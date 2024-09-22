@@ -1,0 +1,45 @@
+GAME chess
+PLAYERS 2
+
+# is PIECES really necessary if dinedeclare naman ulit sila with PIECE (more accurately at that)?
+PIECES (pawn, rook, knight, bishop, queen, king)
+
+BOARD (8,8)
+
+TURN
+
+CONDITION (capture king)
+OBSTACLES (none)
+BOOSTERS (none)
+
+PIECE pawn COUNT 8
+PIECE pawn SETUP ()
+PIECE pawn ACTION move()
+PIECE pawn ACTION consume()
+
+PIECE rook COUNT 2
+PIECE rook SETUP ()
+PIECE rook ACTION move()
+PIECE rook ACTION consume()
+
+PIECE knight COUNT 2
+PIECE knight SETUP ()
+PIECE knight ACTION move()
+PIECE knight ACTION consume()
+
+PIECE bishop COUNT 2
+PIECE bishop SETUP ()
+PIECE bishop ACTION move()
+PIECE bishop ACTION consume()
+
+PIECE queen COUNT 1
+PIECE queen SETUP ()
+PIECE queen ACTION move()
+PIECE queen ACTION consume()
+
+PIECE king COUNT 1
+PIECE king SETUP ()
+PIECE king ACTION move()
+PIECE king ACTION consume()
+
+START
