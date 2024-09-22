@@ -5,41 +5,92 @@ PLAYERS 2
 PIECES (pawn, rook, knight, bishop, queen, king)
 
 BOARD (8,8)
+TURN(white-first) # maybe we can change this to ORDER(white, black) so it's more universal for players > 2
 
-TURN
 
-CONDITION (capture king)
+# creating the pieces
+COLOR white, black
+
+PIECE pawn COUNT 8
+PIECE knight COUNT 2
+PIECE bishop COUNT 2
+PIECE rook COUNT 2
+PIECE queen COUNT 1
+PIECE king COUNT 1
+
+
+# defining piece actions
+PIECE pawn ACTION move(forward, forward, single)
+PIECE pawn ACTION consume(diagonal, forward, single)
+REQUIRE reached_opponent_backrank = (pawn reaches rank 8 for white, rank 1 for black)
+PIECE pawn ACTION promote TO [queen, rook, bishop, knight] REQURIE reached_opponent_backrank
+
+PIECE rook ACTION move(orthogonal, multidirection, across)
+PIECE rook ACTION consume(orthogonal, multidirection, across)
+
+move(L_move) = (2 squares orthogonal, 1 square perpendicular) OR (1 square orthogonal, 2 squares perpendicular)
+PIECE knight ACTION move(L_move)
+PIECE knight ACTION consume(L_move)
+
+PIECE bishop ACTION move(diagonal, multidirection, across)
+PIECE bishop ACTION consume(diagonal, multidirection, across)
+
+PIECE queen ACTION move(orthogonal, multidirection, across), move(diagonal, multidirection, across)
+PIECE queen ACTION consume(orthogonal, multidirection, across), move(diagonal, multidirection, across)
+
+PIECE king ACTION move(orthogonal, multidirection, single), move(diagonal, multidirection, single)
+PIECE king ACTION consume(orthogonal, multidirection, single), move(diagonal, multidirection, single)
+
+
+# define castling as a special move
+REQUIRE king_unmoved = (king has not moved)
+REQUIRE rook_unmoved = (rook has not moved)
+REQUIRE path_clear = (no pieces between king and rook)
+REQUIRE king_safe = (king not in check after move)
+
+move(castle_short) = (
+    REQUIRE [king_unmoved, rook_unmoved, path_clear, king_safe]
+    MOVE king FROM BOARD.E1 TO BOARD.G1
+    MOVE rook FROM BOARD.H1 TO BOARD.F1
+) OR (
+    REQUIRE [king_unmoved, rook_unmoved, path_clear, king_safe]
+    MOVE king FROM BOARD.E8 TO BOARD.G8
+    MOVE rook FROM BOARD.H8 TO BOARD.F8
+)
+
+move(castle_long) = (
+    REQUIRE [king_unmoved, rook_unmoved, path_clear, king_safe]
+    MOVE king FROM BOARD.E1 TO BOARD.C1
+    MOVE rook FROM BOARD.A1 TO BOARD.D1
+) OR (
+    REQUIRE [king_unmoved, rook_unmoved, path_clear, king_safe]
+    MOVE king FROM BOARD.E8 TO BOARD.C8
+    MOVE rook FROM BOARD.A8 TO BOARD.D8
+)
+
+PIECE rook ACTION move(castle_short), move(castle_long)
+PIECE king ACTION move(castle_short), move(castle_long)
+
+
+# setting up the pieces on the BOARD
+PIECE (pawn, white) SETUP (BOARD.A2$ : BOARD.H2$)
+PIECE (rook, white) SETUP (BOARD.A1, BOARD.H1)
+PIECE (knight, white) SETUP (BOARD.B1, BOARD.G1)
+PIECE (bishop, white) SETUP (BOARD.C1, BOARD.F1)
+PIECE (queen, white) SETUP (BOARD.D1)
+PIECE (king, white) SETUP (BOARD.E1)
+
+PIECE (pawn, black) SETUP (BOARD.A7$ : BOARD.H7$)
+PIECE (rook, black) SETUP (BOARD.A8, BOARD.H8)
+PIECE (knight, black) SETUP (BOARD.B8, BOARD.G8)
+PIECE (bishop, black) SETUP (BOARD.C8, BOARD.F8)
+PIECE (queen, black) SETUP (BOARD.D8)
+PIECE (king, black) SETUP (BOARD.E8)
+
+
 OBSTACLES (none)
 BOOSTERS (none)
 
-PIECE pawn COUNT 8
-PIECE pawn SETUP ()
-PIECE pawn ACTION move()
-PIECE pawn ACTION consume()
-
-PIECE rook COUNT 2
-PIECE rook SETUP ()
-PIECE rook ACTION move()
-PIECE rook ACTION consume()
-
-PIECE knight COUNT 2
-PIECE knight SETUP ()
-PIECE knight ACTION move()
-PIECE knight ACTION consume()
-
-PIECE bishop COUNT 2
-PIECE bishop SETUP ()
-PIECE bishop ACTION move()
-PIECE bishop ACTION consume()
-
-PIECE queen COUNT 1
-PIECE queen SETUP ()
-PIECE queen ACTION move()
-PIECE queen ACTION consume()
-
-PIECE king COUNT 1
-PIECE king SETUP ()
-PIECE king ACTION move()
-PIECE king ACTION consume()
+CONDITION (capture_king)
 
 START
