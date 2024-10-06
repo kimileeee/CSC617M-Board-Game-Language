@@ -21,7 +21,7 @@ DEFINE checkers.CONDITIONS:
 END
 
 DEFINE checkers.RULES :
-     RULE promote_rule (white AT BOARD.ROW.7 || black AT BOARD.ROW.0)
+     RULE promote_rule (white AT BOARD.ROW.7 OR black AT BOARD.ROW.0)
 END
 
 DEFINE checkers.PIECES:
