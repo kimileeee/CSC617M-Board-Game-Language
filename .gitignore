@@ -1,2 +1,4 @@
 
 /antlr_tutorial
+/.antlr
+/output/__pycache__
