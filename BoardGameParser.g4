@@ -13,7 +13,7 @@ define_block : DEFINE IDENTIFIER COLON code_block END
 gameplay_block : START COLON code_block END
                ;
 
-code_block  : statement NEWLINE code_block
+code_block  : statement code_block
             | statement
             ;
 
@@ -92,7 +92,7 @@ game_entities_statement : game_entities OPEN_PAR param_list CLOSE_PAR
                         ;
 
 player_statement : PLAYER IDENTIFIER COLOR IDENTIFIER AT board_pos
-                 | ORDER OPEN_PAR (list_literal) CLOSE_PAR
+                 | ORDER OPEN_PAR list_literal CLOSE_PAR
                  ;
 
 condition_statement : CONDITION OPEN_PAR conditional_expression CLOSE_PAR
