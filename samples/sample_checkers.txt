@@ -1,0 +1,48 @@
+GAME checkers
+
+DEFINE checkers:
+     PLAYERS (me, you) 
+     CONDITIONS (ANY)
+     RULES (ALL)
+     PIECES (regular, king)
+     OBSTACLES (NONE)
+     BOOSTERS (NONE)
+     BOARD (8, 8)
+END
+
+DEFINE checker.PLAYERS:
+     PLAYER me COLOR COLOR.white AT BOARD.ROW.0
+     PLAYER you COLOR COLOR.black AT BOARD.ROW.7 
+     ORDER ([me, you])
+END
+
+DEFINE checkers.CONDITIONS:
+     CONDITION (ANY PLAYER PIECE ALL.count == 0)
+END
+
+DEFINE checkers.RULES :
+     RULE promote_rule (white AT BOARD.ROW.7 || black AT BOARD.ROW.0)
+END
+
+DEFINE checkers.PIECES:
+     PIECE regular COUNT 12
+     PIECE king COUNT 0
+
+     PIECE regular ACTION move(diagonal, 1, 1)
+     PIECE regular ACTION consume(diagonal, 2, 2)
+
+     PIECE king ACTION consume(diagonal, across, skip)
+     PIECE king ACTION move(diagonal, uni-direction, across)
+END
+
+DEFINE checkers.BOARD:
+     PIECE regular SETUP (BOARD.C1, BOARD.C3) 
+END
+
+START:
+     TURN white
+     MOVE regular_1 TO BOARD.E4
+
+     TURN black
+     MOVE regular_1 TO BOARD.F7
+END
