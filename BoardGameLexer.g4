@@ -82,7 +82,7 @@ STRING_LITERAL : '"' (~["])* '"';
 BOOLEAN_LITERAL : 'true' | 'false';
 
 // Identifiers
-IDENTIFIER : [a-zA-Z] [a-zA-Z0-9_]*;
+IDENTIFIER : [a-zA-Z][a-zA-Z0-9_]*;
 
 // Comments
 COMMENT : '//' ~[\r\n]* -> skip;
