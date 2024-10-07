@@ -24,8 +24,8 @@ PIECE : 'PIECE';
 COUNT : 'COUNT';
 ACTION : 'ACTION';
 SETUP : 'SETUP';
-ROW : 'ROW';
-COLUMN : 'COLUMN';
+BOARD_ROW : 'BOARD.ROW.' INT_LITERAL;
+BOARD_COLUMN : 'BOARD.COLUMN.' INT_LITERAL;
 OBSTACLE : 'OBSTACLE';
 BOOSTER : 'BOOSTER';
 START : 'START';
@@ -55,6 +55,7 @@ AND_OPT : 'AND';
 OR_OPT : 'OR';
 NOT_OPT : 'NOT';
 EQUAL_OPT : '==';
+ASSIGN_OPT : '=';
 LESS_THAN_OPT : '<';
 LESS_EQUAL_OPT : '<=';
 GREATER_THAN_OPT : '>';
@@ -82,7 +83,7 @@ STRING_LITERAL : '"' (~["])* '"';
 BOOLEAN_LITERAL : 'true' | 'false';
 
 // Identifiers
-IDENTIFIER : [a-zA-Z][a-zA-Z0-9_]*;
+IDENTIFIER : [a-zA-Z][a-zA-Z0-9_]*('.'[a-zA-Z][a-zA-Z0-9_]*)*;
 
 // Comments
 COMMENT : '//' ~[\r\n]* -> skip;

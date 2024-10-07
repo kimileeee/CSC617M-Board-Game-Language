@@ -10,7 +10,7 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Enter a parse tree produced by BoardGameParser#program.
     def enterProgram(self, ctx:BoardGameParser.ProgramContext):
-        print("Entered GAME")
+        pass
 
     # Exit a parse tree produced by BoardGameParser#program.
     def exitProgram(self, ctx:BoardGameParser.ProgramContext):
@@ -71,30 +71,21 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#literal_list.
-    def enterLiteral_list(self, ctx:BoardGameParser.Literal_listContext):
-        pass
-
-    # Exit a parse tree produced by BoardGameParser#literal_list.
-    def exitLiteral_list(self, ctx:BoardGameParser.Literal_listContext):
-        pass
-
-
-    # Enter a parse tree produced by BoardGameParser#list_literal.
-    def enterList_literal(self, ctx:BoardGameParser.List_literalContext):
-        pass
-
-    # Exit a parse tree produced by BoardGameParser#list_literal.
-    def exitList_literal(self, ctx:BoardGameParser.List_literalContext):
-        pass
-
-
     # Enter a parse tree produced by BoardGameParser#param_list.
     def enterParam_list(self, ctx:BoardGameParser.Param_listContext):
         pass
 
     # Exit a parse tree produced by BoardGameParser#param_list.
     def exitParam_list(self, ctx:BoardGameParser.Param_listContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#object_access.
+    def enterObject_access(self, ctx:BoardGameParser.Object_accessContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#object_access.
+    def exitObject_access(self, ctx:BoardGameParser.Object_accessContext):
         pass
 
 

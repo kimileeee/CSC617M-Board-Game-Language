@@ -7,7 +7,6 @@ program : GAME IDENTIFIER define_block+ gameplay_block
         ;
 
 define_block : DEFINE IDENTIFIER COLON code_block END
-             | DEFINE IDENTIFIER DOT IDENTIFIER COLON code_block END
              ;
 
 gameplay_block : START COLON code_block END
@@ -44,14 +43,14 @@ literal : INT_LITERAL
         | BOOLEAN_LITERAL
         ;
 
-literal_list : literal COMMA literal_list
-             | literal
-             ;
-
-list_literal : OPEN_PAR literal_list CLOSE_PAR
-             ;
-
 param_list  : IDENTIFIER COMMA param_list
+            | IDENTIFIER ASSIGN_OPT literal COMMA param_list
+            | IDENTIFIER ASSIGN_OPT IDENTIFIER COMMA param_list
+            | IDENTIFIER ASSIGN_OPT literal
+            | IDENTIFIER ASSIGN_OPT IDENTIFIER
+            | ANY COMMA param_list
+            | ALL COMMA param_list
+            | NONE COMMA param_list
             | IDENTIFIER
             | NONE
             | ANY
@@ -60,8 +59,13 @@ param_list  : IDENTIFIER COMMA param_list
             | literal
             ;
 
-board_pos : BOARD DOT ROW DOT INT_LITERAL
-          | BOARD DOT COLUMN DOT INT_LITERAL
+object_access   : IDENTIFIER DOT game_entities
+                | game_entities DOT IDENTIFIER
+                | IDENTIFIER DOT IDENTIFIER
+                ;
+
+board_pos : BOARD_ROW
+          | BOARD_COLUMN
           | BOARD DOT IDENTIFIER
           ;
 
@@ -91,11 +95,10 @@ conditional_expression : expression conditional conditional_expression
 game_entities_statement : game_entities OPEN_PAR param_list CLOSE_PAR
                         ;
 
-player_statement : PLAYER IDENTIFIER COLOR IDENTIFIER AT board_pos
-                 | ORDER OPEN_PAR list_literal CLOSE_PAR
+player_statement : PLAYER IDENTIFIER COLOR object_access AT board_pos
                  ;
 
-condition_statement : CONDITION OPEN_PAR conditional_expression CLOSE_PAR
+condition_statement : CONDITION OPEN_PAR param_list CLOSE_PAR
                     ;
 
 rule_statement : RULE IDENTIFIER OPEN_PAR conditional_expression CLOSE_PAR

@@ -7,7 +7,7 @@ DEFINE checkers:
      PIECES (regular, king)
      OBSTACLES (NONE)
      BOOSTERS (NONE)
-     BOARD (8, 8)
+     BOARD ([8, 8], layout_here)
 END
 
 DEFINE checkers.PLAYERS:
@@ -17,7 +17,7 @@ DEFINE checkers.PLAYERS:
 END
 
 DEFINE checkers.CONDITIONS:
-      CONDITION (ANY, ALL, count = 0) 
+     CONDITION (ANY, ALL, count = 0)
 END
 
 DEFINE checkers.RULES :

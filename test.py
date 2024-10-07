@@ -1,7 +1,7 @@
 from antlr4 import *
-from output.BoardGameLexer import BoardGameLexer
-from output.BoardGameParser import BoardGameParser
-from output.BoardGameParserListener import BoardGameParserListener
+from antlr_files.BoardGameLexer import BoardGameLexer
+from antlr_files.BoardGameParser import BoardGameParser
+from antlr_files.BoardGameParserListener import BoardGameParserListener
 from antlr4.tree.Trees import Trees
 import graphviz
 
