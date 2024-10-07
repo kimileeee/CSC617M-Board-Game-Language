@@ -22,8 +22,8 @@ END
 
 DEFINE chess.RULES:
     RULE promote_rule (white AT BOARD.ROW.7 OR black AT BOARD.ROW.0)
-    RULE white_castling (white.king AT BOARD.E0 AND white.rook AT BOARD.H0 AND BOARD.F0.empty() AND BOARD.G0.empty())
-    RULE black_castling (black.king AT BOARD.E7 AND black.rook AT BOARD.H7 AND BOARD.F7.empty() AND BOARD.G7.empty())
+    RULE white_castling ((king, white) AT BOARD.E0 AND white.rook AT BOARD.H0 AND BOARD.F0.empty() AND BOARD.G0.empty())
+    RULE black_castling ((king, black) AT BOARD.E7 AND black.rook AT BOARD.H7 AND BOARD.F7.empty() AND BOARD.G7.empty())
 END
 
 DEFINE chess.PIECES:
@@ -41,10 +41,8 @@ DEFINE chess.PIECES:
     PIECE rook ACTION move(orthogonal, 8, 8)
     PIECE rook ACTION consume(orthogonal, 8, 8)
 
-    // define knight L move
-    move(L_move) = (["NNW", "NNE", "SSW", "SSE", "EEN", "EES", "WWN", "WWS"])
-    PIECE knight ACTION move(L_move)
-    PIECE knight ACTION consume(L_move)
+    PIECE knight ACTION move(["NNW", "NNE", "SSW", "SSE", "EEN", "EES", "WWN", "WWS"])
+    PIECE knight ACTION consume(["NNW", "NNE", "SSW", "SSE", "EEN", "EES", "WWN", "WWS"])
 
     PIECE bishop ACTION move(diagonal, 8, 8)
     PIECE bishop ACTION consume(diagonal, 8, 8)
