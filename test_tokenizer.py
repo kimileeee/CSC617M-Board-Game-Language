@@ -1,6 +1,7 @@
 from antlr4 import *
 from antlr_files.BoardGameLexer import BoardGameLexer
 from datetime import *
+from tabulate import tabulate
 
 def tokenize_source_code(source_code):
     # Create an input stream for your source code
@@ -17,18 +18,22 @@ def tokenize_source_code(source_code):
 
     tokens = token_stream.tokens
 
+    board_game_tokens = []
+    tokenizer_headers = ["Line Number", "Column Start", "Column End", "Token", "Type"]
+
     # Loop through all tokens
     for token in tokens:
-        print(f"Token: '{token.text}', Type: {lexer.symbolicNames[token.type]}, Line: {token.line}, Column Start: {token.column}, Column End: {token.column + len(token.text)}")
+        board_game_tokens.append([token.line, token.column, token.column+len(token.text), token.text, lexer.symbolicNames[token.type]])
+    
+    print(tabulate(board_game_tokens, headers=tokenizer_headers, numalign="left"))
 
-        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
-        file_name = f"tokenizer_output_{timestamp}.txt"
-
-        with open(file_name, 'a') as output_file:
-            output_file.write(f"Token: '{token.text}', Type: {lexer.symbolicNames[token.type]}, Line: {token.line}, Position: {token.column}\n")
-
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
+    file_name = f"tokenizer_output_{timestamp}.txt"
+    with open(file_name, 'w+') as output_file:
+        output_file.write(tabulate(board_game_tokens, headers=tokenizer_headers, numalign="left"))
+        output_file.close()
+        
 # Example source code input
-
 with open("samples/sample_checkers.txt", 'r') as file:
     source_code = file.read()
 
