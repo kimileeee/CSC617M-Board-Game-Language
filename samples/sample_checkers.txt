@@ -10,14 +10,14 @@ DEFINE checkers:
      BOARD (8, 8)
 END
 
-DEFINE checker.PLAYERS:
+DEFINE checkers.PLAYERS:
      PLAYER me COLOR COLOR.white AT BOARD.ROW.0
      PLAYER you COLOR COLOR.black AT BOARD.ROW.7 
      ORDER ([me, you])
 END
 
 DEFINE checkers.CONDITIONS:
-     CONDITION (ANY PLAYER PIECE ALL.count == 0)
+      CONDITION (ANY, ALL, count = 0) 
 END
 
 DEFINE checkers.RULES :
@@ -32,7 +32,7 @@ DEFINE checkers.PIECES:
      PIECE regular ACTION consume(diagonal, 2, 2)
 
      PIECE king ACTION consume(diagonal, across, skip)
-     PIECE king ACTION move(diagonal, uni-direction, across)
+     PIECE king ACTION move(diagonal, uni_direction, across)
 END
 
 DEFINE checkers.BOARD:
