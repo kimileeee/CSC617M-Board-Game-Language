@@ -1,5 +1,6 @@
 from antlr4 import *
 from antlr_files.BoardGameLexer import BoardGameLexer
+from datetime import *
 
 def tokenize_source_code(source_code):
     # Create an input stream for your source code
@@ -18,7 +19,13 @@ def tokenize_source_code(source_code):
 
     # Loop through all tokens
     for token in tokens:
-        print(f"Token: '{token.text}', Type: {lexer.symbolicNames[token.type]}, Line: {token.line}, Position: {token.column}")
+        print(f"Token: '{token.text}', Type: {lexer.symbolicNames[token.type]}, Line: {token.line}, Column Start: {token.column}, Column End: {token.column + len(token.text)}")
+
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
+        file_name = f"tokenizer_output_{timestamp}.txt"
+
+        with open(file_name, 'a') as output_file:
+            output_file.write(f"Token: '{token.text}', Type: {lexer.symbolicNames[token.type]}, Line: {token.line}, Position: {token.column}\n")
 
 # Example source code input
 

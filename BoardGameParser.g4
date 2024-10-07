@@ -64,9 +64,7 @@ object_access   : IDENTIFIER DOT game_entities
                 | IDENTIFIER DOT IDENTIFIER
                 ;
 
-board_pos : BOARD_ROW
-          | BOARD_COLUMN
-          | BOARD DOT IDENTIFIER
+board_pos : BOARD DOT object_access
           ;
 
 conditional  : AND_OPT
