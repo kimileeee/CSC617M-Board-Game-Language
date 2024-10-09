@@ -71,14 +71,14 @@ DEFINE chess.PIECES:
 END
 
 DEFINE chess.BOARD:
-    PIECE (pawn, white) SETUP (BOARD.A2$ : BOARD.H2$)
+    PIECE (pawn, white) SETUP (BOARD.A2 ... BOARD.H2)
     PIECE (rook, white) SETUP (BOARD.A1, BOARD.H1)
     PIECE (knight, white) SETUP (BOARD.B1, BOARD.G1)
     PIECE (bishop, white) SETUP (BOARD.C1, BOARD.F1)
     PIECE (queen, white) SETUP (BOARD.D1)
     PIECE (king, white) SETUP (BOARD.E1)
 
-    PIECE (pawn, black) SETUP (BOARD.A7$ : BOARD.H7$)
+    PIECE (pawn, black) SETUP (BOARD.A7 ... BOARD.H7)
     PIECE (rook, black) SETUP (BOARD.A8, BOARD.H8)
     PIECE (knight, black) SETUP (BOARD.B8, BOARD.G8)
     PIECE (bishop, black) SETUP (BOARD.C8, BOARD.F8)
