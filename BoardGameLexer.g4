@@ -76,6 +76,7 @@ OPEN_BRACKET : '[';
 CLOSE_BRACKET : ']';
 OPEN_BRACE : '{';
 CLOSE_BRACE : '}';
+ELIPSIS : '...';
 
 // Literals
 INT_LITERAL : [0-9]+;
