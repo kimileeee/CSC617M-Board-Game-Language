@@ -1,0 +1,67 @@
+GAME game_of_the_generals
+
+DEFINE game_of_the_generals:
+    PLAYERS (me, you) 
+    CONDITIONS (ANY)
+    PIECES (5-star, 4-star, 3-star, 2-star, 1-star, colonel, lt-colonel,
+		    major, captain, 1-lieutenant, 2-lieutenant, sergeant, spy,
+		    private, flag)
+    OBSTACLES (NONE)
+    BOOSTERS (NONE)
+    BOARD (8, 8)
+END
+
+DEFINE game_of_the_generals.PLAYERS:
+     PLAYER me COLOR COLOR.blue AT BOARD.ROW.0
+     PLAYER you COLOR COLOR.red AT BOARD.ROW.7 
+     ORDER ([me, you])
+END
+
+DEFINE checkers.CONDITIONS:
+     CONDITION (ANY, [flag], count = 0)
+     CONDITION ([me], [flag], location = BOARD.ROW.8)
+     CONDITION ([you], [flag], location = BOARD.ROW.1)
+     CONDITION (ANY, NONE, status = "resigned")
+     CONDITION (ALL, NONE, status = "draw")
+END
+
+
+
+DEFINE checkers.PIECES:
+    PIECE 5-star COUNT 1
+    PIECE 4-star COUNT 1
+    PIECE 3-star COUNT 1
+    PIECE 2-star COUNT 1
+    PIECE 1-star COUNT 1
+    PIECE colonel COUNT 1
+    PIECE lt-colonel COUNT 1
+    PIECE major COUNT 1
+    PIECE captain COUNT 1
+    PIECE 1-lieutenant COUNT 1
+    PIECE 2-lieutenant COUNT 1
+    PIECE sergeant COUNT 1
+    PIECE spy COUNT 2
+    PIECE private COUNT 6
+    PIECE flag COUNT 1
+
+    PIECE ALL ACTION move(adjacent, 1, 1)
+    PIECE [5-star, 4-star, 3-star, 2-star, 1-star, colonel, lt-colonel, major, captain, 1-lieutenant, 2-lieutenant, sergeant, flag] ACTION consume(adjacent, 1, 1, [5-star, 4-star, 3-star, 2-star, 1-star, colonel, lt-colonel, major, captain, 1-lieutenant, 2-lieutenant, sergeant, flag, private])
+    PIECE private ACTION consume(adjacent, replace, [spy, private])
+    PIECE spy ACTION consume(adjacent, replace, [spy, 5-star, 4-star, 3-star, 2-star, 1-star, colonel, lt-colonel, major, captain, 1-lieutenant, 2-lieutenant, sergeant, flag])
+END
+
+DEFINE checkers.BOARD:
+    PLAYER me PIECE private SETUP (BOARD.C1 ... BOARD.C6) 
+    PLAYER me PIECE flag SETUP (BOARD.A2)
+
+    PLAYER you PIECE private SETUP (BOARD.F4 ... BOARD.F9)
+    PLAYER you PIECE flag SETUP (BOARD.H8)
+END
+
+START:
+     TURN me
+     MOVE private_1 TO BOARD.D2
+
+     TURN you
+     MOVE private_1 TO BOARD.E7
+END

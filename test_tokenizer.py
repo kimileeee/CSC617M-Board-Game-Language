@@ -34,7 +34,7 @@ def tokenize_source_code(source_code):
         output_file.close()
         
 # Example source code input
-with open("samples/sample_checkers.txt", 'r') as file:
+with open("samples/sample_game_of_the_generals.txt", 'r') as file:
     source_code = file.read()
 
 tokenize_source_code(source_code)
