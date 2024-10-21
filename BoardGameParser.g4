@@ -12,8 +12,7 @@ define_block : DEFINE IDENTIFIER COLON code_block END
 gameplay_block : START COLON code_block END
                ;
 
-code_block  : statement code_block
-            | statement
+code_block  : (statement)+ //person should have at least one or more statements when creating code
             ;
 
 statement   : game_entities_statement
@@ -43,26 +42,42 @@ literal : INT_LITERAL
         | BOOLEAN_LITERAL
         ;
 
-param_list  : IDENTIFIER COMMA param_list
-            | IDENTIFIER ASSIGN_OPT literal COMMA param_list
-            | IDENTIFIER ASSIGN_OPT IDENTIFIER COMMA param_list
-            | IDENTIFIER ASSIGN_OPT literal
-            | IDENTIFIER ASSIGN_OPT IDENTIFIER
-            | ANY COMMA param_list
-            | ALL COMMA param_list
-            | NONE COMMA param_list
-            | IDENTIFIER
-            | NONE
-            | ANY
-            | ALL
-            | literal COMMA param_list
-            | literal
-            ;
+// param_list  : IDENTIFIER COMMA param_list
+//             | IDENTIFIER ASSIGN_OPT literal COMMA param_list
+//             | IDENTIFIER ASSIGN_OPT IDENTIFIER COMMA param_list
+//             | IDENTIFIER ASSIGN_OPT literal
+//             | IDENTIFIER ASSIGN_OPT IDENTIFIER
+//             | ANY COMMA param_list
+//             | ALL COMMA param_list
+//             | NONE COMMA param_list
+//             | IDENTIFIER
+//             | NONE
+//             | ANY
+//             | ALL
+//             | literal COMMA param_list
+//             | literal
+//             ;
 
-object_access   : IDENTIFIER DOT game_entities
-                | game_entities DOT IDENTIFIER
-                | IDENTIFIER DOT IDENTIFIER
+param_list    : IDENTIFIER (COMMA IDENTIFIER)*
+                | IDENTIFIER ASSIGN_OPT literal (COMMA param_list)* //in what situations would a literal have 0 comma param list extra after it?
+                | IDENTIFIER ASSIGN_OPT IDENTIFIER (COMMA param_list)*
+                | IDENTIFIER ASSIGN_OPT literal
+                | literal (COMMA param_list)* //removes redundancy of literal COMMA param_list and literal
+                | NONE
+                | ANY
+                | ALL
                 ;
+
+// object_access   : IDENTIFIER DOT game_entities 
+//                 | game_entities DOT IDENTIFIER
+//                 | IDENTIFIER DOT IDENTIFIER //what situations would we want to use dot identifier?
+//                 ;
+
+object_access   : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)* //do we allow something like BOARD.PIECES.OBSTACLES??
+                  | game_entities DOT IDENTIFIER (DOT game_entities | IDENTIFIER)* //should it be DOT identifier 
+                  | IDENTIFIER DOT IDENTIFIER (DOT game_entities | IDENTIFIER)*
+                  ;
+        
 
 board_pos : BOARD DOT object_access
           ;
@@ -89,6 +104,8 @@ expression : IDENTIFIER
 conditional_expression : expression conditional conditional_expression
                        | expression
                        ;
+
+conditional_expression_2 : expression (conditional expression)* ;
 
 game_entities_statement : game_entities OPEN_PAR param_list CLOSE_PAR
                         ;

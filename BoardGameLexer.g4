@@ -85,11 +85,16 @@ STRING_LITERAL : '"' (~["])* '"';
 BOOLEAN_LITERAL : 'true' | 'false';
 
 // Identifiers
-IDENTIFIER : [a-zA-Z][a-zA-Z0-9_]*('.'[a-zA-Z][a-zA-Z0-9_]*)*;
+IDENTIFIER : [a-zA-Z][a-zA-Z0-9_]*;
 
 // Comments
 COMMENT : '//' ~[\r\n]* -> skip;
 
 // Whitespace
 WS : [ \t\r\n]+ -> skip;
+
+//checks for invalid inputs
+INVALID_IDENTIFIER : ([0-9]+[a-zA-Z_][a-zA-Z0-9_]*) -> skip;
+
+//how is the usage of special characters usually handled in a language?
 
