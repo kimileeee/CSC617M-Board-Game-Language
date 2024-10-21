@@ -11,9 +11,9 @@ DEFINE chess:
 END
 
 DEFINE chess.PLAYERS:
-    PLAYER player_1 COLOR COLOR.white AT BOARD.ROW.0
-    PLAYER player_2 COLOR COLOR.black AT BOARD.ROW.7
-    ORDER ([player_1, player_2])
+    PLAYER white COLOR COLOR.white AT BOARD.ROW.0
+    PLAYER black COLOR COLOR.black AT BOARD.ROW.7
+    ORDER ([white, black])
 END
 
 DEFINE chess.CONDITIONS:
@@ -71,19 +71,19 @@ DEFINE chess.PIECES:
 END
 
 DEFINE chess.BOARD:
-    PIECE white.pawn SETUP (BOARD.A2 ... BOARD.H2)
-    PIECE white.king SETUP (BOARD.A1, BOARD.H1)
-    PIECE white.knight SETUP (BOARD.B1, BOARD.G1)
-    PIECE white.bishop SETUP (BOARD.C1, BOARD.F1)
-    PIECE white.queen SETUP (BOARD.D1)
-    PIECE white.king SETUP (BOARD.E1)
+    PLAYER white PIECE pawn SETUP (BOARD.A2 ... BOARD.H2)
+    PLAYER white PIECE king SETUP (BOARD.A1, BOARD.H1)
+    PLAYER white PIECE knight SETUP (BOARD.B1, BOARD.G1)
+    PLAYER white PIECE bishop SETUP (BOARD.C1, BOARD.F1)
+    PLAYER white PIECE queen SETUP (BOARD.D1)
+    PLAYER white PIECE king SETUP (BOARD.E1)
 
-    PIECE black.pawn SETUP (BOARD.A7 ... BOARD.H7)
-    PIECE black.rook SETUP (BOARD.A8, BOARD.H8)
-    PIECE black.knight SETUP (BOARD.B8, BOARD.G8)
-    PIECE black.bishop SETUP (BOARD.C8, BOARD.F8)
-    PIECE black.queen SETUP (BOARD.D8)
-    PIECE black.king SETUP (BOARD.E8)
+    PLAYER black PIECE pawn SETUP (BOARD.A7 ... BOARD.H7)
+    PLAYER black PIECE rook SETUP (BOARD.A8, BOARD.H8)
+    PLAYER black PIECE knight SETUP (BOARD.B8, BOARD.G8)
+    PLAYER black PIECE bishop SETUP (BOARD.C8, BOARD.F8)
+    PLAYER black PIECE queen SETUP (BOARD.D8)
+    PLAYER black PIECE king SETUP (BOARD.E8)
 END
 
 START:

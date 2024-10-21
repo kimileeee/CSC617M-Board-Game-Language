@@ -3,8 +3,8 @@ GAME game_of_the_generals
 DEFINE game_of_the_generals:
     PLAYERS (me, you) 
     CONDITIONS (ANY)
-    PIECES (5-star, 4-star, 3-star, 2-star, 1-star, colonel, lt-colonel,
-		    major, captain, 1-lieutenant, 2-lieutenant, sergeant, spy,
+    PIECES (five_star, four_star, three_star, two_star, one_star, colonel, lt_colonel,
+		    major, captain, one_lieutenant, two_lieutenant, sergeant, spy,
 		    private, flag)
     OBSTACLES (NONE)
     BOOSTERS (NONE)
@@ -28,26 +28,26 @@ END
 
 
 DEFINE checkers.PIECES:
-    PIECE 5-star COUNT 1
-    PIECE 4-star COUNT 1
-    PIECE 3-star COUNT 1
-    PIECE 2-star COUNT 1
-    PIECE 1-star COUNT 1
+    PIECE five_star COUNT 1
+    PIECE four_star COUNT 1
+    PIECE three_star COUNT 1
+    PIECE two_star COUNT 1
+    PIECE one_star COUNT 1
     PIECE colonel COUNT 1
-    PIECE lt-colonel COUNT 1
+    PIECE lt_colonel COUNT 1
     PIECE major COUNT 1
     PIECE captain COUNT 1
-    PIECE 1-lieutenant COUNT 1
-    PIECE 2-lieutenant COUNT 1
+    PIECE one_lieutenant COUNT 1
+    PIECE two_lieutenant COUNT 1
     PIECE sergeant COUNT 1
     PIECE spy COUNT 2
     PIECE private COUNT 6
     PIECE flag COUNT 1
 
     PIECE ALL ACTION move(adjacent, 1, 1)
-    PIECE [5-star, 4-star, 3-star, 2-star, 1-star, colonel, lt-colonel, major, captain, 1-lieutenant, 2-lieutenant, sergeant, flag] ACTION consume(adjacent, 1, 1, [5-star, 4-star, 3-star, 2-star, 1-star, colonel, lt-colonel, major, captain, 1-lieutenant, 2-lieutenant, sergeant, flag, private])
+    PIECE (five_star, four_star, three_star, two_star, one_star, colonel, lt_colonel, major, captain, one_lieutenant, two_lieutenant, sergeant, flag) ACTION consume(adjacent, 1, 1, [five_star, four_star, three_star, two_star, one_star, colonel, lt_colonel, major, captain, one_lieutenant, two_lieutenant, sergeant, flag, private])
     PIECE private ACTION consume(adjacent, replace, [spy, private])
-    PIECE spy ACTION consume(adjacent, replace, [spy, 5-star, 4-star, 3-star, 2-star, 1-star, colonel, lt-colonel, major, captain, 1-lieutenant, 2-lieutenant, sergeant, flag])
+    PIECE spy ACTION consume(adjacent, replace, [spy, five_star, four_star, three_star, two_star, one_star, colonel, lt_colonel, major, captain, one_lieutenant, two_lieutenant, sergeant, flag])
 END
 
 DEFINE checkers.BOARD:

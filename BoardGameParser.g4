@@ -53,14 +53,12 @@ primary : literal
 
 param_list     : IDENTIFIER (COMMA param_list)*
                 | IDENTIFIER ASSIGN_OPT literal (COMMA param_list)* //in what situations would a literal have 0 comma param list extra after it?
-                | IDENTIFIER ASSIGN_OPT IDENTIFIER (COMMA param_list)*
-                | IDENTIFIER ASSIGN_OPT literal
+                | IDENTIFIER ASSIGN_OPT objects (COMMA param_list)*
                 | literal (COMMA param_list)* //removes redundancy of literal COMMA param_list and literal
                 | object_access (COMMA param_list)*
                 | NONE (COMMA param_list)*
                 | ANY (COMMA param_list)*
                 | ALL (COMMA param_list)*
-                | primary (COMMA param_list)*
                 | list (COMMA param_list)*
                 ;
 
@@ -148,25 +146,25 @@ condition_statement : CONDITION OPEN_PAR param_list CLOSE_PAR
 rule_statement : RULE IDENTIFIER OPEN_PAR expression CLOSE_PAR
                ;
 
-piece_statement : PIECE IDENTIFIER COUNT INT_LITERAL 
-                | PIECE IDENTIFIER ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
+piece_statement : PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) COUNT INT_LITERAL 
+                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
                 | PIECE assignment_expression
                 ;
 
-board_statement : PIECE (IDENTIFIER | object_access) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
-                | OBSTACLE (IDENTIFIER | object_access) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
-                | BOOSTER (IDENTIFIER | object_access) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
+board_statement : (PLAYER IDENTIFIER)* PIECE (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
+                | (PLAYER IDENTIFIER)* OBSTACLE (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
+                | (PLAYER IDENTIFIER)* BOOSTER (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
                 ;
 
-obstacle_statement : OBSTACLE IDENTIFIER COUNT INT_LITERAL
-                   | OBSTACLE IDENTIFIER ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
+obstacle_statement : OBSTACLE (IDENTIFIER | object_access | ALL) COUNT INT_LITERAL
+                   | OBSTACLE (IDENTIFIER | object_access | ALL) ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
                    ;
 
-booster_statement : BOOSTER IDENTIFIER COUNT INT_LITERAL
-                  | BOOSTER IDENTIFIER ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
+booster_statement : BOOSTER (IDENTIFIER | object_access | ALL) COUNT INT_LITERAL
+                  | BOOSTER (IDENTIFIER | object_access | ALL) ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
                   ;
 
-move_statement : MOVE IDENTIFIER TO board_pos
+move_statement : MOVE (IDENTIFIER | object_access | ALL) TO board_pos
                ;
 
 turn_statement : TURN IDENTIFIER move_statement
