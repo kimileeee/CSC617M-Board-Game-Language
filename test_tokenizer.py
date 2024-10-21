@@ -23,12 +23,15 @@ def tokenize_source_code(source_code):
 
     # Loop through all tokens
     for token in tokens:
-        board_game_tokens.append([token.line, token.column, token.column+len(token.text), token.text, lexer.symbolicNames[token.type]])
+        if (token.channel == BoardGameLexer.ERRORS):
+            print(f"Line {token.line}:{token.column} Invalid token \"{token.text}\"")
+        else:
+            board_game_tokens.append([token.line, token.column, token.column+len(token.text), token.text, lexer.symbolicNames[token.type]])
     
     print(tabulate(board_game_tokens, headers=tokenizer_headers, numalign="left"))
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
-    file_name = f"tokenizer_output_{timestamp}.txt"
+    file_name = f"./tokenizer_outputs/tokenizer_output_{timestamp}.txt"
     with open(file_name, 'w+') as output_file:
         output_file.write(tabulate(board_game_tokens, headers=tokenizer_headers, numalign="left"))
         output_file.close()

@@ -64,7 +64,25 @@ object_access   : IDENTIFIER DOT game_entities
                 | IDENTIFIER DOT IDENTIFIER
                 ;
 
+<<<<<<< Updated upstream
 board_pos : BOARD DOT object_access
+=======
+list : OPEN_BRACKET param_list CLOSE_BRACKET
+     ;
+// object_access   : IDENTIFIER DOT game_entities 
+//                 | game_entities DOT IDENTIFIER
+//                 | IDENTIFIER DOT IDENTIFIER //what situations would we want to use dot identifier?
+//                 ;
+
+object_access   : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)* //do we allow something like BOARD.PIECES.OBSTACLES??
+                  | game_entities DOT IDENTIFIER (DOT game_entities | IDENTIFIER)* //should it be DOT identifier 
+                  | IDENTIFIER DOT IDENTIFIER (DOT game_entities | IDENTIFIER)*
+                  ;
+        
+
+board_pos : BOARD DOT IDENTIFIER
+          | BOARD DOT (ROW | COLUMN) DOT (INT_LITERAL)
+>>>>>>> Stashed changes
           ;
 
 conditional  : AND_OPT

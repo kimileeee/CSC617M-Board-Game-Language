@@ -80,6 +80,15 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BoardGameParser#list.
+    def enterList(self, ctx:BoardGameParser.ListContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#list.
+    def exitList(self, ctx:BoardGameParser.ListContext):
+        pass
+
+
     # Enter a parse tree produced by BoardGameParser#object_access.
     def enterObject_access(self, ctx:BoardGameParser.Object_accessContext):
         pass

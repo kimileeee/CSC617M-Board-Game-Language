@@ -4,6 +4,11 @@ Grammar defining a Board Game Language
 
 lexer grammar BoardGameLexer;
 
+channels {
+	COMMENTS,
+    ERRORS
+}
+
 // Keywords
 GAME : 'GAME';
 DEFINE : 'DEFINE';
@@ -78,18 +83,33 @@ OPEN_BRACE : '{';
 CLOSE_BRACE : '}';
 ELIPSIS : '...';
 
+// Comments
+COMMENT : '//' ~[\r\n]* -> channel(COMMENTS);
+
+// Whitespace
+fragment SPACE : ' ';
+WS : [ \t\r\n]+ -> channel(HIDDEN);
+
 // Literals
-INT_LITERAL : [0-9]+;
-FLOAT_LITERAL : [0-9]+ '.' [0-9]+;
+fragment DIGIT : [0-9];
+fragment NUMBER : DIGIT+;
+fragment INTEGER : '-'? NUMBER;
+
+INT_LITERAL : INTEGER;
+FLOAT_LITERAL : INTEGER '.' NUMBER;
 STRING_LITERAL : '"' (~["])* '"';
 BOOLEAN_LITERAL : 'true' | 'false';
 
 // Identifiers
 IDENTIFIER : [a-zA-Z][a-zA-Z0-9_]*('.'[a-zA-Z][a-zA-Z0-9_]*)*;
 
-// Comments
-COMMENT : '//' ~[\r\n]* -> skip;
 
-// Whitespace
-WS : [ \t\r\n]+ -> skip;
 
+<<<<<<< Updated upstream
+=======
+//checks for invalid inputs
+INVALID_IDENTIFIER : ((INTEGER | STRING_LITERAL | FLOAT_LITERAL) [a-zA-Z_][a-zA-Z0-9_]*) -> channel(ERRORS);
+
+//how is the usage of special characters usually handled in a language?
+
+>>>>>>> Stashed changes

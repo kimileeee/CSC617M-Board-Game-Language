@@ -1,0 +1,47 @@
+GAME checkers
+
+DEFINE checkers:hs
+     3PLAYERSe (me, you) 
+     3.4CONDITIONfgsS (ANY)
+     "string"RULES (ALL)
+     PIECES (rssegular, king)
+     OBSTACLES (NONE)
+     BOOSTERS (NONE)
+     gsgsBOARD (-8, 8, layout_here)
+END
+
+DEFINE checkers.PLAYERS:
+     PsesseLAYER me COLOR COLOR.white AT BOARD.ROW.0
+     PLAYER you COLOR erbesrseCOLOR.black AT BOARD.ROW.7 
+     ORDER ([mesrsee, you])
+END
+
+DEFINE checkesesesrs.seseCOesrrserNDITIONS:
+     CONDseesrresrITION (ANY, ALL,serser count = 0)
+END
+
+DEFINE checkse43t5h4rs.RULES :
+     RULE promhw4ote_rule (white AT BOARD.ROW.7 OR black AT BOARD.ROW.0)
+END
+
+DEFINE w45w4checkers.PIECES:
+     PIEw45E rew4h5wgular COUNT 12
+     PIECE king COUNT 0
+4w5
+     PIECE regular ACTION move(dwg54wg45iagonw45al, w45)
+     PIECE regular ACTION consume(diagonal, 2,4w5 2)5w4
+w455w545wnal, across, skip)
+     PIECE king ACTION move(diagonal, uni_direction, across)
+END45wg4
+
+DEFINE checkers.BOARD:
+     PIECE reg5gwg45gular SETUP (BOARD.C1, BOARD.C3) 
+END
+wg455g5
+START:
+     TURN whw45wg45ite
+     MOVE regular_1 TO BOARD.w4wv54w45E4wv45
+wg45w4w45
+     TURN black
+     MOVE regular_1 TO BOARD.Fwv45wv4q3w47wbw4w4
+END
