@@ -6,7 +6,7 @@ options {
 program : GAME IDENTIFIER define_block+ gameplay_block
         ;
 
-define_block : DEFINE IDENTIFIER COLON code_block END
+define_block : DEFINE (IDENTIFIER | object_access) COLON code_block END
              ;
 
 gameplay_block : START COLON code_block END
@@ -34,6 +34,7 @@ game_entities : BOARD
               | PIECES
               | OBSTACLES
               | BOOSTERS
+              | COLOR
               ;
 
 literal : INT_LITERAL
@@ -68,6 +69,8 @@ param_list    : IDENTIFIER (COMMA IDENTIFIER)*
                 | ALL
                 ;
 
+list : OPEN_BRACKET param_list CLOSE_BRACKET
+     ;
 // object_access   : IDENTIFIER DOT game_entities 
 //                 | game_entities DOT IDENTIFIER
 //                 | IDENTIFIER DOT IDENTIFIER //what situations would we want to use dot identifier?
@@ -80,6 +83,7 @@ object_access   : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)*
         
 
 board_pos : BOARD DOT object_access
+          | BOARD DOT (ROW | COLUMN) DOT (INT_LITERAL)
           ;
 
 conditional  : AND_OPT
@@ -101,16 +105,17 @@ expression : IDENTIFIER
            | expression DIV_OPT expression
            ;
 
-conditional_expression : expression conditional conditional_expression
-                       | expression
-                       ;
+// conditional_expression : expression conditional conditional_expression
+//                        | expression
+//                        ;
 
-conditional_expression_2 : expression (conditional expression)* ;
+conditional_expression : expression (conditional expression)* ;
 
 game_entities_statement : game_entities OPEN_PAR param_list CLOSE_PAR
                         ;
 
 player_statement : PLAYER IDENTIFIER COLOR object_access AT board_pos
+                 | ORDER OPEN_PAR list CLOSE_PAR
                  ;
 
 condition_statement : CONDITION OPEN_PAR param_list CLOSE_PAR

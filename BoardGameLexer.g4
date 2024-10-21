@@ -34,6 +34,8 @@ END : 'END';
 MOVE : 'MOVE';
 TO : 'TO';
 TURN : 'TURN';
+ROW : 'ROW';
+COLUMN : 'COLUMN';
 
 ALL : 'ALL';
 ANY : 'ANY';
