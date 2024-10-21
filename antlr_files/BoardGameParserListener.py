@@ -170,15 +170,6 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#if_statement.
-    def enterIf_statement(self, ctx:BoardGameParser.If_statementContext):
-        pass
-
-    # Exit a parse tree produced by BoardGameParser#if_statement.
-    def exitIf_statement(self, ctx:BoardGameParser.If_statementContext):
-        pass
-
-
     # Enter a parse tree produced by BoardGameParser#conditional_opt.
     def enterConditional_opt(self, ctx:BoardGameParser.Conditional_optContext):
         pass
@@ -311,6 +302,60 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by BoardGameParser#turn_statement.
     def exitTurn_statement(self, ctx:BoardGameParser.Turn_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#if_statement.
+    def enterIf_statement(self, ctx:BoardGameParser.If_statementContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#if_statement.
+    def exitIf_statement(self, ctx:BoardGameParser.If_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#for_statement.
+    def enterFor_statement(self, ctx:BoardGameParser.For_statementContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#for_statement.
+    def exitFor_statement(self, ctx:BoardGameParser.For_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#while_statement.
+    def enterWhile_statement(self, ctx:BoardGameParser.While_statementContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#while_statement.
+    def exitWhile_statement(self, ctx:BoardGameParser.While_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#input_statement.
+    def enterInput_statement(self, ctx:BoardGameParser.Input_statementContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#input_statement.
+    def exitInput_statement(self, ctx:BoardGameParser.Input_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#print_statement.
+    def enterPrint_statement(self, ctx:BoardGameParser.Print_statementContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#print_statement.
+    def exitPrint_statement(self, ctx:BoardGameParser.Print_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#return_statement.
+    def enterReturn_statement(self, ctx:BoardGameParser.Return_statementContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#return_statement.
+    def exitReturn_statement(self, ctx:BoardGameParser.Return_statementContext):
         pass
 
 

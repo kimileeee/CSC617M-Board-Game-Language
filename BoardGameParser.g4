@@ -25,6 +25,13 @@ statement   : game_entities_statement
             | booster_statement
             | turn_statement
             | move_statement
+            | expression
+            | if_statement
+            | for_statement
+            | while_statement
+            | input_statement
+            | print_statement
+            | return_statement
             ;
 
 game_entities : BOARD
@@ -101,11 +108,8 @@ at_expression : (IDENTIFIER | object_access) AT board_pos
               ;
 
 assignment_expression : (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT expression
+                      | (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT input_statement
                      ;
-
-if_statement : IF expression COLON code_block  ELSE COLON code_block
-             | IF expression COLON code_block
-             ;
 
 conditional_opt : EQUAL_OPT 
              | LESS_THAN_OPT 
@@ -169,3 +173,22 @@ move_statement : MOVE (IDENTIFIER | object_access | ALL) TO board_pos
 
 turn_statement : TURN IDENTIFIER move_statement
                ;
+
+if_statement : IF expression COLON code_block  ELSE COLON code_block
+             | IF expression COLON code_block
+             ;
+
+for_statement : FOR IDENTIFIER IN list COLON code_block END
+              ;
+
+while_statement : WHILE expression COLON code_block END
+                ;
+
+input_statement : INPUT OPEN_PAR STRING_LITERAL* CLOSE_PAR
+                ;
+
+print_statement : PRINT OPEN_PAR (param_list) CLOSE_PAR
+                ;
+
+return_statement : RETURN expression
+                 ;
