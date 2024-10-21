@@ -6,14 +6,13 @@ options {
 program : GAME IDENTIFIER define_block+ gameplay_block
         ;
 
-define_block : DEFINE IDENTIFIER COLON code_block END
+define_block : DEFINE (IDENTIFIER | object_access) COLON code_block END
              ;
 
 gameplay_block : START COLON code_block END
                ;
 
-code_block  : statement code_block
-            | statement
+code_block  : (statement)+ //person should have at least one or more statements when creating code
             ;
 
 statement   : game_entities_statement
@@ -35,6 +34,7 @@ game_entities : BOARD
               | PIECES
               | OBSTACLES
               | BOOSTERS
+              | COLOR
               ;
 
 literal : INT_LITERAL
@@ -43,30 +43,32 @@ literal : INT_LITERAL
         | BOOLEAN_LITERAL
         ;
 
-param_list  : IDENTIFIER COMMA param_list
-            | IDENTIFIER ASSIGN_OPT literal COMMA param_list
-            | IDENTIFIER ASSIGN_OPT IDENTIFIER COMMA param_list
-            | IDENTIFIER ASSIGN_OPT literal
-            | IDENTIFIER ASSIGN_OPT IDENTIFIER
-            | ANY COMMA param_list
-            | ALL COMMA param_list
-            | NONE COMMA param_list
-            | IDENTIFIER
-            | NONE
-            | ANY
-            | ALL
-            | literal COMMA param_list
-            | literal
-            ;
+// param_list  : IDENTIFIER COMMA param_list
+//             | IDENTIFIER ASSIGN_OPT literal COMMA param_list
+//             | IDENTIFIER ASSIGN_OPT IDENTIFIER COMMA param_list
+//             | IDENTIFIER ASSIGN_OPT literal
+//             | IDENTIFIER ASSIGN_OPT IDENTIFIER
+//             | ANY COMMA param_list
+//             | ALL COMMA param_list
+//             | NONE COMMA param_list
+//             | IDENTIFIER
+//             | NONE
+//             | ANY
+//             | ALL
+//             | literal COMMA param_list
+//             | literal
+//             ;
 
-object_access   : IDENTIFIER DOT game_entities
-                | game_entities DOT IDENTIFIER
-                | IDENTIFIER DOT IDENTIFIER
+param_list    : IDENTIFIER (COMMA IDENTIFIER)*
+                | IDENTIFIER ASSIGN_OPT literal (COMMA param_list)* //in what situations would a literal have 0 comma param list extra after it?
+                | IDENTIFIER ASSIGN_OPT IDENTIFIER (COMMA param_list)*
+                | IDENTIFIER ASSIGN_OPT literal
+                | literal (COMMA param_list)* //removes redundancy of literal COMMA param_list and literal
+                | NONE
+                | ANY
+                | ALL
                 ;
 
-<<<<<<< Updated upstream
-board_pos : BOARD DOT object_access
-=======
 list : OPEN_BRACKET param_list CLOSE_BRACKET
      ;
 // object_access   : IDENTIFIER DOT game_entities 
@@ -82,7 +84,6 @@ object_access   : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)*
 
 board_pos : BOARD DOT IDENTIFIER
           | BOARD DOT (ROW | COLUMN) DOT (INT_LITERAL)
->>>>>>> Stashed changes
           ;
 
 conditional  : AND_OPT
@@ -104,14 +105,17 @@ expression : IDENTIFIER
            | expression DIV_OPT expression
            ;
 
-conditional_expression : expression conditional conditional_expression
-                       | expression
-                       ;
+// conditional_expression : expression conditional conditional_expression
+//                        | expression
+//                        ;
+
+conditional_expression : expression (conditional expression)* ;
 
 game_entities_statement : game_entities OPEN_PAR param_list CLOSE_PAR
                         ;
 
 player_statement : PLAYER IDENTIFIER COLOR object_access AT board_pos
+                 | ORDER OPEN_PAR list CLOSE_PAR
                  ;
 
 condition_statement : CONDITION OPEN_PAR param_list CLOSE_PAR

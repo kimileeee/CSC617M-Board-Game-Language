@@ -24,7 +24,6 @@ OBSTACLES : 'OBSTACLES';
 BOOSTERS : 'BOOSTERS';
 PLAYER : 'PLAYER';
 COLOR : 'COLOR';
-AT : 'AT';
 ORDER : 'ORDER';
 CONDITION : 'CONDITION';
 RULE : 'RULE';
@@ -39,11 +38,8 @@ END : 'END';
 MOVE : 'MOVE';
 TO : 'TO';
 TURN : 'TURN';
-
-ALL : 'ALL';
-ANY : 'ANY';
-NONE : 'NONE';
-// NEWLINE : '\r'? '\n';
+ROW : 'ROW';
+COLUMN : 'COLUMN';
 
 IF : 'IF';
 ELSE : 'ELSE';
@@ -52,11 +48,17 @@ WHILE : 'WHILE';
 INPUT : 'INPUT';
 PRINT : 'PRINT';
 RETURN : 'RETURN';
-IN : 'IN';
 BREAK : 'BREAK';
 ERROR : 'ERROR';
 
+ALL : 'ALL';
+ANY : 'ANY';
+NONE : 'NONE';
+// NEWLINE : '\r'? '\n';
+
 // Operators
+IN : 'IN';
+AT : 'AT';
 AND_OPT : 'AND';
 OR_OPT : 'OR';
 NOT_OPT : 'NOT';
@@ -83,13 +85,6 @@ OPEN_BRACE : '{';
 CLOSE_BRACE : '}';
 ELIPSIS : '...';
 
-// Comments
-COMMENT : '//' ~[\r\n]* -> channel(COMMENTS);
-
-// Whitespace
-fragment SPACE : ' ';
-WS : [ \t\r\n]+ -> channel(HIDDEN);
-
 // Literals
 fragment DIGIT : [0-9];
 fragment NUMBER : DIGIT+;
@@ -101,15 +96,17 @@ STRING_LITERAL : '"' (~["])* '"';
 BOOLEAN_LITERAL : 'true' | 'false';
 
 // Identifiers
-IDENTIFIER : [a-zA-Z][a-zA-Z0-9_]*('.'[a-zA-Z][a-zA-Z0-9_]*)*;
+IDENTIFIER : [a-zA-Z][a-zA-Z0-9_]*;
 
+// Comments
+COMMENT : '//' ~[\r\n]* -> channel(COMMENTS);
 
+// Whitespace
+fragment SPACE : ' ';
+WS : [ \t\r\n]+ -> channel(HIDDEN);
 
-<<<<<<< Updated upstream
-=======
 //checks for invalid inputs
-INVALID_IDENTIFIER : ((INTEGER | STRING_LITERAL | FLOAT_LITERAL) [a-zA-Z_][a-zA-Z0-9_]*) -> channel(ERRORS);
+INVALID_IDENTIFIER : ((INT_LITERAL | STRING_LITERAL | FLOAT_LITERAL) [a-zA-Z_][a-zA-Z0-9_]*) -> channel(ERRORS);
 
 //how is the usage of special characters usually handled in a language?
 
->>>>>>> Stashed changes

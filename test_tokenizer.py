@@ -24,7 +24,7 @@ def tokenize_source_code(source_code):
     # Loop through all tokens
     for token in tokens:
         if (token.channel == BoardGameLexer.ERRORS):
-            print(f"Line {token.line}:{token.column} Invalid token \"{token.text}\"")
+            print(f"Line {token.line}:{token.column} Invalid token \'{token.text}\'")
         else:
             board_game_tokens.append([token.line, token.column, token.column+len(token.text), token.text, lexer.symbolicNames[token.type]])
     
@@ -37,7 +37,7 @@ def tokenize_source_code(source_code):
         output_file.close()
         
 # Example source code input
-with open("samples/sample_game_of_the_generals.txt", 'r') as file:
+with open("samples/error.txt", 'r') as file:
     source_code = file.read()
 
 tokenize_source_code(source_code)
