@@ -19,7 +19,6 @@ OBSTACLES : 'OBSTACLES';
 BOOSTERS : 'BOOSTERS';
 PLAYER : 'PLAYER';
 COLOR : 'COLOR';
-AT : 'AT';
 ORDER : 'ORDER';
 CONDITION : 'CONDITION';
 RULE : 'RULE';
@@ -37,11 +36,6 @@ TURN : 'TURN';
 ROW : 'ROW';
 COLUMN : 'COLUMN';
 
-ALL : 'ALL';
-ANY : 'ANY';
-NONE : 'NONE';
-// NEWLINE : '\r'? '\n';
-
 IF : 'IF';
 ELSE : 'ELSE';
 FOR : 'FOR';
@@ -49,11 +43,17 @@ WHILE : 'WHILE';
 INPUT : 'INPUT';
 PRINT : 'PRINT';
 RETURN : 'RETURN';
-IN : 'IN';
 BREAK : 'BREAK';
 ERROR : 'ERROR';
 
+ALL : 'ALL';
+ANY : 'ANY';
+NONE : 'NONE';
+// NEWLINE : '\r'? '\n';
+
 // Operators
+IN : 'IN';
+AT : 'AT';
 AND_OPT : 'AND';
 OR_OPT : 'OR';
 NOT_OPT : 'NOT';
