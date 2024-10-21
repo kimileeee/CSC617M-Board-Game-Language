@@ -43,73 +43,97 @@ literal : INT_LITERAL
         | BOOLEAN_LITERAL
         ;
 
-// param_list  : IDENTIFIER COMMA param_list
-//             | IDENTIFIER ASSIGN_OPT literal COMMA param_list
-//             | IDENTIFIER ASSIGN_OPT IDENTIFIER COMMA param_list
-//             | IDENTIFIER ASSIGN_OPT literal
-//             | IDENTIFIER ASSIGN_OPT IDENTIFIER
-//             | ANY COMMA param_list
-//             | ALL COMMA param_list
-//             | NONE COMMA param_list
-//             | IDENTIFIER
-//             | NONE
-//             | ANY
-//             | ALL
-//             | literal COMMA param_list
-//             | literal
-//             ;
+primary : literal
+        | object_access
+        | list
+        | IDENTIFIER
+        | OPEN_PAR expression CLOSE_PAR
+        | method_call
+        ;
 
-param_list    : IDENTIFIER (COMMA IDENTIFIER)*
+param_list     : IDENTIFIER (COMMA param_list)*
                 | IDENTIFIER ASSIGN_OPT literal (COMMA param_list)* //in what situations would a literal have 0 comma param list extra after it?
                 | IDENTIFIER ASSIGN_OPT IDENTIFIER (COMMA param_list)*
                 | IDENTIFIER ASSIGN_OPT literal
                 | literal (COMMA param_list)* //removes redundancy of literal COMMA param_list and literal
-                | NONE
-                | ANY
-                | ALL
+                | object_access (COMMA param_list)*
+                | NONE (COMMA param_list)*
+                | ANY (COMMA param_list)*
+                | ALL (COMMA param_list)*
+                | primary (COMMA param_list)*
+                | list (COMMA param_list)*
                 ;
 
 list : OPEN_BRACKET param_list CLOSE_BRACKET
      ;
-// object_access   : IDENTIFIER DOT game_entities 
-//                 | game_entities DOT IDENTIFIER
-//                 | IDENTIFIER DOT IDENTIFIER //what situations would we want to use dot identifier?
-//                 ;
 
-object_access   : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)* //do we allow something like BOARD.PIECES.OBSTACLES??
-                  | game_entities DOT IDENTIFIER (DOT game_entities | IDENTIFIER)* //should it be DOT identifier 
-                  | IDENTIFIER DOT IDENTIFIER (DOT game_entities | IDENTIFIER)*
-                  ;
+object_access : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)* //do we allow something like BOARD.PIECES.OBSTACLES??
+              | game_entities DOT IDENTIFIER (DOT game_entities | IDENTIFIER)* //should it be DOT identifier 
+              | IDENTIFIER DOT IDENTIFIER (DOT game_entities | IDENTIFIER)*
+              ;
         
 
 board_pos : BOARD DOT IDENTIFIER
           | BOARD DOT (ROW | COLUMN) DOT (INT_LITERAL)
+          | board_pos ELIPSIS board_pos
           ;
 
-conditional  : AND_OPT
-             | OR_OPT
-             | NOT_OPT
-             | EQUAL_OPT
-             | LESS_THAN_OPT
-             | LESS_EQUAL_OPT
-             | GREATER_THAN_OPT
+expression : assignment_expression (logical_opt expression)*
+           | math_expression (logical_opt expression)*
+           | in_expression (logical_opt expression)*
+           | at_expression (logical_opt expression)*
+           | primary (logical_opt expression)*
+           | NOT_OPT expression (logical_opt expression)*
+           | expression conditional_opt expression (logical_opt expression)*
+           | move_statement (logical_opt expression)*
+           ;
+
+objects : IDENTIFIER
+        | object_access
+        | board_pos
+        ;
+
+method_call : objects DOT IDENTIFIER OPEN_PAR param_list* CLOSE_PAR
+            ;
+
+in_expression : primary IN primary
+              ;
+
+at_expression : (IDENTIFIER | object_access) AT board_pos
+              ;
+
+assignment_expression : (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT expression
+                     ;
+
+if_statement : IF expression COLON code_block  ELSE COLON code_block
+             | IF expression COLON code_block
+             ;
+
+conditional_opt : EQUAL_OPT 
+             | LESS_THAN_OPT 
+             | LESS_EQUAL_OPT 
+             | GREATER_THAN_OPT 
              | GREATER_EQUAL_OPT
              ;
 
-expression : IDENTIFIER
-           | literal
-           | IDENTIFIER DOT IDENTIFIER
-           | expression ADD_OPT expression
-           | expression SUB_OPT expression
-           | expression MUL_OPT expression
-           | expression DIV_OPT expression
-           ;
+multiplicative : multiplicative (MUL_OPT | DIV_OPT) primary
+               | primary
+               ;
 
-// conditional_expression : expression conditional conditional_expression
-//                        | expression
-//                        ;
+additive : additive (ADD_OPT | SUB_OPT) multiplicative
+         | multiplicative
+         ;
 
-conditional_expression : expression (conditional expression)* ;
+math_expression : additive
+                ;
+
+logical_opt : AND_OPT 
+            | OR_OPT
+            ;
+
+// logical_expression : expression (logical_opt logical_expression)*
+//                    ;
+
 
 game_entities_statement : game_entities OPEN_PAR param_list CLOSE_PAR
                         ;
@@ -121,24 +145,25 @@ player_statement : PLAYER IDENTIFIER COLOR object_access AT board_pos
 condition_statement : CONDITION OPEN_PAR param_list CLOSE_PAR
                     ;
 
-rule_statement : RULE IDENTIFIER OPEN_PAR conditional_expression CLOSE_PAR
+rule_statement : RULE IDENTIFIER OPEN_PAR expression CLOSE_PAR
                ;
 
 piece_statement : PIECE IDENTIFIER COUNT INT_LITERAL 
-                | PIECE IDENTIFIER ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR
+                | PIECE IDENTIFIER ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
+                | PIECE assignment_expression
                 ;
 
-board_statement : PIECE IDENTIFIER SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
-                | OBSTACLE IDENTIFIER SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
-                | BOOSTER IDENTIFIER SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
+board_statement : PIECE (IDENTIFIER | object_access) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
+                | OBSTACLE (IDENTIFIER | object_access) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
+                | BOOSTER (IDENTIFIER | object_access) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
                 ;
 
 obstacle_statement : OBSTACLE IDENTIFIER COUNT INT_LITERAL
-                   | OBSTACLE IDENTIFIER ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR
+                   | OBSTACLE IDENTIFIER ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
                    ;
 
 booster_statement : BOOSTER IDENTIFIER COUNT INT_LITERAL
-                  | BOOSTER IDENTIFIER ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR
+                  | BOOSTER IDENTIFIER ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
                   ;
 
 move_statement : MOVE IDENTIFIER TO board_pos

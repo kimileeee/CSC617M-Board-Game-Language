@@ -71,6 +71,15 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BoardGameParser#primary.
+    def enterPrimary(self, ctx:BoardGameParser.PrimaryContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#primary.
+    def exitPrimary(self, ctx:BoardGameParser.PrimaryContext):
+        pass
+
+
     # Enter a parse tree produced by BoardGameParser#param_list.
     def enterParam_list(self, ctx:BoardGameParser.Param_listContext):
         pass
@@ -107,15 +116,6 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#conditional.
-    def enterConditional(self, ctx:BoardGameParser.ConditionalContext):
-        pass
-
-    # Exit a parse tree produced by BoardGameParser#conditional.
-    def exitConditional(self, ctx:BoardGameParser.ConditionalContext):
-        pass
-
-
     # Enter a parse tree produced by BoardGameParser#expression.
     def enterExpression(self, ctx:BoardGameParser.ExpressionContext):
         pass
@@ -125,12 +125,102 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#conditional_expression.
-    def enterConditional_expression(self, ctx:BoardGameParser.Conditional_expressionContext):
+    # Enter a parse tree produced by BoardGameParser#objects.
+    def enterObjects(self, ctx:BoardGameParser.ObjectsContext):
         pass
 
-    # Exit a parse tree produced by BoardGameParser#conditional_expression.
-    def exitConditional_expression(self, ctx:BoardGameParser.Conditional_expressionContext):
+    # Exit a parse tree produced by BoardGameParser#objects.
+    def exitObjects(self, ctx:BoardGameParser.ObjectsContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#method_call.
+    def enterMethod_call(self, ctx:BoardGameParser.Method_callContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#method_call.
+    def exitMethod_call(self, ctx:BoardGameParser.Method_callContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#in_expression.
+    def enterIn_expression(self, ctx:BoardGameParser.In_expressionContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#in_expression.
+    def exitIn_expression(self, ctx:BoardGameParser.In_expressionContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#at_expression.
+    def enterAt_expression(self, ctx:BoardGameParser.At_expressionContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#at_expression.
+    def exitAt_expression(self, ctx:BoardGameParser.At_expressionContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#assignment_expression.
+    def enterAssignment_expression(self, ctx:BoardGameParser.Assignment_expressionContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#assignment_expression.
+    def exitAssignment_expression(self, ctx:BoardGameParser.Assignment_expressionContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#if_statement.
+    def enterIf_statement(self, ctx:BoardGameParser.If_statementContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#if_statement.
+    def exitIf_statement(self, ctx:BoardGameParser.If_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#conditional_opt.
+    def enterConditional_opt(self, ctx:BoardGameParser.Conditional_optContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#conditional_opt.
+    def exitConditional_opt(self, ctx:BoardGameParser.Conditional_optContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#multiplicative.
+    def enterMultiplicative(self, ctx:BoardGameParser.MultiplicativeContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#multiplicative.
+    def exitMultiplicative(self, ctx:BoardGameParser.MultiplicativeContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#additive.
+    def enterAdditive(self, ctx:BoardGameParser.AdditiveContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#additive.
+    def exitAdditive(self, ctx:BoardGameParser.AdditiveContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#math_expression.
+    def enterMath_expression(self, ctx:BoardGameParser.Math_expressionContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#math_expression.
+    def exitMath_expression(self, ctx:BoardGameParser.Math_expressionContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#logical_opt.
+    def enterLogical_opt(self, ctx:BoardGameParser.Logical_optContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#logical_opt.
+    def exitLogical_opt(self, ctx:BoardGameParser.Logical_optContext):
         pass
 
 

@@ -22,8 +22,8 @@ END
 
 DEFINE chess.RULES:
     RULE promote_rule (white AT BOARD.ROW.7 OR black AT BOARD.ROW.0)
-    RULE white_castling ((king, white) AT BOARD.E0 AND white.rook AT BOARD.H0 AND BOARD.F0.empty() AND BOARD.G0.empty())
-    RULE black_castling ((king, black) AT BOARD.E7 AND black.rook AT BOARD.H7 AND BOARD.F7.empty() AND BOARD.G7.empty())
+    RULE white_castling (white.king AT BOARD.E0 AND white.rook AT BOARD.H0 AND BOARD.F0.empty() AND BOARD.G0.empty())
+    RULE black_castling (black.king AT BOARD.E7 AND black.rook AT BOARD.H7 AND BOARD.F7.empty() AND BOARD.G7.empty())
 END
 
 DEFINE chess.PIECES:
@@ -55,14 +55,14 @@ DEFINE chess.PIECES:
 
 
     // define castling as a special move
-    move(castle) = (
-        white_castling,
-        MOVE king FROM BOARD.E0 TO BOARD.G0,
-        MOVE rook FROM BOARD.H0 TO BOARD.F0
+    PIECE move(castle) = (
+        white_castling AND
+        MOVE king TO BOARD.G0 AND
+        MOVE rook TO BOARD.F0
     ) OR (
-        black_castling,
-        MOVE king FROM BOARD.E7 TO BOARD.G7,
-        MOVE rook FROM BOARD.H7 TO BOARD.F7
+        black_castling AND
+        MOVE king TO BOARD.G7 AND
+        MOVE rook TO BOARD.F7
     )
 
     PIECE rook ACTION move(castle_short)
@@ -71,19 +71,19 @@ DEFINE chess.PIECES:
 END
 
 DEFINE chess.BOARD:
-    PIECE (pawn, white) SETUP (BOARD.A2 ... BOARD.H2)
-    PIECE (rook, white) SETUP (BOARD.A1, BOARD.H1)
-    PIECE (knight, white) SETUP (BOARD.B1, BOARD.G1)
-    PIECE (bishop, white) SETUP (BOARD.C1, BOARD.F1)
-    PIECE (queen, white) SETUP (BOARD.D1)
-    PIECE (king, white) SETUP (BOARD.E1)
+    PIECE white.pawn SETUP (BOARD.A2 ... BOARD.H2)
+    PIECE white.king SETUP (BOARD.A1, BOARD.H1)
+    PIECE white.knight SETUP (BOARD.B1, BOARD.G1)
+    PIECE white.bishop SETUP (BOARD.C1, BOARD.F1)
+    PIECE white.queen SETUP (BOARD.D1)
+    PIECE white.king SETUP (BOARD.E1)
 
-    PIECE (pawn, black) SETUP (BOARD.A7 ... BOARD.H7)
-    PIECE (rook, black) SETUP (BOARD.A8, BOARD.H8)
-    PIECE (knight, black) SETUP (BOARD.B8, BOARD.G8)
-    PIECE (bishop, black) SETUP (BOARD.C8, BOARD.F8)
-    PIECE (queen, black) SETUP (BOARD.D8)
-    PIECE (king, black) SETUP (BOARD.E8)
+    PIECE black.pawn SETUP (BOARD.A7 ... BOARD.H7)
+    PIECE black.rook SETUP (BOARD.A8, BOARD.H8)
+    PIECE black.knight SETUP (BOARD.B8, BOARD.G8)
+    PIECE black.bishop SETUP (BOARD.C8, BOARD.F8)
+    PIECE black.queen SETUP (BOARD.D8)
+    PIECE black.king SETUP (BOARD.E8)
 END
 
 START:
