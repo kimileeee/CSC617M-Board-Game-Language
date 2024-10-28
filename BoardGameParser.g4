@@ -2,6 +2,9 @@ parser grammar BoardGameParser;
 options {
     tokenVocab=BoardGameLexer;
 }
+/*
+Grammar defining a Board Game Language
+*/
 
 program : GAME IDENTIFIER define_block+ gameplay_block
         ;
@@ -25,6 +28,7 @@ statement   : game_entities_statement
             | booster_statement
             | turn_statement
             | move_statement
+            | conditionals
             ;
 
 game_entities : BOARD
@@ -71,16 +75,16 @@ param_list    : IDENTIFIER (COMMA IDENTIFIER)*
 
 list : OPEN_BRACKET param_list CLOSE_BRACKET
      ;
-// object_access   : IDENTIFIER DOT game_entities 
+// object_access   : IDENTIFIER DOT game_entities
 //                 | game_entities DOT IDENTIFIER
 //                 | IDENTIFIER DOT IDENTIFIER //what situations would we want to use dot identifier?
 //                 ;
 
 object_access   : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)* //do we allow something like BOARD.PIECES.OBSTACLES??
-                  | game_entities DOT IDENTIFIER (DOT game_entities | IDENTIFIER)* //should it be DOT identifier 
+                  | game_entities DOT IDENTIFIER (DOT game_entities | IDENTIFIER)* //should it be DOT identifier
                   | IDENTIFIER DOT IDENTIFIER (DOT game_entities | IDENTIFIER)*
                   ;
-        
+
 
 board_pos : BOARD DOT object_access
           | BOARD DOT (ROW | COLUMN) DOT (INT_LITERAL)
@@ -124,7 +128,7 @@ condition_statement : CONDITION OPEN_PAR param_list CLOSE_PAR
 rule_statement : RULE IDENTIFIER OPEN_PAR conditional_expression CLOSE_PAR
                ;
 
-piece_statement : PIECE IDENTIFIER COUNT INT_LITERAL 
+piece_statement : PIECE IDENTIFIER COUNT INT_LITERAL
                 | PIECE IDENTIFIER ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR
                 ;
 
@@ -146,3 +150,10 @@ move_statement : MOVE IDENTIFIER TO board_pos
 
 turn_statement : TURN IDENTIFIER move_statement
                ;
+
+conditionals    : IF ((IDENTIFIER | game_entities) EQUAL_OPT literal (AND_OPT (IDENTIFIER | game_entities) EQUAL_OPT literal)*) COLON code_block
+                  (ELSE IF ((IDENTIFIER | game_entities) EQUAL_OPT literal (AND_OPT (IDENTIFIER | game_entities) EQUAL_OPT literal)*) COLON code_block)*
+                  (ELSE ((IDENTIFIER | game_entities) EQUAL_OPT literal (AND_OPT (IDENTIFIER | game_entities) EQUAL_OPT literal)*) COLON code_block)*
+                | WHILE OPEN_PAR ((IDENTIFIER | game_entities) EQUAL_OPT literal (AND_OPT (IDENTIFIER | game_entities) EQUAL_OPT literal)*) CLOSE_PAR COLON code_block
+                ;
+                //how should for loop be implemented in our language and when do we want to use a for loop

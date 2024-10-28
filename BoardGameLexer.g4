@@ -74,6 +74,7 @@ DOT : '.';
 COMMA : ',';
 OPEN_PAR : '(';
 CLOSE_PAR : ')';
+SEMICOLON : ';';
 OPEN_BRACKET : '[';
 CLOSE_BRACKET : ']';
 OPEN_BRACE : '{';
