@@ -8,6 +8,7 @@ DEFINE checkers:
      OBSTACLES (NONE)
      BOOSTERS (NONE)
      BOARD (8, 8, layout_here)
+     TIMER(1800)
 END
 
 DEFINE checkers.PLAYERS:
@@ -18,6 +19,10 @@ END
 
 DEFINE checkers.CONDITIONS:
      CONDITION (ANY, ALL, count = 0)
+END
+
+DEFINE checkers.SCORE:
+     SCORE(checkers.CONDITIONS)
 END
 
 DEFINE checkers.RULES :

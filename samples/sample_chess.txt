@@ -8,6 +8,7 @@ DEFINE chess:
     PIECES (pawn, rook, knight, bishop, queen, king)
     OBSTACLES (NONE)
     BOOSTERS (NONE)
+    TIMER(1800)
 END
 
 DEFINE chess.PLAYERS:
@@ -18,6 +19,10 @@ END
 
 DEFINE chess.CONDITIONS:
     CONDITION (ANY, king, count=0)
+END
+
+DEFINE checkers.SCORE:
+     SCORE(chess.CONDITIONS)
 END
 
 DEFINE chess.RULES:

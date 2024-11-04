@@ -9,6 +9,7 @@ DEFINE snakes_and_ladders:
     BOOSTERS (teleport)
     BOARD (10, 10, s-shape)
     DICE(1, 6)
+    TIMER(600)
 END
 
 DEFINE snakes_and_ladders.PLAYERS:
@@ -19,6 +20,10 @@ END
 
 DEFINE snakes_and_ladders.CONDITIONS:
     CONDITION (ANY PLAYER PIECE regular AT BOARD.100)
+END
+
+DEFINE snakes_and_ladders.SCORE:
+    SCORE(snakes_and_ladders.CONDITIONS)
 END
 
 DEFINE snakes_and_ladders.RULES:

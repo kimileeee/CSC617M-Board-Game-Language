@@ -25,6 +25,9 @@ statement   : game_entities_statement
             | booster_statement
             | turn_statement
             | move_statement
+            | timer_statement
+            | dice_statement
+            | score_statement
             | expression
             | if_statement
             | for_statement
@@ -42,6 +45,7 @@ game_entities : BOARD
               | OBSTACLES
               | BOOSTERS
               | COLOR
+              | SCORE //added this to indicate that it can be set
               ;
 
 literal : INT_LITERAL
@@ -192,3 +196,12 @@ print_statement : PRINT OPEN_PAR (param_list) CLOSE_PAR
 
 return_statement : RETURN expression
                  ;
+
+timer_statement : TIMER OPEN_PAR POSITIVE_INT_LITERAL CLOSE_PAR //i set this as positive_int_literal since timer cannot be negative
+                ;
+
+dice_statement  : DICE OPEN_PAR INT_LITERAL COMMA INT_LITERAL CLOSE_PAR //i imagine it as DICE(1,6) where it rolls the possible numbers
+                ; //currently its set as this in case of games that allow negative numbers since some games allow those type of dice rolls
+
+score_statement : SCORE OPEN_PAR (IDENTIFIER DOT CONDITIONS) CLOSE_PAR //specifically to indicate what condition should occur for score to be tallied but is optional
+                ; //did not use object access to specifically restrict it to DOT CONDITIONS ONLY
