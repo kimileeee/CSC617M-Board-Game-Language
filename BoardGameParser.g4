@@ -26,6 +26,8 @@ statement   : game_entities_statement
             | turn_statement
             | move_statement
             | expression
+            | timer_statement
+            | dice_statement
             | if_statement
             | for_statement
             | while_statement
@@ -192,3 +194,9 @@ print_statement : PRINT OPEN_PAR (param_list) CLOSE_PAR
 
 return_statement : RETURN expression
                  ;
+
+dice_statement  : DICE OPEN_PAR INT_LITERAL COMMA INT_LITERAL CLOSE_PAR //currently allows inputs such as 0 and negative input since some games do allow it but am not sure yet if there is any dice that allows 0 moves?
+                ;
+
+timer_statement : TIMER OPEN_PAR POSITIVE_INT_LITERAL CLOSE_PAR //this gets a positive number that indicates when the player should swap 
+                ;
