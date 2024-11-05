@@ -18,7 +18,7 @@ DEFINE checkers.PLAYERS:
 END
 
 DEFINE checkers.CONDITIONS:
-     CONDITION (ANY, ALL, count = 0)
+     CONDITION (ANY PLAYERS PIECES.count == 0)
 END
 
 DEFINE checkers.SCORE:

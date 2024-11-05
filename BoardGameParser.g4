@@ -47,7 +47,11 @@ game_entities : BOARD
               | SCORE //added this to indicate that it can be set
               ;
 
-literal : INT_LITERAL
+int_literal : POSITIVE_INT_LITERAL
+            | NEGATIVE_INT_LITERAL
+            ;
+
+literal : int_literal
         | FLOAT_LITERAL
         | STRING_LITERAL
         | BOOLEAN_LITERAL
@@ -83,17 +87,25 @@ object_access : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)* /
         
 
 board_pos : BOARD DOT IDENTIFIER
-          | BOARD DOT (ROW | COLUMN) DOT (INT_LITERAL)
+          | BOARD DOT (ROW | COLUMN) DOT (int_literal)
           | board_pos ELIPSIS board_pos
           ;
+
+conditional_opt : EQUAL_OPT 
+             | LESS_THAN_OPT 
+             | LESS_EQUAL_OPT 
+             | GREATER_THAN_OPT 
+             | GREATER_EQUAL_OPT
+             ;
 
 expression : assignment_expression (logical_opt expression)*
            | math_expression (logical_opt expression)*
            | in_expression (logical_opt expression)*
            | at_expression (logical_opt expression)*
+           | any_expression expression (logical_opt expression)*
            | primary (logical_opt expression)*
            | NOT_OPT expression (logical_opt expression)*
-           | expression conditional_opt expression (logical_opt expression)*
+           | conditional_expression (logical_opt expression)*
            | move_statement (logical_opt expression)*
            ;
 
@@ -105,25 +117,27 @@ objects : IDENTIFIER
 method_call : objects DOT IDENTIFIER OPEN_PAR param_list* CLOSE_PAR
             ;
 
+conditional_expression : primary conditional_opt primary
+                       ;
+
 in_expression : primary IN primary
               ;
 
 at_expression : (IDENTIFIER | object_access) AT board_pos
               ;
 
+any_expression : ANY (IDENTIFIER | object_access | list | game_entities)
+               ;
+
 assignment_expression : (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT expression
                       | (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT input_statement
                      ;
 
-conditional_opt : EQUAL_OPT 
-             | LESS_THAN_OPT 
-             | LESS_EQUAL_OPT 
-             | GREATER_THAN_OPT 
-             | GREATER_EQUAL_OPT
-             ;
+exponent : primary (EXP_OPT primary)*
+         ;
 
-multiplicative : multiplicative (MUL_OPT | DIV_OPT) primary
-               | primary
+multiplicative : multiplicative (MUL_OPT | DIV_OPT) exponent
+               | exponent
                ;
 
 additive : additive (ADD_OPT | SUB_OPT) multiplicative
@@ -148,13 +162,13 @@ player_statement : PLAYER IDENTIFIER COLOR object_access AT board_pos
                  | ORDER OPEN_PAR list CLOSE_PAR
                  ;
 
-condition_statement : CONDITION OPEN_PAR param_list CLOSE_PAR
+condition_statement : CONDITION OPEN_PAR expression CLOSE_PAR
                     ;
 
 rule_statement : RULE IDENTIFIER OPEN_PAR expression CLOSE_PAR
                ;
 
-piece_statement : PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) COUNT INT_LITERAL 
+piece_statement : PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) COUNT int_literal 
                 | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
                 | PIECE assignment_expression
                 ;
@@ -164,11 +178,11 @@ board_statement : (PLAYER IDENTIFIER)* PIECE (IDENTIFIER | object_access | ALL) 
                 | (PLAYER IDENTIFIER)* BOOSTER (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
                 ;
 
-obstacle_statement : OBSTACLE (IDENTIFIER | object_access | ALL) COUNT INT_LITERAL
+obstacle_statement : OBSTACLE (IDENTIFIER | object_access | ALL) COUNT int_literal
                    | OBSTACLE (IDENTIFIER | object_access | ALL) ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
                    ;
 
-booster_statement : BOOSTER (IDENTIFIER | object_access | ALL) COUNT INT_LITERAL
+booster_statement : BOOSTER (IDENTIFIER | object_access | ALL) COUNT int_literal
                   | BOOSTER (IDENTIFIER | object_access | ALL) ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
                   ;
 
@@ -200,6 +214,6 @@ return_statement : RETURN expression
 timer_statement : TIMER OPEN_PAR POSITIVE_INT_LITERAL CLOSE_PAR //i set this as positive_int_literal since timer cannot be negative
                 ;
 
-dice_statement  : DICE OPEN_PAR INT_LITERAL COMMA INT_LITERAL CLOSE_PAR //i imagine it as DICE(1,6) where it rolls the possible numbers
+dice_statement  : DICE OPEN_PAR int_literal COMMA int_literal CLOSE_PAR //i imagine it as DICE(1,6) where it rolls the possible numbers
                 ; //currently its set as this in case of games that allow negative numbers since some games allow those type of dice rolls
 
