@@ -72,6 +72,7 @@ ADD_OPT : '+';
 SUB_OPT : '-';
 MUL_OPT : '*';
 DIV_OPT : '/';
+EXP_OPT : '^';
 
 // Symbols
 COLON : ':';
