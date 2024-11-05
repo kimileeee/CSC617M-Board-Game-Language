@@ -62,6 +62,15 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BoardGameParser#int_literal.
+    def enterInt_literal(self, ctx:BoardGameParser.Int_literalContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#int_literal.
+    def exitInt_literal(self, ctx:BoardGameParser.Int_literalContext):
+        pass
+
+
     # Enter a parse tree produced by BoardGameParser#literal.
     def enterLiteral(self, ctx:BoardGameParser.LiteralContext):
         pass
