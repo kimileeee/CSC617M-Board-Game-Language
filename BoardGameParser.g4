@@ -37,6 +37,7 @@ statement   : game_entities_statement
             ;
 
 game_entities : BOARD
+              | GAME
               | PLAYERS
               | CONDITIONS
               | RULES
@@ -151,10 +152,6 @@ logical_opt : AND_OPT
             | OR_OPT
             ;
 
-// logical_expression : expression (logical_opt logical_expression)*
-//                    ;
-
-
 game_entities_statement : game_entities OPEN_PAR param_list CLOSE_PAR
                         ;
 
@@ -170,6 +167,7 @@ rule_statement : RULE IDENTIFIER OPEN_PAR expression CLOSE_PAR
 
 piece_statement : PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) COUNT int_literal 
                 | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
+                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR | ANY | NONE) ACTION IDENTIFIER OPEN_PAR expression CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR expression CLOSE_PAR)*
                 | PIECE assignment_expression
                 ;
 
