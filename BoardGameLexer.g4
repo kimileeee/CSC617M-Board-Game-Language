@@ -92,8 +92,9 @@ fragment NUMBER : DIGIT+;
 fragment INTEGER : '-'? NUMBER;
 
 //to handle the issue between the two a possible alternative would be to distinguish between positive and negative int literals?
-INT_LITERAL : INTEGER;
+// INT_LITERAL : INTEGER;
 POSITIVE_INT_LITERAL : NUMBER;
+NEGATIVE_INT_LITERAL : '-' NUMBER;
 FLOAT_LITERAL : INTEGER '.' NUMBER;
 STRING_LITERAL : '"' (~["])* '"';
 BOOLEAN_LITERAL : 'true' | 'false';
@@ -109,7 +110,7 @@ fragment SPACE : ' ';
 WS : [ \t\r\n]+ -> channel(HIDDEN);
 
 //checks for invalid inputs
-INVALID_IDENTIFIER : ((INT_LITERAL | STRING_LITERAL | FLOAT_LITERAL) [a-zA-Z_][a-zA-Z0-9_]*) -> channel(ERRORS);
+INVALID_IDENTIFIER : ((POSITIVE_INT_LITERAL | NEGATIVE_INT_LITERAL | STRING_LITERAL | FLOAT_LITERAL) [a-zA-Z_][a-zA-Z0-9_]*) -> channel(ERRORS);
 
 //how is the usage of special characters usually handled in a language?
 
