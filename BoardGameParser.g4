@@ -27,7 +27,6 @@ statement   : game_entities_statement
             | move_statement
             | timer_statement
             | dice_statement
-            | score_statement
             | expression
             | if_statement
             | for_statement
@@ -62,14 +61,15 @@ primary : literal
         | method_call
         ;
 
-param_list      : IDENTIFIER ASSIGN_OPT literal (COMMA param_list)* //in what situations would a literal have 0 comma param list extra after it?
+param_list      : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR
+                | ALL (COMMA param_list)*
+                | ANY (COMMA param_list)*
+                | NONE (COMMA param_list)*
+                | IDENTIFIER ASSIGN_OPT literal (COMMA param_list)* //in what situations would a literal have 0 comma param list extra after it?
                 | IDENTIFIER ASSIGN_OPT objects (COMMA param_list)*
                 | IDENTIFIER (COMMA param_list)*
                 | literal (COMMA param_list)* //removes redundancy of literal COMMA param_list and literal
                 | object_access (COMMA param_list)*
-                | NONE (COMMA param_list)*
-                | ANY (COMMA param_list)*
-                | ALL (COMMA param_list)*
                 | list (COMMA param_list)*
                 ;
 
@@ -203,5 +203,3 @@ timer_statement : TIMER OPEN_PAR POSITIVE_INT_LITERAL CLOSE_PAR //i set this as 
 dice_statement  : DICE OPEN_PAR INT_LITERAL COMMA INT_LITERAL CLOSE_PAR //i imagine it as DICE(1,6) where it rolls the possible numbers
                 ; //currently its set as this in case of games that allow negative numbers since some games allow those type of dice rolls
 
-score_statement : SCORE OPEN_PAR (IDENTIFIER DOT CONDITIONS) CLOSE_PAR //specifically to indicate what condition should occur for score to be tallied but is optional
-                ; //did not use object access to specifically restrict it to DOT CONDITIONS ONLY
