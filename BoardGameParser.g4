@@ -62,9 +62,9 @@ primary : literal
         | method_call
         ;
 
-param_list     : IDENTIFIER (COMMA param_list)*
-                | IDENTIFIER ASSIGN_OPT literal (COMMA param_list)* //in what situations would a literal have 0 comma param list extra after it?
+param_list      : IDENTIFIER ASSIGN_OPT literal (COMMA param_list)* //in what situations would a literal have 0 comma param list extra after it?
                 | IDENTIFIER ASSIGN_OPT objects (COMMA param_list)*
+                | IDENTIFIER (COMMA param_list)*
                 | literal (COMMA param_list)* //removes redundancy of literal COMMA param_list and literal
                 | object_access (COMMA param_list)*
                 | NONE (COMMA param_list)*

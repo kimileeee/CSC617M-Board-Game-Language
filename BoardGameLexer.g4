@@ -90,6 +90,7 @@ fragment DIGIT : [0-9];
 fragment NUMBER : DIGIT+;
 fragment INTEGER : '-'? NUMBER;
 
+//to handle the issue between the two a possible alternative would be to distinguish between positive and negative int literals?
 INT_LITERAL : INTEGER;
 POSITIVE_INT_LITERAL : NUMBER;
 FLOAT_LITERAL : INTEGER '.' NUMBER;
