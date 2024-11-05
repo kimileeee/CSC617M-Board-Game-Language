@@ -413,14 +413,5 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#score_statement.
-    def enterScore_statement(self, ctx:BoardGameParser.Score_statementContext):
-        pass
-
-    # Exit a parse tree produced by BoardGameParser#score_statement.
-    def exitScore_statement(self, ctx:BoardGameParser.Score_statementContext):
-        pass
-
-
 
 del BoardGameParser

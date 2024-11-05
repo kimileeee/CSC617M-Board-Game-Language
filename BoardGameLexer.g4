@@ -110,7 +110,7 @@ fragment SPACE : ' ';
 WS : [ \t\r\n]+ -> channel(HIDDEN);
 
 //checks for invalid inputs
-INVALID_IDENTIFIER : ((POSITIVE_INT_LITERAL | NEGATIVE_INT_LITERAL | STRING_LITERAL | FLOAT_LITERAL | COLON) [a-zA-Z_][a-zA-Z0-9_]*) -> channel(ERRORS);
+INVALID_IDENTIFIER : ((POSITIVE_INT_LITERAL | NEGATIVE_INT_LITERAL | STRING_LITERAL | FLOAT_LITERAL) [a-zA-Z_][a-zA-Z0-9_]*) -> channel(ERRORS);
 
 //how is the usage of special characters usually handled in a language?
 
