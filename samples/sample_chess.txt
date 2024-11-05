@@ -60,17 +60,18 @@ DEFINE chess.PIECES:
 
 
     // define castling as a special move
-    PIECE NONE ACTION castling((
-        GAME.current_player.color() == COLOR.white AND
+    PIECE move(castle) = (
         white_castling AND
         MOVE king TO BOARD.G0 AND
         MOVE rook TO BOARD.F0
     ) OR (
-        GAME.current_player.color() == COLOR.black AND
         black_castling AND
         MOVE king TO BOARD.G7 AND
         MOVE rook TO BOARD.F7
-    ))
+    )
+
+    PIECE rook ACTION move(castle_short)
+    PIECE king ACTION move(castle_short)
 
 END
 

@@ -10,7 +10,7 @@ else:
 
 def serializedATN():
     return [
-        4,1,77,784,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,77,761,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
         2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
         7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,
@@ -55,41 +55,39 @@ def serializedATN():
         1,30,1,30,1,30,1,31,1,31,1,31,1,31,1,31,1,31,1,31,1,31,3,31,521,
         8,31,1,31,1,31,1,31,1,31,1,31,1,31,1,31,1,31,1,31,1,31,3,31,533,
         8,31,1,31,1,31,1,31,1,31,1,31,1,31,1,31,1,31,1,31,1,31,1,31,5,31,
-        546,8,31,10,31,12,31,549,9,31,1,31,1,31,1,31,1,31,1,31,1,31,1,31,
-        1,31,1,31,1,31,3,31,561,8,31,1,31,1,31,1,31,1,31,1,31,1,31,1,31,
-        1,31,1,31,1,31,1,31,5,31,574,8,31,10,31,12,31,577,9,31,1,31,1,31,
-        3,31,581,8,31,1,32,1,32,5,32,585,8,32,10,32,12,32,588,9,32,1,32,
-        1,32,1,32,1,32,3,32,594,8,32,1,32,1,32,1,32,1,32,3,32,600,8,32,1,
-        32,1,32,1,32,1,32,5,32,606,8,32,10,32,12,32,609,9,32,1,32,1,32,1,
-        32,1,32,3,32,615,8,32,1,32,1,32,1,32,1,32,3,32,621,8,32,1,32,1,32,
-        1,32,1,32,5,32,627,8,32,10,32,12,32,630,9,32,1,32,1,32,1,32,1,32,
-        3,32,636,8,32,1,32,1,32,1,32,1,32,3,32,642,8,32,1,32,1,32,3,32,646,
-        8,32,1,33,1,33,1,33,1,33,3,33,652,8,33,1,33,1,33,1,33,1,33,1,33,
-        1,33,3,33,660,8,33,1,33,1,33,1,33,1,33,1,33,1,33,1,33,1,33,1,33,
-        1,33,1,33,5,33,673,8,33,10,33,12,33,676,9,33,3,33,678,8,33,1,34,
-        1,34,1,34,1,34,3,34,684,8,34,1,34,1,34,1,34,1,34,1,34,1,34,3,34,
-        692,8,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,
-        5,34,705,8,34,10,34,12,34,708,9,34,3,34,710,8,34,1,35,1,35,1,35,
-        1,35,3,35,716,8,35,1,35,1,35,1,35,1,36,1,36,1,36,1,36,1,37,1,37,
-        1,37,1,37,1,37,1,37,1,37,1,37,1,37,1,37,1,37,1,37,1,37,3,37,738,
-        8,37,1,38,1,38,1,38,1,38,1,38,1,38,1,38,1,38,1,39,1,39,1,39,1,39,
-        1,39,1,39,1,40,1,40,1,40,5,40,757,8,40,10,40,12,40,760,9,40,1,40,
-        1,40,1,41,1,41,1,41,1,41,1,41,1,42,1,42,1,42,1,43,1,43,1,43,1,43,
-        1,43,1,44,1,44,1,44,1,44,1,44,1,44,1,44,1,44,0,3,24,46,48,45,0,2,
-        4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,
-        50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,0,7,
-        5,0,1,1,3,5,7,7,9,12,14,14,1,0,69,70,1,0,29,30,2,0,48,48,50,53,1,
-        0,56,57,1,0,54,55,1,0,45,46,872,0,90,1,0,0,0,2,99,1,0,0,0,4,108,
+        546,8,31,10,31,12,31,549,9,31,1,31,1,31,3,31,553,8,31,1,32,1,32,
+        5,32,557,8,32,10,32,12,32,560,9,32,1,32,1,32,1,32,1,32,3,32,566,
+        8,32,1,32,1,32,1,32,1,32,3,32,572,8,32,1,32,1,32,1,32,1,32,5,32,
+        578,8,32,10,32,12,32,581,9,32,1,32,1,32,1,32,1,32,3,32,587,8,32,
+        1,32,1,32,1,32,1,32,3,32,593,8,32,1,32,1,32,1,32,1,32,5,32,599,8,
+        32,10,32,12,32,602,9,32,1,32,1,32,1,32,1,32,3,32,608,8,32,1,32,1,
+        32,1,32,1,32,3,32,614,8,32,1,32,1,32,3,32,618,8,32,1,33,1,33,1,33,
+        1,33,3,33,624,8,33,1,33,1,33,1,33,1,33,1,33,1,33,3,33,632,8,33,1,
+        33,1,33,1,33,1,33,1,33,1,33,1,33,1,33,1,33,1,33,1,33,5,33,645,8,
+        33,10,33,12,33,648,9,33,3,33,650,8,33,1,34,1,34,1,34,1,34,3,34,656,
+        8,34,1,34,1,34,1,34,1,34,1,34,1,34,3,34,664,8,34,1,34,1,34,1,34,
+        1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,5,34,677,8,34,10,34,12,34,
+        680,9,34,3,34,682,8,34,1,35,1,35,1,35,1,35,3,35,688,8,35,1,35,1,
+        35,1,35,1,36,1,36,1,36,1,36,1,37,1,37,1,37,1,37,1,37,1,37,1,37,1,
+        37,1,37,1,37,1,37,1,37,1,37,3,37,710,8,37,1,38,1,38,1,38,1,38,1,
+        38,1,38,1,38,1,38,1,39,1,39,1,39,1,39,1,39,1,39,1,40,1,40,1,40,5,
+        40,729,8,40,10,40,12,40,732,9,40,1,40,1,40,1,41,1,41,1,41,1,41,1,
+        41,1,42,1,42,1,42,1,43,1,43,1,43,1,43,1,43,1,44,1,44,1,44,1,44,1,
+        44,5,44,754,8,44,10,44,12,44,757,9,44,1,44,1,44,1,44,0,3,24,46,48,
+        45,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,
+        44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,
+        88,0,7,4,0,3,5,7,7,9,12,14,14,1,0,69,70,1,0,29,30,2,0,48,48,50,53,
+        1,0,56,57,1,0,54,55,1,0,45,46,843,0,90,1,0,0,0,2,99,1,0,0,0,4,108,
         1,0,0,0,6,114,1,0,0,0,8,137,1,0,0,0,10,139,1,0,0,0,12,141,1,0,0,
         0,14,147,1,0,0,0,16,158,1,0,0,0,18,242,1,0,0,0,20,244,1,0,0,0,22,
         281,1,0,0,0,24,292,1,0,0,0,26,302,1,0,0,0,28,387,1,0,0,0,30,392,
         1,0,0,0,32,394,1,0,0,0,34,406,1,0,0,0,36,410,1,0,0,0,38,416,1,0,
         0,0,40,421,1,0,0,0,42,446,1,0,0,0,44,448,1,0,0,0,46,456,1,0,0,0,
         48,467,1,0,0,0,50,478,1,0,0,0,52,480,1,0,0,0,54,482,1,0,0,0,56,499,
-        1,0,0,0,58,501,1,0,0,0,60,506,1,0,0,0,62,580,1,0,0,0,64,645,1,0,
-        0,0,66,677,1,0,0,0,68,709,1,0,0,0,70,711,1,0,0,0,72,720,1,0,0,0,
-        74,737,1,0,0,0,76,739,1,0,0,0,78,747,1,0,0,0,80,753,1,0,0,0,82,763,
-        1,0,0,0,84,768,1,0,0,0,86,771,1,0,0,0,88,776,1,0,0,0,90,91,5,1,0,
+        1,0,0,0,58,501,1,0,0,0,60,506,1,0,0,0,62,552,1,0,0,0,64,617,1,0,
+        0,0,66,649,1,0,0,0,68,681,1,0,0,0,70,683,1,0,0,0,72,692,1,0,0,0,
+        74,709,1,0,0,0,76,711,1,0,0,0,78,719,1,0,0,0,80,725,1,0,0,0,82,735,
+        1,0,0,0,84,740,1,0,0,0,86,743,1,0,0,0,88,748,1,0,0,0,90,91,5,1,0,
         0,91,93,5,74,0,0,92,94,3,2,1,0,93,92,1,0,0,0,94,95,1,0,0,0,95,93,
         1,0,0,0,95,96,1,0,0,0,96,97,1,0,0,0,97,98,3,4,2,0,98,1,1,0,0,0,99,
         102,5,2,0,0,100,103,5,74,0,0,101,103,3,22,11,0,102,100,1,0,0,0,102,
@@ -222,7 +220,7 @@ def serializedATN():
         0,0,0,512,520,5,18,0,0,513,521,5,74,0,0,514,521,3,22,11,0,515,521,
         5,40,0,0,516,517,5,62,0,0,517,518,3,18,9,0,518,519,5,63,0,0,519,
         521,1,0,0,0,520,513,1,0,0,0,520,514,1,0,0,0,520,515,1,0,0,0,520,
-        516,1,0,0,0,521,522,1,0,0,0,522,523,5,19,0,0,523,581,3,12,6,0,524,
+        516,1,0,0,0,521,522,1,0,0,0,522,523,5,19,0,0,523,553,3,12,6,0,524,
         532,5,18,0,0,525,533,5,74,0,0,526,533,3,22,11,0,527,533,5,40,0,0,
         528,529,5,62,0,0,529,530,3,18,9,0,530,531,5,63,0,0,531,533,1,0,0,
         0,532,525,1,0,0,0,532,526,1,0,0,0,532,527,1,0,0,0,532,528,1,0,0,
@@ -230,81 +228,73 @@ def serializedATN():
         0,0,537,538,3,18,9,0,538,547,5,63,0,0,539,540,5,61,0,0,540,541,5,
         74,0,0,541,542,5,62,0,0,542,543,3,18,9,0,543,544,5,63,0,0,544,546,
         1,0,0,0,545,539,1,0,0,0,546,549,1,0,0,0,547,545,1,0,0,0,547,548,
-        1,0,0,0,548,581,1,0,0,0,549,547,1,0,0,0,550,560,5,18,0,0,551,561,
-        5,74,0,0,552,561,3,22,11,0,553,561,5,40,0,0,554,555,5,62,0,0,555,
-        556,3,18,9,0,556,557,5,63,0,0,557,561,1,0,0,0,558,561,5,41,0,0,559,
-        561,5,42,0,0,560,551,1,0,0,0,560,552,1,0,0,0,560,553,1,0,0,0,560,
-        554,1,0,0,0,560,558,1,0,0,0,560,559,1,0,0,0,561,562,1,0,0,0,562,
-        563,5,20,0,0,563,564,5,74,0,0,564,565,5,62,0,0,565,566,3,28,14,0,
-        566,575,5,63,0,0,567,568,5,61,0,0,568,569,5,74,0,0,569,570,5,62,
-        0,0,570,571,3,28,14,0,571,572,5,63,0,0,572,574,1,0,0,0,573,567,1,
-        0,0,0,574,577,1,0,0,0,575,573,1,0,0,0,575,576,1,0,0,0,576,581,1,
-        0,0,0,577,575,1,0,0,0,578,579,5,18,0,0,579,581,3,42,21,0,580,512,
-        1,0,0,0,580,524,1,0,0,0,580,550,1,0,0,0,580,578,1,0,0,0,581,63,1,
-        0,0,0,582,583,5,13,0,0,583,585,5,74,0,0,584,582,1,0,0,0,585,588,
-        1,0,0,0,586,584,1,0,0,0,586,587,1,0,0,0,587,589,1,0,0,0,588,586,
-        1,0,0,0,589,593,5,18,0,0,590,594,5,74,0,0,591,594,3,22,11,0,592,
-        594,5,40,0,0,593,590,1,0,0,0,593,591,1,0,0,0,593,592,1,0,0,0,594,
-        595,1,0,0,0,595,596,5,21,0,0,596,599,5,62,0,0,597,600,3,18,9,0,598,
-        600,3,24,12,0,599,597,1,0,0,0,599,598,1,0,0,0,600,601,1,0,0,0,601,
-        602,5,63,0,0,602,646,1,0,0,0,603,604,5,13,0,0,604,606,5,74,0,0,605,
-        603,1,0,0,0,606,609,1,0,0,0,607,605,1,0,0,0,607,608,1,0,0,0,608,
-        610,1,0,0,0,609,607,1,0,0,0,610,614,5,22,0,0,611,615,5,74,0,0,612,
-        615,3,22,11,0,613,615,5,40,0,0,614,611,1,0,0,0,614,612,1,0,0,0,614,
-        613,1,0,0,0,615,616,1,0,0,0,616,617,5,21,0,0,617,620,5,62,0,0,618,
-        621,3,18,9,0,619,621,3,24,12,0,620,618,1,0,0,0,620,619,1,0,0,0,621,
-        622,1,0,0,0,622,623,5,63,0,0,623,646,1,0,0,0,624,625,5,13,0,0,625,
-        627,5,74,0,0,626,624,1,0,0,0,627,630,1,0,0,0,628,626,1,0,0,0,628,
-        629,1,0,0,0,629,631,1,0,0,0,630,628,1,0,0,0,631,635,5,23,0,0,632,
-        636,5,74,0,0,633,636,3,22,11,0,634,636,5,40,0,0,635,632,1,0,0,0,
-        635,633,1,0,0,0,635,634,1,0,0,0,636,637,1,0,0,0,637,638,5,21,0,0,
-        638,641,5,62,0,0,639,642,3,18,9,0,640,642,3,24,12,0,641,639,1,0,
-        0,0,641,640,1,0,0,0,642,643,1,0,0,0,643,644,5,63,0,0,644,646,1,0,
-        0,0,645,586,1,0,0,0,645,607,1,0,0,0,645,628,1,0,0,0,646,65,1,0,0,
-        0,647,651,5,22,0,0,648,652,5,74,0,0,649,652,3,22,11,0,650,652,5,
-        40,0,0,651,648,1,0,0,0,651,649,1,0,0,0,651,650,1,0,0,0,652,653,1,
-        0,0,0,653,654,5,19,0,0,654,678,3,12,6,0,655,659,5,22,0,0,656,660,
-        5,74,0,0,657,660,3,22,11,0,658,660,5,40,0,0,659,656,1,0,0,0,659,
-        657,1,0,0,0,659,658,1,0,0,0,660,661,1,0,0,0,661,662,5,20,0,0,662,
-        663,5,74,0,0,663,664,5,62,0,0,664,665,3,18,9,0,665,674,5,63,0,0,
-        666,667,5,61,0,0,667,668,5,74,0,0,668,669,5,62,0,0,669,670,3,18,
-        9,0,670,671,5,63,0,0,671,673,1,0,0,0,672,666,1,0,0,0,673,676,1,0,
-        0,0,674,672,1,0,0,0,674,675,1,0,0,0,675,678,1,0,0,0,676,674,1,0,
-        0,0,677,647,1,0,0,0,677,655,1,0,0,0,678,67,1,0,0,0,679,683,5,23,
-        0,0,680,684,5,74,0,0,681,684,3,22,11,0,682,684,5,40,0,0,683,680,
-        1,0,0,0,683,681,1,0,0,0,683,682,1,0,0,0,684,685,1,0,0,0,685,686,
-        5,19,0,0,686,710,3,12,6,0,687,691,5,23,0,0,688,692,5,74,0,0,689,
-        692,3,22,11,0,690,692,5,40,0,0,691,688,1,0,0,0,691,689,1,0,0,0,691,
-        690,1,0,0,0,692,693,1,0,0,0,693,694,5,20,0,0,694,695,5,74,0,0,695,
-        696,5,62,0,0,696,697,3,18,9,0,697,706,5,63,0,0,698,699,5,61,0,0,
-        699,700,5,74,0,0,700,701,5,62,0,0,701,702,3,18,9,0,702,703,5,63,
-        0,0,703,705,1,0,0,0,704,698,1,0,0,0,705,708,1,0,0,0,706,704,1,0,
-        0,0,706,707,1,0,0,0,707,710,1,0,0,0,708,706,1,0,0,0,709,679,1,0,
-        0,0,709,687,1,0,0,0,710,69,1,0,0,0,711,715,5,26,0,0,712,716,5,74,
-        0,0,713,716,3,22,11,0,714,716,5,40,0,0,715,712,1,0,0,0,715,713,1,
-        0,0,0,715,714,1,0,0,0,716,717,1,0,0,0,717,718,5,27,0,0,718,719,3,
-        24,12,0,719,71,1,0,0,0,720,721,5,28,0,0,721,722,5,74,0,0,722,723,
-        3,70,35,0,723,73,1,0,0,0,724,725,5,31,0,0,725,726,3,28,14,0,726,
-        727,5,59,0,0,727,728,3,6,3,0,728,729,5,32,0,0,729,730,5,59,0,0,730,
-        731,3,6,3,0,731,738,1,0,0,0,732,733,5,31,0,0,733,734,3,28,14,0,734,
-        735,5,59,0,0,735,736,3,6,3,0,736,738,1,0,0,0,737,724,1,0,0,0,737,
-        732,1,0,0,0,738,75,1,0,0,0,739,740,5,33,0,0,740,741,5,74,0,0,741,
-        742,5,43,0,0,742,743,3,20,10,0,743,744,5,59,0,0,744,745,3,6,3,0,
-        745,746,5,25,0,0,746,77,1,0,0,0,747,748,5,34,0,0,748,749,3,28,14,
-        0,749,750,5,59,0,0,750,751,3,6,3,0,751,752,5,25,0,0,752,79,1,0,0,
-        0,753,754,5,35,0,0,754,758,5,62,0,0,755,757,5,72,0,0,756,755,1,0,
-        0,0,757,760,1,0,0,0,758,756,1,0,0,0,758,759,1,0,0,0,759,761,1,0,
-        0,0,760,758,1,0,0,0,761,762,5,63,0,0,762,81,1,0,0,0,763,764,5,36,
-        0,0,764,765,5,62,0,0,765,766,3,18,9,0,766,767,5,63,0,0,767,83,1,
-        0,0,0,768,769,5,37,0,0,769,770,3,28,14,0,770,85,1,0,0,0,771,772,
-        5,6,0,0,772,773,5,62,0,0,773,774,5,69,0,0,774,775,5,63,0,0,775,87,
-        1,0,0,0,776,777,5,8,0,0,777,778,5,62,0,0,778,779,3,12,6,0,779,780,
-        5,61,0,0,780,781,3,12,6,0,781,782,5,63,0,0,782,89,1,0,0,0,73,95,
-        102,116,137,147,158,171,179,187,197,207,215,223,231,239,242,254,
-        256,265,267,276,278,281,292,299,310,319,328,337,347,356,366,375,
-        384,387,392,401,416,426,433,442,446,453,464,475,499,520,532,547,
-        560,575,580,586,593,599,607,614,620,628,635,641,645,651,659,674,
-        677,683,691,706,709,715,737,758
+        1,0,0,0,548,553,1,0,0,0,549,547,1,0,0,0,550,551,5,18,0,0,551,553,
+        3,42,21,0,552,512,1,0,0,0,552,524,1,0,0,0,552,550,1,0,0,0,553,63,
+        1,0,0,0,554,555,5,13,0,0,555,557,5,74,0,0,556,554,1,0,0,0,557,560,
+        1,0,0,0,558,556,1,0,0,0,558,559,1,0,0,0,559,561,1,0,0,0,560,558,
+        1,0,0,0,561,565,5,18,0,0,562,566,5,74,0,0,563,566,3,22,11,0,564,
+        566,5,40,0,0,565,562,1,0,0,0,565,563,1,0,0,0,565,564,1,0,0,0,566,
+        567,1,0,0,0,567,568,5,21,0,0,568,571,5,62,0,0,569,572,3,18,9,0,570,
+        572,3,24,12,0,571,569,1,0,0,0,571,570,1,0,0,0,572,573,1,0,0,0,573,
+        574,5,63,0,0,574,618,1,0,0,0,575,576,5,13,0,0,576,578,5,74,0,0,577,
+        575,1,0,0,0,578,581,1,0,0,0,579,577,1,0,0,0,579,580,1,0,0,0,580,
+        582,1,0,0,0,581,579,1,0,0,0,582,586,5,22,0,0,583,587,5,74,0,0,584,
+        587,3,22,11,0,585,587,5,40,0,0,586,583,1,0,0,0,586,584,1,0,0,0,586,
+        585,1,0,0,0,587,588,1,0,0,0,588,589,5,21,0,0,589,592,5,62,0,0,590,
+        593,3,18,9,0,591,593,3,24,12,0,592,590,1,0,0,0,592,591,1,0,0,0,593,
+        594,1,0,0,0,594,595,5,63,0,0,595,618,1,0,0,0,596,597,5,13,0,0,597,
+        599,5,74,0,0,598,596,1,0,0,0,599,602,1,0,0,0,600,598,1,0,0,0,600,
+        601,1,0,0,0,601,603,1,0,0,0,602,600,1,0,0,0,603,607,5,23,0,0,604,
+        608,5,74,0,0,605,608,3,22,11,0,606,608,5,40,0,0,607,604,1,0,0,0,
+        607,605,1,0,0,0,607,606,1,0,0,0,608,609,1,0,0,0,609,610,5,21,0,0,
+        610,613,5,62,0,0,611,614,3,18,9,0,612,614,3,24,12,0,613,611,1,0,
+        0,0,613,612,1,0,0,0,614,615,1,0,0,0,615,616,5,63,0,0,616,618,1,0,
+        0,0,617,558,1,0,0,0,617,579,1,0,0,0,617,600,1,0,0,0,618,65,1,0,0,
+        0,619,623,5,22,0,0,620,624,5,74,0,0,621,624,3,22,11,0,622,624,5,
+        40,0,0,623,620,1,0,0,0,623,621,1,0,0,0,623,622,1,0,0,0,624,625,1,
+        0,0,0,625,626,5,19,0,0,626,650,3,12,6,0,627,631,5,22,0,0,628,632,
+        5,74,0,0,629,632,3,22,11,0,630,632,5,40,0,0,631,628,1,0,0,0,631,
+        629,1,0,0,0,631,630,1,0,0,0,632,633,1,0,0,0,633,634,5,20,0,0,634,
+        635,5,74,0,0,635,636,5,62,0,0,636,637,3,18,9,0,637,646,5,63,0,0,
+        638,639,5,61,0,0,639,640,5,74,0,0,640,641,5,62,0,0,641,642,3,18,
+        9,0,642,643,5,63,0,0,643,645,1,0,0,0,644,638,1,0,0,0,645,648,1,0,
+        0,0,646,644,1,0,0,0,646,647,1,0,0,0,647,650,1,0,0,0,648,646,1,0,
+        0,0,649,619,1,0,0,0,649,627,1,0,0,0,650,67,1,0,0,0,651,655,5,23,
+        0,0,652,656,5,74,0,0,653,656,3,22,11,0,654,656,5,40,0,0,655,652,
+        1,0,0,0,655,653,1,0,0,0,655,654,1,0,0,0,656,657,1,0,0,0,657,658,
+        5,19,0,0,658,682,3,12,6,0,659,663,5,23,0,0,660,664,5,74,0,0,661,
+        664,3,22,11,0,662,664,5,40,0,0,663,660,1,0,0,0,663,661,1,0,0,0,663,
+        662,1,0,0,0,664,665,1,0,0,0,665,666,5,20,0,0,666,667,5,74,0,0,667,
+        668,5,62,0,0,668,669,3,18,9,0,669,678,5,63,0,0,670,671,5,61,0,0,
+        671,672,5,74,0,0,672,673,5,62,0,0,673,674,3,18,9,0,674,675,5,63,
+        0,0,675,677,1,0,0,0,676,670,1,0,0,0,677,680,1,0,0,0,678,676,1,0,
+        0,0,678,679,1,0,0,0,679,682,1,0,0,0,680,678,1,0,0,0,681,651,1,0,
+        0,0,681,659,1,0,0,0,682,69,1,0,0,0,683,687,5,26,0,0,684,688,5,74,
+        0,0,685,688,3,22,11,0,686,688,5,40,0,0,687,684,1,0,0,0,687,685,1,
+        0,0,0,687,686,1,0,0,0,688,689,1,0,0,0,689,690,5,27,0,0,690,691,3,
+        24,12,0,691,71,1,0,0,0,692,693,5,28,0,0,693,694,5,74,0,0,694,695,
+        3,70,35,0,695,73,1,0,0,0,696,697,5,31,0,0,697,698,3,28,14,0,698,
+        699,5,59,0,0,699,700,3,6,3,0,700,701,5,32,0,0,701,702,5,59,0,0,702,
+        703,3,6,3,0,703,710,1,0,0,0,704,705,5,31,0,0,705,706,3,28,14,0,706,
+        707,5,59,0,0,707,708,3,6,3,0,708,710,1,0,0,0,709,696,1,0,0,0,709,
+        704,1,0,0,0,710,75,1,0,0,0,711,712,5,33,0,0,712,713,5,74,0,0,713,
+        714,5,43,0,0,714,715,3,20,10,0,715,716,5,59,0,0,716,717,3,6,3,0,
+        717,718,5,25,0,0,718,77,1,0,0,0,719,720,5,34,0,0,720,721,3,28,14,
+        0,721,722,5,59,0,0,722,723,3,6,3,0,723,724,5,25,0,0,724,79,1,0,0,
+        0,725,726,5,35,0,0,726,730,5,62,0,0,727,729,5,72,0,0,728,727,1,0,
+        0,0,729,732,1,0,0,0,730,728,1,0,0,0,730,731,1,0,0,0,731,733,1,0,
+        0,0,732,730,1,0,0,0,733,734,5,63,0,0,734,81,1,0,0,0,735,736,5,36,
+        0,0,736,737,5,62,0,0,737,738,3,18,9,0,738,739,5,63,0,0,739,83,1,
+        0,0,0,740,741,5,37,0,0,741,742,3,28,14,0,742,85,1,0,0,0,743,744,
+        5,6,0,0,744,745,5,62,0,0,745,746,5,69,0,0,746,747,5,63,0,0,747,87,
+        1,0,0,0,748,749,5,8,0,0,749,750,5,62,0,0,750,755,3,12,6,0,751,752,
+        5,61,0,0,752,754,3,12,6,0,753,751,1,0,0,0,754,757,1,0,0,0,755,753,
+        1,0,0,0,755,756,1,0,0,0,756,758,1,0,0,0,757,755,1,0,0,0,758,759,
+        5,63,0,0,759,89,1,0,0,0,72,95,102,116,137,147,158,171,179,187,197,
+        207,215,223,231,239,242,254,256,265,267,276,278,281,292,299,310,
+        319,328,337,347,356,366,375,384,387,392,401,416,426,433,442,446,
+        453,464,475,499,520,532,547,552,558,565,571,579,586,592,600,607,
+        613,617,623,631,646,649,655,663,678,681,687,709,730,755
     ]
 
 class BoardGameParser ( Parser ):
@@ -998,9 +988,6 @@ class BoardGameParser ( Parser ):
         def BOARD(self):
             return self.getToken(BoardGameParser.BOARD, 0)
 
-        def GAME(self):
-            return self.getToken(BoardGameParser.GAME, 0)
-
         def PLAYERS(self):
             return self.getToken(BoardGameParser.PLAYERS, 0)
 
@@ -1048,7 +1035,7 @@ class BoardGameParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 139
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 24250) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 24248) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -2380,7 +2367,7 @@ class BoardGameParser ( Parser ):
             self.state = 401
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 7696581418682) != 0) or ((((_la - 64)) & ~0x3f) == 0 and ((1 << (_la - 64)) & 2017) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 7696581418680) != 0) or ((((_la - 64)) & ~0x3f) == 0 and ((1 << (_la - 64)) & 2017) != 0):
                 self.state = 398
                 self.param_list()
                 self.state = 403
@@ -3426,19 +3413,6 @@ class BoardGameParser ( Parser ):
             else:
                 return self.getToken(BoardGameParser.COMMA, i)
 
-        def expression(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(BoardGameParser.ExpressionContext)
-            else:
-                return self.getTypedRuleContext(BoardGameParser.ExpressionContext,i)
-
-
-        def ANY(self):
-            return self.getToken(BoardGameParser.ANY, 0)
-
-        def NONE(self):
-            return self.getToken(BoardGameParser.NONE, 0)
-
         def assignment_expression(self):
             return self.getTypedRuleContext(BoardGameParser.Assignment_expressionContext,0)
 
@@ -3463,9 +3437,9 @@ class BoardGameParser ( Parser ):
         self.enterRule(localctx, 62, self.RULE_piece_statement)
         self._la = 0 # Token type
         try:
-            self.state = 580
+            self.state = 552
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,51,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,49,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 512
@@ -3570,79 +3544,7 @@ class BoardGameParser ( Parser ):
                 self.enterOuterAlt(localctx, 3)
                 self.state = 550
                 self.match(BoardGameParser.PIECE)
-                self.state = 560
-                self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,49,self._ctx)
-                if la_ == 1:
-                    self.state = 551
-                    self.match(BoardGameParser.IDENTIFIER)
-                    pass
-
-                elif la_ == 2:
-                    self.state = 552
-                    self.object_access()
-                    pass
-
-                elif la_ == 3:
-                    self.state = 553
-                    self.match(BoardGameParser.ALL)
-                    pass
-
-                elif la_ == 4:
-                    self.state = 554
-                    self.match(BoardGameParser.OPEN_PAR)
-                    self.state = 555
-                    self.param_list()
-                    self.state = 556
-                    self.match(BoardGameParser.CLOSE_PAR)
-                    pass
-
-                elif la_ == 5:
-                    self.state = 558
-                    self.match(BoardGameParser.ANY)
-                    pass
-
-                elif la_ == 6:
-                    self.state = 559
-                    self.match(BoardGameParser.NONE)
-                    pass
-
-
-                self.state = 562
-                self.match(BoardGameParser.ACTION)
-                self.state = 563
-                self.match(BoardGameParser.IDENTIFIER)
-                self.state = 564
-                self.match(BoardGameParser.OPEN_PAR)
-                self.state = 565
-                self.expression()
-                self.state = 566
-                self.match(BoardGameParser.CLOSE_PAR)
-                self.state = 575
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                while _la==61:
-                    self.state = 567
-                    self.match(BoardGameParser.COMMA)
-                    self.state = 568
-                    self.match(BoardGameParser.IDENTIFIER)
-                    self.state = 569
-                    self.match(BoardGameParser.OPEN_PAR)
-                    self.state = 570
-                    self.expression()
-                    self.state = 571
-                    self.match(BoardGameParser.CLOSE_PAR)
-                    self.state = 577
-                    self._errHandler.sync(self)
-                    _la = self._input.LA(1)
-
-                pass
-
-            elif la_ == 4:
-                self.enterOuterAlt(localctx, 4)
-                self.state = 578
-                self.match(BoardGameParser.PIECE)
-                self.state = 579
+                self.state = 551
                 self.assignment_expression()
                 pass
 
@@ -3728,177 +3630,177 @@ class BoardGameParser ( Parser ):
         self.enterRule(localctx, 64, self.RULE_board_statement)
         self._la = 0 # Token type
         try:
-            self.state = 645
+            self.state = 617
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,61,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,59,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 586
+                self.state = 558
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==13:
-                    self.state = 582
+                    self.state = 554
                     self.match(BoardGameParser.PLAYER)
-                    self.state = 583
+                    self.state = 555
                     self.match(BoardGameParser.IDENTIFIER)
-                    self.state = 588
+                    self.state = 560
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
-                self.state = 589
+                self.state = 561
                 self.match(BoardGameParser.PIECE)
-                self.state = 593
+                self.state = 565
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,53,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,51,self._ctx)
                 if la_ == 1:
-                    self.state = 590
+                    self.state = 562
                     self.match(BoardGameParser.IDENTIFIER)
                     pass
 
                 elif la_ == 2:
-                    self.state = 591
+                    self.state = 563
                     self.object_access()
                     pass
 
                 elif la_ == 3:
-                    self.state = 592
+                    self.state = 564
                     self.match(BoardGameParser.ALL)
                     pass
 
 
-                self.state = 595
+                self.state = 567
                 self.match(BoardGameParser.SETUP)
-                self.state = 596
+                self.state = 568
                 self.match(BoardGameParser.OPEN_PAR)
-                self.state = 599
+                self.state = 571
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,54,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,52,self._ctx)
                 if la_ == 1:
-                    self.state = 597
+                    self.state = 569
                     self.param_list()
                     pass
 
                 elif la_ == 2:
-                    self.state = 598
+                    self.state = 570
                     self.board_pos(0)
                     pass
 
 
-                self.state = 601
+                self.state = 573
                 self.match(BoardGameParser.CLOSE_PAR)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 607
+                self.state = 579
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==13:
-                    self.state = 603
+                    self.state = 575
                     self.match(BoardGameParser.PLAYER)
-                    self.state = 604
+                    self.state = 576
                     self.match(BoardGameParser.IDENTIFIER)
-                    self.state = 609
+                    self.state = 581
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
-                self.state = 610
+                self.state = 582
                 self.match(BoardGameParser.OBSTACLE)
-                self.state = 614
+                self.state = 586
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,56,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,54,self._ctx)
                 if la_ == 1:
-                    self.state = 611
+                    self.state = 583
                     self.match(BoardGameParser.IDENTIFIER)
                     pass
 
                 elif la_ == 2:
-                    self.state = 612
+                    self.state = 584
                     self.object_access()
                     pass
 
                 elif la_ == 3:
-                    self.state = 613
+                    self.state = 585
                     self.match(BoardGameParser.ALL)
                     pass
 
 
-                self.state = 616
+                self.state = 588
                 self.match(BoardGameParser.SETUP)
-                self.state = 617
+                self.state = 589
                 self.match(BoardGameParser.OPEN_PAR)
-                self.state = 620
+                self.state = 592
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,57,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,55,self._ctx)
                 if la_ == 1:
-                    self.state = 618
+                    self.state = 590
                     self.param_list()
                     pass
 
                 elif la_ == 2:
-                    self.state = 619
+                    self.state = 591
                     self.board_pos(0)
                     pass
 
 
-                self.state = 622
+                self.state = 594
                 self.match(BoardGameParser.CLOSE_PAR)
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 628
+                self.state = 600
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==13:
-                    self.state = 624
+                    self.state = 596
                     self.match(BoardGameParser.PLAYER)
-                    self.state = 625
+                    self.state = 597
                     self.match(BoardGameParser.IDENTIFIER)
-                    self.state = 630
+                    self.state = 602
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
-                self.state = 631
+                self.state = 603
                 self.match(BoardGameParser.BOOSTER)
-                self.state = 635
+                self.state = 607
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,59,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,57,self._ctx)
                 if la_ == 1:
-                    self.state = 632
+                    self.state = 604
                     self.match(BoardGameParser.IDENTIFIER)
                     pass
 
                 elif la_ == 2:
-                    self.state = 633
+                    self.state = 605
                     self.object_access()
                     pass
 
                 elif la_ == 3:
-                    self.state = 634
+                    self.state = 606
                     self.match(BoardGameParser.ALL)
                     pass
 
 
-                self.state = 637
+                self.state = 609
                 self.match(BoardGameParser.SETUP)
-                self.state = 638
+                self.state = 610
                 self.match(BoardGameParser.OPEN_PAR)
-                self.state = 641
+                self.state = 613
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,60,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,58,self._ctx)
                 if la_ == 1:
-                    self.state = 639
+                    self.state = 611
                     self.param_list()
                     pass
 
                 elif la_ == 2:
-                    self.state = 640
+                    self.state = 612
                     self.board_pos(0)
                     pass
 
 
-                self.state = 643
+                self.state = 615
                 self.match(BoardGameParser.CLOSE_PAR)
                 pass
 
@@ -3990,86 +3892,86 @@ class BoardGameParser ( Parser ):
         self.enterRule(localctx, 66, self.RULE_obstacle_statement)
         self._la = 0 # Token type
         try:
-            self.state = 677
+            self.state = 649
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,65,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,63,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 647
+                self.state = 619
                 self.match(BoardGameParser.OBSTACLE)
-                self.state = 651
+                self.state = 623
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,62,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,60,self._ctx)
                 if la_ == 1:
-                    self.state = 648
+                    self.state = 620
                     self.match(BoardGameParser.IDENTIFIER)
                     pass
 
                 elif la_ == 2:
-                    self.state = 649
+                    self.state = 621
                     self.object_access()
                     pass
 
                 elif la_ == 3:
-                    self.state = 650
+                    self.state = 622
                     self.match(BoardGameParser.ALL)
                     pass
 
 
-                self.state = 653
+                self.state = 625
                 self.match(BoardGameParser.COUNT)
-                self.state = 654
+                self.state = 626
                 self.int_literal()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 655
+                self.state = 627
                 self.match(BoardGameParser.OBSTACLE)
-                self.state = 659
+                self.state = 631
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,63,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,61,self._ctx)
                 if la_ == 1:
-                    self.state = 656
+                    self.state = 628
                     self.match(BoardGameParser.IDENTIFIER)
                     pass
 
                 elif la_ == 2:
-                    self.state = 657
+                    self.state = 629
                     self.object_access()
                     pass
 
                 elif la_ == 3:
-                    self.state = 658
+                    self.state = 630
                     self.match(BoardGameParser.ALL)
                     pass
 
 
-                self.state = 661
+                self.state = 633
                 self.match(BoardGameParser.ACTION)
-                self.state = 662
+                self.state = 634
                 self.match(BoardGameParser.IDENTIFIER)
-                self.state = 663
+                self.state = 635
                 self.match(BoardGameParser.OPEN_PAR)
-                self.state = 664
+                self.state = 636
                 self.param_list()
-                self.state = 665
+                self.state = 637
                 self.match(BoardGameParser.CLOSE_PAR)
-                self.state = 674
+                self.state = 646
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==61:
-                    self.state = 666
+                    self.state = 638
                     self.match(BoardGameParser.COMMA)
-                    self.state = 667
+                    self.state = 639
                     self.match(BoardGameParser.IDENTIFIER)
-                    self.state = 668
+                    self.state = 640
                     self.match(BoardGameParser.OPEN_PAR)
-                    self.state = 669
+                    self.state = 641
                     self.param_list()
-                    self.state = 670
+                    self.state = 642
                     self.match(BoardGameParser.CLOSE_PAR)
-                    self.state = 676
+                    self.state = 648
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
@@ -4163,86 +4065,86 @@ class BoardGameParser ( Parser ):
         self.enterRule(localctx, 68, self.RULE_booster_statement)
         self._la = 0 # Token type
         try:
-            self.state = 709
+            self.state = 681
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,69,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,67,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 679
+                self.state = 651
                 self.match(BoardGameParser.BOOSTER)
-                self.state = 683
+                self.state = 655
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,66,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,64,self._ctx)
                 if la_ == 1:
-                    self.state = 680
+                    self.state = 652
                     self.match(BoardGameParser.IDENTIFIER)
                     pass
 
                 elif la_ == 2:
-                    self.state = 681
+                    self.state = 653
                     self.object_access()
                     pass
 
                 elif la_ == 3:
-                    self.state = 682
+                    self.state = 654
                     self.match(BoardGameParser.ALL)
                     pass
 
 
-                self.state = 685
+                self.state = 657
                 self.match(BoardGameParser.COUNT)
-                self.state = 686
+                self.state = 658
                 self.int_literal()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 687
+                self.state = 659
                 self.match(BoardGameParser.BOOSTER)
-                self.state = 691
+                self.state = 663
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,67,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,65,self._ctx)
                 if la_ == 1:
-                    self.state = 688
+                    self.state = 660
                     self.match(BoardGameParser.IDENTIFIER)
                     pass
 
                 elif la_ == 2:
-                    self.state = 689
+                    self.state = 661
                     self.object_access()
                     pass
 
                 elif la_ == 3:
-                    self.state = 690
+                    self.state = 662
                     self.match(BoardGameParser.ALL)
                     pass
 
 
-                self.state = 693
+                self.state = 665
                 self.match(BoardGameParser.ACTION)
-                self.state = 694
+                self.state = 666
                 self.match(BoardGameParser.IDENTIFIER)
-                self.state = 695
+                self.state = 667
                 self.match(BoardGameParser.OPEN_PAR)
-                self.state = 696
+                self.state = 668
                 self.param_list()
-                self.state = 697
+                self.state = 669
                 self.match(BoardGameParser.CLOSE_PAR)
-                self.state = 706
+                self.state = 678
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==61:
-                    self.state = 698
+                    self.state = 670
                     self.match(BoardGameParser.COMMA)
-                    self.state = 699
+                    self.state = 671
                     self.match(BoardGameParser.IDENTIFIER)
-                    self.state = 700
+                    self.state = 672
                     self.match(BoardGameParser.OPEN_PAR)
-                    self.state = 701
+                    self.state = 673
                     self.param_list()
-                    self.state = 702
+                    self.state = 674
                     self.match(BoardGameParser.CLOSE_PAR)
-                    self.state = 708
+                    self.state = 680
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
@@ -4305,30 +4207,30 @@ class BoardGameParser ( Parser ):
         self.enterRule(localctx, 70, self.RULE_move_statement)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 711
+            self.state = 683
             self.match(BoardGameParser.MOVE)
-            self.state = 715
+            self.state = 687
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,70,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,68,self._ctx)
             if la_ == 1:
-                self.state = 712
+                self.state = 684
                 self.match(BoardGameParser.IDENTIFIER)
                 pass
 
             elif la_ == 2:
-                self.state = 713
+                self.state = 685
                 self.object_access()
                 pass
 
             elif la_ == 3:
-                self.state = 714
+                self.state = 686
                 self.match(BoardGameParser.ALL)
                 pass
 
 
-            self.state = 717
+            self.state = 689
             self.match(BoardGameParser.TO)
-            self.state = 718
+            self.state = 690
             self.board_pos(0)
         except RecognitionException as re:
             localctx.exception = re
@@ -4376,11 +4278,11 @@ class BoardGameParser ( Parser ):
         self.enterRule(localctx, 72, self.RULE_turn_statement)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 720
+            self.state = 692
             self.match(BoardGameParser.TURN)
-            self.state = 721
+            self.state = 693
             self.match(BoardGameParser.IDENTIFIER)
-            self.state = 722
+            self.state = 694
             self.move_statement()
         except RecognitionException as re:
             localctx.exception = re
@@ -4440,36 +4342,36 @@ class BoardGameParser ( Parser ):
         localctx = BoardGameParser.If_statementContext(self, self._ctx, self.state)
         self.enterRule(localctx, 74, self.RULE_if_statement)
         try:
-            self.state = 737
+            self.state = 709
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,71,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,69,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 724
+                self.state = 696
                 self.match(BoardGameParser.IF)
-                self.state = 725
+                self.state = 697
                 self.expression()
-                self.state = 726
+                self.state = 698
                 self.match(BoardGameParser.COLON)
-                self.state = 727
+                self.state = 699
                 self.code_block()
-                self.state = 728
+                self.state = 700
                 self.match(BoardGameParser.ELSE)
-                self.state = 729
+                self.state = 701
                 self.match(BoardGameParser.COLON)
-                self.state = 730
+                self.state = 702
                 self.code_block()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 732
+                self.state = 704
                 self.match(BoardGameParser.IF)
-                self.state = 733
+                self.state = 705
                 self.expression()
-                self.state = 734
+                self.state = 706
                 self.match(BoardGameParser.COLON)
-                self.state = 735
+                self.state = 707
                 self.code_block()
                 pass
 
@@ -4533,19 +4435,19 @@ class BoardGameParser ( Parser ):
         self.enterRule(localctx, 76, self.RULE_for_statement)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 739
+            self.state = 711
             self.match(BoardGameParser.FOR)
-            self.state = 740
+            self.state = 712
             self.match(BoardGameParser.IDENTIFIER)
-            self.state = 741
+            self.state = 713
             self.match(BoardGameParser.IN)
-            self.state = 742
+            self.state = 714
             self.list_()
-            self.state = 743
+            self.state = 715
             self.match(BoardGameParser.COLON)
-            self.state = 744
+            self.state = 716
             self.code_block()
-            self.state = 745
+            self.state = 717
             self.match(BoardGameParser.END)
         except RecognitionException as re:
             localctx.exception = re
@@ -4600,15 +4502,15 @@ class BoardGameParser ( Parser ):
         self.enterRule(localctx, 78, self.RULE_while_statement)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 747
+            self.state = 719
             self.match(BoardGameParser.WHILE)
-            self.state = 748
+            self.state = 720
             self.expression()
-            self.state = 749
+            self.state = 721
             self.match(BoardGameParser.COLON)
-            self.state = 750
+            self.state = 722
             self.code_block()
-            self.state = 751
+            self.state = 723
             self.match(BoardGameParser.END)
         except RecognitionException as re:
             localctx.exception = re
@@ -4662,21 +4564,21 @@ class BoardGameParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 753
+            self.state = 725
             self.match(BoardGameParser.INPUT)
-            self.state = 754
+            self.state = 726
             self.match(BoardGameParser.OPEN_PAR)
-            self.state = 758
+            self.state = 730
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==72:
-                self.state = 755
+                self.state = 727
                 self.match(BoardGameParser.STRING_LITERAL)
-                self.state = 760
+                self.state = 732
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 761
+            self.state = 733
             self.match(BoardGameParser.CLOSE_PAR)
         except RecognitionException as re:
             localctx.exception = re
@@ -4727,14 +4629,14 @@ class BoardGameParser ( Parser ):
         self.enterRule(localctx, 82, self.RULE_print_statement)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 763
+            self.state = 735
             self.match(BoardGameParser.PRINT)
-            self.state = 764
+            self.state = 736
             self.match(BoardGameParser.OPEN_PAR)
 
-            self.state = 765
+            self.state = 737
             self.param_list()
-            self.state = 766
+            self.state = 738
             self.match(BoardGameParser.CLOSE_PAR)
         except RecognitionException as re:
             localctx.exception = re
@@ -4779,9 +4681,9 @@ class BoardGameParser ( Parser ):
         self.enterRule(localctx, 84, self.RULE_return_statement)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 768
+            self.state = 740
             self.match(BoardGameParser.RETURN)
-            self.state = 769
+            self.state = 741
             self.expression()
         except RecognitionException as re:
             localctx.exception = re
@@ -4831,13 +4733,13 @@ class BoardGameParser ( Parser ):
         self.enterRule(localctx, 86, self.RULE_timer_statement)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 771
+            self.state = 743
             self.match(BoardGameParser.TIMER)
-            self.state = 772
+            self.state = 744
             self.match(BoardGameParser.OPEN_PAR)
-            self.state = 773
+            self.state = 745
             self.match(BoardGameParser.POSITIVE_INT_LITERAL)
-            self.state = 774
+            self.state = 746
             self.match(BoardGameParser.CLOSE_PAR)
         except RecognitionException as re:
             localctx.exception = re
@@ -4868,11 +4770,14 @@ class BoardGameParser ( Parser ):
                 return self.getTypedRuleContext(BoardGameParser.Int_literalContext,i)
 
 
-        def COMMA(self):
-            return self.getToken(BoardGameParser.COMMA, 0)
-
         def CLOSE_PAR(self):
             return self.getToken(BoardGameParser.CLOSE_PAR, 0)
+
+        def COMMA(self, i:int=None):
+            if i is None:
+                return self.getTokens(BoardGameParser.COMMA)
+            else:
+                return self.getToken(BoardGameParser.COMMA, i)
 
         def getRuleIndex(self):
             return BoardGameParser.RULE_dice_statement
@@ -4892,19 +4797,28 @@ class BoardGameParser ( Parser ):
 
         localctx = BoardGameParser.Dice_statementContext(self, self._ctx, self.state)
         self.enterRule(localctx, 88, self.RULE_dice_statement)
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 776
+            self.state = 748
             self.match(BoardGameParser.DICE)
-            self.state = 777
+            self.state = 749
             self.match(BoardGameParser.OPEN_PAR)
-            self.state = 778
+            self.state = 750
             self.int_literal()
-            self.state = 779
-            self.match(BoardGameParser.COMMA)
-            self.state = 780
-            self.int_literal()
-            self.state = 781
+            self.state = 755
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while _la==61:
+                self.state = 751
+                self.match(BoardGameParser.COMMA)
+                self.state = 752
+                self.int_literal()
+                self.state = 757
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+
+            self.state = 758
             self.match(BoardGameParser.CLOSE_PAR)
         except RecognitionException as re:
             localctx.exception = re

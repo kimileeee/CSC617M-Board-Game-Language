@@ -37,7 +37,6 @@ statement   : game_entities_statement
             ;
 
 game_entities : BOARD
-              | GAME
               | PLAYERS
               | CONDITIONS
               | RULES
@@ -152,24 +151,25 @@ logical_opt : AND_OPT
             | OR_OPT
             ;
 
+// logical_expression : expression (logical_opt logical_expression)*
+//                    ;
+
+
 game_entities_statement : game_entities OPEN_PAR param_list CLOSE_PAR
                         ;
 
-player_statement : PLAYER IDENTIFIER (COLOR object_access)* (AT board_pos)*
+player_statement : PLAYER IDENTIFIER COLOR object_access AT board_pos
                  | ORDER OPEN_PAR list CLOSE_PAR
                  ;
 
-condition_statement : CONDITION OPEN_PAR PLAYER ANY PIECE (ALL | IDENTIFIER) method_call EQUAL_OPT INT_LITERAL CLOSE_PAR
-                    | CONDITION OPEN_PAR PLAYER ANY PIECE check_pos CLOSE_PAR
-                    | CONDITION OPEN_PAR PLAYER IDENTIFIER PIECE IDENTIFIER EQUAL_OPT INT_LITERAL CLOSE_PAR
+condition_statement : CONDITION OPEN_PAR expression CLOSE_PAR
                     ;
 
-rule_statement : RULE IDENTIFIER OPEN_PAR check_pos ((AND | OR) check_pos)* CLOSE_PAR
+rule_statement : RULE IDENTIFIER OPEN_PAR expression CLOSE_PAR
                ;
 
 piece_statement : PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) COUNT int_literal 
-                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR
-                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR | ANY | NONE) ACTION IDENTIFIER conditional_expression AND IDENTIFIER (AND MOVE INDETIFIER TO board_pos)+
+                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
                 | PIECE assignment_expression
                 ;
 
