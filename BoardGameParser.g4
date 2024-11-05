@@ -155,7 +155,7 @@ logical_opt : AND_OPT
 game_entities_statement : game_entities OPEN_PAR param_list CLOSE_PAR
                         ;
 
-player_statement : PLAYER IDENTIFIER COLOR object_access AT board_pos
+player_statement : PLAYER IDENTIFIER (COLOR object_access)* (AT board_pos)*
                  | ORDER OPEN_PAR list CLOSE_PAR
                  ;
 
