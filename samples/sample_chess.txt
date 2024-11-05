@@ -27,7 +27,7 @@ END
 
 DEFINE chess.RULES:
     RULE promote_rule (white AT BOARD.ROW.7 OR black AT BOARD.ROW.0)
-    RULE white_castling (white.king AT BOARD.E0 AND white.rook AT BOARD.H0 AND BOARD.F0.empty() AND BOARD.G0.empty())
+    RULE white_castling ((white.king AT BOARD.E0) AND (white.rook AT BOARD.H0) AND (BOARD.F0.empty()) AND (BOARD.G0.empty()))
     RULE black_castling (black.king AT BOARD.E7 AND black.rook AT BOARD.H7 AND BOARD.F7.empty() AND BOARD.G7.empty())
 END
 
