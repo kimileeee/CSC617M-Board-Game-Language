@@ -66,17 +66,16 @@ primary : literal
         | method_call
         ;
 
-param_list      : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR
-                | ALL (COMMA param_list)*
-                | ANY (COMMA param_list)*
-                | NONE (COMMA param_list)*
-                | IDENTIFIER ASSIGN_OPT literal (COMMA param_list)* //in what situations would a literal have 0 comma param list extra after it?
-                | IDENTIFIER ASSIGN_OPT objects (COMMA param_list)*
-                | IDENTIFIER (COMMA param_list)*
-                | literal (COMMA param_list)* //removes redundancy of literal COMMA param_list and literal
-                | object_access (COMMA param_list)*
-                | list (COMMA param_list)*
-                ;
+param_list : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR
+           | (ALL | ANY | NONE) COMMA param_list
+           | IDENTIFIER ASSIGN_OPT (literal | objects | method_call) COMMA param_list
+           | method_call ASSIGN_OPT (literal | objects | method_call) COMMA param_list
+           | IDENTIFIER COMMA param_list
+           | literal COMMA param_list
+           | object_access COMMA param_list
+           | list COMMA param_list
+           | (ALL | ANY | NONE | IDENTIFIER | literal | object_access | list)
+           ;
 
 list : OPEN_BRACKET param_list CLOSE_BRACKET
      ;
@@ -86,7 +85,8 @@ object_access : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)* /
               | IDENTIFIER DOT IDENTIFIER (DOT game_entities | IDENTIFIER)*
               ;
         
-
+//BOARD DOT IDENTIFIER can also be handled by object access thanks to game_entities DOT IDENTIFIER?
+//solution is to either remove BOARD from game entities and let it purely be handled by board_pos?
 board_pos : BOARD DOT IDENTIFIER
           | BOARD DOT (ROW | COLUMN) DOT (int_literal)
           | board_pos ELIPSIS board_pos
@@ -99,16 +99,21 @@ conditional_opt : EQUAL_OPT
              | GREATER_EQUAL_OPT
              ;
 
-expression : assignment_expression (logical_opt expression)*
-           | math_expression (logical_opt expression)*
-           | in_expression (logical_opt expression)*
-           | at_expression (logical_opt expression)*
-           | any_expression expression (logical_opt expression)*
-           | primary (logical_opt expression)*
-           | NOT_OPT expression (logical_opt expression)*
-           | conditional_expression (logical_opt expression)*
-           | move_statement (logical_opt expression)*
+expression : base_expression logical_opt expression
+           | base_expression
            ;
+
+base_expression
+    : assignment_expression
+    | math_expression
+    | in_expression
+    | at_expression
+    | conditional_expression
+    | move_statement
+    | any_expression expression
+    | primary
+    | NOT_OPT expression
+    ;
 
 objects : IDENTIFIER
         | object_access
