@@ -7,6 +7,7 @@ program : GAME IDENTIFIER define_block+ gameplay_block
         ;
 
 define_block : DEFINE (IDENTIFIER | object_access) COLON code_block END
+             | DEFINE IDENTIFIER OPEN_PAR param_list CLOSE_PAR COLON code_block END
              ;
 
 gameplay_block : START COLON code_block END
@@ -58,12 +59,12 @@ literal : int_literal
         | BOOLEAN_LITERAL
         ;
 
-primary : literal
-        | object_access
-        | list
-        | IDENTIFIER
-        | OPEN_PAR expression CLOSE_PAR
-        | method_call
+        primary : literal
+                | object_access
+                | list
+                | IDENTIFIER
+                | OPEN_PAR expression CLOSE_PAR
+                | method_call
         ;
 
 param_list : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR
