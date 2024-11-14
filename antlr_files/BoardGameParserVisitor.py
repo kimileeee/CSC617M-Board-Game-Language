@@ -11,6 +11,10 @@ class BoardGameParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#program.
     def visitProgram(self, ctx:BoardGameParser.ProgramContext):
+        print("Creating a new board game...")
+
+        print(ctx)
+
         return self.visitChildren(ctx)
 
 
