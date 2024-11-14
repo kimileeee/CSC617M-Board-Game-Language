@@ -1,10 +1,27 @@
 from antlr4 import *
 from antlr_files.BoardGameLexer import BoardGameLexer
 from antlr_files.BoardGameParser import BoardGameParser
-# from antlr_files.BoardGameParserVisitor import BoardGameParserVisitor
+from antlr_files.BoardGameParserVisitor import BoardGameParserVisitor
 from antlr_files.BoardGameParserListener import BoardGameParserListener
 from datetime import *
 import argparse
+
+def run_visitor(tree):
+    # Initialize the visitor
+    visitor = BoardGameParserVisitor()
+
+    # Visit the parse tree
+    visitor.visit(tree)
+
+def run_listener(tree):
+    # Initialize the listener
+    listener = BoardGameParserListener()
+
+    # Walk the parse tree with the listener
+    walker = ParseTreeWalker()
+    walker.walk(listener, tree)
+
+
 
 
 def main():
@@ -30,21 +47,8 @@ def main():
         # Start parsing
         tree = parser.program()
 
-        # Initialize the listener
-        listener = BoardGameParserListener()
-
-        # Walk the parse tree with the listener
-        walker = ParseTreeWalker()
-        walker.walk(listener, tree)
-
-
-        # # Initialize the visitor
-        # visitor = BoardGameParserVisitor()
-
-        # # Visit the parse tree
-        # visitor.visit(tree)
-
-
+        # run_listener(tree)
+        run_visitor(tree)
 
 
 if __name__ == '__main__':

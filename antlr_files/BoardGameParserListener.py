@@ -10,9 +10,7 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Enter a parse tree produced by BoardGameParser#program.
     def enterProgram(self, ctx:BoardGameParser.ProgramContext):
-        print("Creating a new board game...")
-
-        print(ctx)
+        pass
 
     # Exit a parse tree produced by BoardGameParser#program.
     def exitProgram(self, ctx:BoardGameParser.ProgramContext):

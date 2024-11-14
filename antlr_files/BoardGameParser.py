@@ -511,6 +511,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitProgram" ):
                 listener.exitProgram(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitProgram" ):
+                return visitor.visitProgram(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -589,6 +595,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitDefine_block" ):
                 listener.exitDefine_block(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDefine_block" ):
+                return visitor.visitDefine_block(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -674,6 +686,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitGameplay_block" ):
                 listener.exitGameplay_block(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitGameplay_block" ):
+                return visitor.visitGameplay_block(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -724,6 +742,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitCode_block" ):
                 listener.exitCode_block(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCode_block" ):
+                return visitor.visitCode_block(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -850,6 +874,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitStatement" ):
                 listener.exitStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStatement" ):
+                return visitor.visitStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1034,6 +1064,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitGame_entities" ):
                 listener.exitGame_entities(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitGame_entities" ):
+                return visitor.visitGame_entities(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1083,6 +1119,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInt_literal" ):
                 listener.exitInt_literal(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInt_literal" ):
+                return visitor.visitInt_literal(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1140,6 +1182,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitLiteral" ):
                 listener.exitLiteral(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLiteral" ):
+                return visitor.visitLiteral(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1230,6 +1278,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPrimary" ):
                 listener.exitPrimary(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimary" ):
+                return visitor.visitPrimary(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1369,6 +1423,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitParam_list" ):
                 listener.exitParam_list(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitParam_list" ):
+                return visitor.visitParam_list(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1596,6 +1656,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitList" ):
                 listener.exitList(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitList" ):
+                return visitor.visitList(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1656,6 +1722,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitObject_access" ):
                 listener.exitObject_access(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitObject_access" ):
+                return visitor.visitObject_access(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1833,6 +1905,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitBoard_pos" ):
                 listener.exitBoard_pos(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBoard_pos" ):
+                return visitor.visitBoard_pos(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
     def board_pos(self, _p:int=0):
@@ -1942,6 +2020,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitConditional_opt" ):
                 listener.exitConditional_opt(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConditional_opt" ):
+                return visitor.visitConditional_opt(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1997,6 +2081,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitExpression" ):
                 listener.exitExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpression" ):
+                return visitor.visitExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2091,6 +2181,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitBase_expression" ):
                 listener.exitBase_expression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBase_expression" ):
+                return visitor.visitBase_expression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2200,6 +2296,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitObjects" ):
                 listener.exitObjects(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitObjects" ):
+                return visitor.visitObjects(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2283,6 +2385,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitMethod_declaration" ):
                 listener.exitMethod_declaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethod_declaration" ):
+                return visitor.visitMethod_declaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2357,6 +2465,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitMethod_call" ):
                 listener.exitMethod_call(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMethod_call" ):
+                return visitor.visitMethod_call(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2434,6 +2548,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitClass_define_block" ):
                 listener.exitClass_define_block(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClass_define_block" ):
+                return visitor.visitClass_define_block(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2499,6 +2619,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitClass_statement" ):
                 listener.exitClass_statement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitClass_statement" ):
+                return visitor.visitClass_statement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2561,6 +2687,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitConditional_expression" ):
                 listener.exitConditional_expression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConditional_expression" ):
+                return visitor.visitConditional_expression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2612,6 +2744,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitIn_expression" ):
                 listener.exitIn_expression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIn_expression" ):
+                return visitor.visitIn_expression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2668,6 +2806,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAt_expression" ):
                 listener.exitAt_expression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAt_expression" ):
+                return visitor.visitAt_expression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2740,6 +2884,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAny_expression" ):
                 listener.exitAny_expression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAny_expression" ):
+                return visitor.visitAny_expression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2825,6 +2975,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAssignment_expression" ):
                 listener.exitAssignment_expression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssignment_expression" ):
+                return visitor.visitAssignment_expression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2934,6 +3090,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitExponent" ):
                 listener.exitExponent(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExponent" ):
+                return visitor.visitExponent(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2998,6 +3160,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitMultiplicative" ):
                 listener.exitMultiplicative(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMultiplicative" ):
+                return visitor.visitMultiplicative(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3082,6 +3250,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitAdditive" ):
                 listener.exitAdditive(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAdditive" ):
+                return visitor.visitAdditive(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
     def additive(self, _p:int=0):
@@ -3155,6 +3329,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitMath_expression" ):
                 listener.exitMath_expression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMath_expression" ):
+                return visitor.visitMath_expression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -3198,6 +3378,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitLogical_opt" ):
                 listener.exitLogical_opt(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLogical_opt" ):
+                return visitor.visitLogical_opt(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3256,6 +3442,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitGame_entities_statement" ):
                 listener.exitGame_entities_statement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitGame_entities_statement" ):
+                return visitor.visitGame_entities_statement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3333,6 +3525,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPlayer_statement" ):
                 listener.exitPlayer_statement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPlayer_statement" ):
+                return visitor.visitPlayer_statement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3414,6 +3612,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitCondition_statement" ):
                 listener.exitCondition_statement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCondition_statement" ):
+                return visitor.visitCondition_statement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -3473,6 +3677,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitRule_statement" ):
                 listener.exitRule_statement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRule_statement" ):
+                return visitor.visitRule_statement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3587,6 +3797,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPiece_statement" ):
                 listener.exitPiece_statement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPiece_statement" ):
+                return visitor.visitPiece_statement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3853,6 +4069,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitBoard_statement" ):
                 listener.exitBoard_statement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBoard_statement" ):
+                return visitor.visitBoard_statement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4115,6 +4337,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitObstacle_statement" ):
                 listener.exitObstacle_statement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitObstacle_statement" ):
+                return visitor.visitObstacle_statement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4288,6 +4516,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitBooster_statement" ):
                 listener.exitBooster_statement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBooster_statement" ):
+                return visitor.visitBooster_statement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4430,6 +4664,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitMove_statement" ):
                 listener.exitMove_statement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMove_statement" ):
+                return visitor.visitMove_statement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4501,6 +4741,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitTurn_statement" ):
                 listener.exitTurn_statement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTurn_statement" ):
+                return visitor.visitTurn_statement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4565,6 +4811,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitIf_statement" ):
                 listener.exitIf_statement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIf_statement" ):
+                return visitor.visitIf_statement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -4658,6 +4910,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitFor_statement" ):
                 listener.exitFor_statement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFor_statement" ):
+                return visitor.visitFor_statement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4725,6 +4983,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitWhile_statement" ):
                 listener.exitWhile_statement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWhile_statement" ):
+                return visitor.visitWhile_statement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4785,6 +5049,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInput_statement" ):
                 listener.exitInput_statement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInput_statement" ):
+                return visitor.visitInput_statement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -4852,6 +5122,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitPrint_statement" ):
                 listener.exitPrint_statement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrint_statement" ):
+                return visitor.visitPrint_statement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4904,6 +5180,12 @@ class BoardGameParser ( Parser ):
             if hasattr( listener, "exitReturn_statement" ):
                 listener.exitReturn_statement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitReturn_statement" ):
+                return visitor.visitReturn_statement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -4955,6 +5237,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTimer_statement" ):
                 listener.exitTimer_statement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTimer_statement" ):
+                return visitor.visitTimer_statement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -5018,6 +5306,12 @@ class BoardGameParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitDice_statement" ):
                 listener.exitDice_statement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDice_statement" ):
+                return visitor.visitDice_statement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 

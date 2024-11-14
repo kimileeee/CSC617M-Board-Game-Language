@@ -12,9 +12,6 @@ class BoardGameParserVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by BoardGameParser#program.
     def visitProgram(self, ctx:BoardGameParser.ProgramContext):
         print("Creating a new board game...")
-
-        print(ctx)
-
         return self.visitChildren(ctx)
 
 
@@ -43,18 +40,18 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BoardGameParser#int_literal.
+    def visitInt_literal(self, ctx:BoardGameParser.Int_literalContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BoardGameParser#literal.
     def visitLiteral(self, ctx:BoardGameParser.LiteralContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#literal_list.
-    def visitLiteral_list(self, ctx:BoardGameParser.Literal_listContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#list_literal.
-    def visitList_literal(self, ctx:BoardGameParser.List_literalContext):
+    # Visit a parse tree produced by BoardGameParser#primary.
+    def visitPrimary(self, ctx:BoardGameParser.PrimaryContext):
         return self.visitChildren(ctx)
 
 
@@ -63,13 +60,23 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BoardGameParser#list.
+    def visitList(self, ctx:BoardGameParser.ListContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#object_access.
+    def visitObject_access(self, ctx:BoardGameParser.Object_accessContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BoardGameParser#board_pos.
     def visitBoard_pos(self, ctx:BoardGameParser.Board_posContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#conditional.
-    def visitConditional(self, ctx:BoardGameParser.ConditionalContext):
+    # Visit a parse tree produced by BoardGameParser#conditional_opt.
+    def visitConditional_opt(self, ctx:BoardGameParser.Conditional_optContext):
         return self.visitChildren(ctx)
 
 
@@ -78,8 +85,83 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BoardGameParser#base_expression.
+    def visitBase_expression(self, ctx:BoardGameParser.Base_expressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#objects.
+    def visitObjects(self, ctx:BoardGameParser.ObjectsContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#method_declaration.
+    def visitMethod_declaration(self, ctx:BoardGameParser.Method_declarationContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#method_call.
+    def visitMethod_call(self, ctx:BoardGameParser.Method_callContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#class_define_block.
+    def visitClass_define_block(self, ctx:BoardGameParser.Class_define_blockContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#class_statement.
+    def visitClass_statement(self, ctx:BoardGameParser.Class_statementContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BoardGameParser#conditional_expression.
     def visitConditional_expression(self, ctx:BoardGameParser.Conditional_expressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#in_expression.
+    def visitIn_expression(self, ctx:BoardGameParser.In_expressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#at_expression.
+    def visitAt_expression(self, ctx:BoardGameParser.At_expressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#any_expression.
+    def visitAny_expression(self, ctx:BoardGameParser.Any_expressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#assignment_expression.
+    def visitAssignment_expression(self, ctx:BoardGameParser.Assignment_expressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#exponent.
+    def visitExponent(self, ctx:BoardGameParser.ExponentContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#multiplicative.
+    def visitMultiplicative(self, ctx:BoardGameParser.MultiplicativeContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#additive.
+    def visitAdditive(self, ctx:BoardGameParser.AdditiveContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#math_expression.
+    def visitMath_expression(self, ctx:BoardGameParser.Math_expressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#logical_opt.
+    def visitLogical_opt(self, ctx:BoardGameParser.Logical_optContext):
         return self.visitChildren(ctx)
 
 
@@ -130,6 +212,46 @@ class BoardGameParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#turn_statement.
     def visitTurn_statement(self, ctx:BoardGameParser.Turn_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#if_statement.
+    def visitIf_statement(self, ctx:BoardGameParser.If_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#for_statement.
+    def visitFor_statement(self, ctx:BoardGameParser.For_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#while_statement.
+    def visitWhile_statement(self, ctx:BoardGameParser.While_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#input_statement.
+    def visitInput_statement(self, ctx:BoardGameParser.Input_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#print_statement.
+    def visitPrint_statement(self, ctx:BoardGameParser.Print_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#return_statement.
+    def visitReturn_statement(self, ctx:BoardGameParser.Return_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#timer_statement.
+    def visitTimer_statement(self, ctx:BoardGameParser.Timer_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#dice_statement.
+    def visitDice_statement(self, ctx:BoardGameParser.Dice_statementContext):
         return self.visitChildren(ctx)
 
 
