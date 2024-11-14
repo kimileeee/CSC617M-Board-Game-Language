@@ -143,6 +143,15 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BoardGameParser#base_expression.
+    def enterBase_expression(self, ctx:BoardGameParser.Base_expressionContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#base_expression.
+    def exitBase_expression(self, ctx:BoardGameParser.Base_expressionContext):
+        pass
+
+
     # Enter a parse tree produced by BoardGameParser#objects.
     def enterObjects(self, ctx:BoardGameParser.ObjectsContext):
         pass
@@ -152,12 +161,39 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BoardGameParser#method_declaration.
+    def enterMethod_declaration(self, ctx:BoardGameParser.Method_declarationContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#method_declaration.
+    def exitMethod_declaration(self, ctx:BoardGameParser.Method_declarationContext):
+        pass
+
+
     # Enter a parse tree produced by BoardGameParser#method_call.
     def enterMethod_call(self, ctx:BoardGameParser.Method_callContext):
         pass
 
     # Exit a parse tree produced by BoardGameParser#method_call.
     def exitMethod_call(self, ctx:BoardGameParser.Method_callContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#class_define_block.
+    def enterClass_define_block(self, ctx:BoardGameParser.Class_define_blockContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#class_define_block.
+    def exitClass_define_block(self, ctx:BoardGameParser.Class_define_blockContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#class_statement.
+    def enterClass_statement(self, ctx:BoardGameParser.Class_statementContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#class_statement.
+    def exitClass_statement(self, ctx:BoardGameParser.Class_statementContext):
         pass
 
 

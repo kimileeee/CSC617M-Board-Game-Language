@@ -7,7 +7,7 @@ program : GAME IDENTIFIER define_block+ gameplay_block
         ;
 
 define_block : DEFINE (IDENTIFIER | object_access) COLON code_block END
-             | DEFINE IDENTIFIER OPEN_PAR param_list CLOSE_PAR COLON code_block END
+             | method_declaration
              ;
 
 gameplay_block : START COLON code_block END
@@ -121,8 +121,18 @@ objects : IDENTIFIER
         | board_pos
         ;
 
+method_declaration : DEFINE IDENTIFIER OPEN_PAR param_list CLOSE_PAR COLON code_block END
+                   ;
+
 method_call : objects DOT IDENTIFIER OPEN_PAR param_list* CLOSE_PAR
             ;
+
+class_define_block : DEFINE IDENTIFIER COLON (class_statement)+ END
+                   ;
+
+class_statement : assignment_expression
+                | method_declaration
+                ;
 
 conditional_expression : primary conditional_opt primary
                        ;
