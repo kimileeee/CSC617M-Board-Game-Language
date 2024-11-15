@@ -42,6 +42,13 @@ class BoardGameParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#int_literal.
     def visitInt_literal(self, ctx:BoardGameParser.Int_literalContext):
+        try:
+            int_literal = int(ctx.getText())
+            print(type(ctx.getText()), type(int_literal))
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            raise
+        
         return self.visitChildren(ctx)
 
 
