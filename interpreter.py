@@ -2,12 +2,13 @@ from antlr4 import *
 from antlr_files.BoardGameLexer import BoardGameLexer
 from antlr_files.BoardGameParser import BoardGameParser
 from antlr_files.BoardGameVisitor import BoardGameVisitor
+from antlr_files.BoardGameInterpreter import BoardGameInterpreter
 from datetime import *
 import argparse
 
 def run_visitor(tree):
     # Initialize the visitor
-    visitor = BoardGameVisitor()
+    visitor = BoardGameInterpreter()
 
     # Visit the parse tree
     visitor.visit(tree)
