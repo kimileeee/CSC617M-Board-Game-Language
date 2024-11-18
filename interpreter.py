@@ -1,32 +1,22 @@
 from antlr4 import *
 from antlr_files.BoardGameLexer import BoardGameLexer
 from antlr_files.BoardGameParser import BoardGameParser
-from antlr_files.BoardGameParserVisitor import BoardGameParserVisitor
-from antlr_files.BoardGameParserListener import BoardGameParserListener
+from antlr_files.BoardGameVisitor import BoardGameVisitor
 from datetime import *
 import argparse
 
 def run_visitor(tree):
     # Initialize the visitor
-    visitor = BoardGameParserVisitor()
+    visitor = BoardGameVisitor()
 
     # Visit the parse tree
     visitor.visit(tree)
-
-def run_listener(tree):
-    # Initialize the listener
-    listener = BoardGameParserListener()
-
-    # Walk the parse tree with the listener
-    walker = ParseTreeWalker()
-    walker.walk(listener, tree)
-
 
 
 
 def main():
     argparser = argparse.ArgumentParser()
-    argparser.add_argument('-F', type=str, help='Your board game source code file', default='./samples/sample_chess.txt')
+    argparser.add_argument('-F', type=str, help='Your board game source code file', default='./samples/sample_checkers.txt')
     args = argparser.parse_args()
 
     with open(args.F, 'r') as file:
