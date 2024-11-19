@@ -18,8 +18,8 @@ def process_code(source_code):
     parser = BoardGameParser(token_stream)
 
     # Generate a parse tree by parsing the input
-    parse_tree = parser.expression()
-
+    parse_tree = parser.program()
+    
     # Create a custom listener
     listener = BoardGameParserListener()
 
