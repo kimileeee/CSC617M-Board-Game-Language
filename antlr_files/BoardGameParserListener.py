@@ -160,7 +160,8 @@ class BoardGameParserListener(ParseTreeListener):
         elif self.temp == "rules":
             self.rules.append(ctx.param_list())
         elif self.temp == "pieces":
-            self.pieces.append(ctx.param_list())
+            #do we assume that the order of the players is the order of what piece they get?
+            pass #modify this later on to handle how piece will be known
         elif self.temp == "obstacles":
             self.obstacles.append(ctx.param_list())
         elif self.temp == "boosters":
