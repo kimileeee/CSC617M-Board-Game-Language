@@ -561,47 +561,75 @@ class BoardGameParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+
+        def getRuleIndex(self):
+            return BoardGameParser.RULE_define_block
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class DefineContext(Define_blockContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Define_blockContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
         def DEFINE(self):
             return self.getToken(BoardGameParser.DEFINE, 0)
-
         def COLON(self):
             return self.getToken(BoardGameParser.COLON, 0)
-
         def code_block(self):
             return self.getTypedRuleContext(BoardGameParser.Code_blockContext,0)
 
-
         def END(self):
             return self.getToken(BoardGameParser.END, 0)
-
         def IDENTIFIER(self):
             return self.getToken(BoardGameParser.IDENTIFIER, 0)
-
         def object_access(self):
             return self.getTypedRuleContext(BoardGameParser.Object_accessContext,0)
 
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterDefine" ):
+                listener.enterDefine(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitDefine" ):
+                listener.exitDefine(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDefine" ):
+                return visitor.visitDefine(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class MethodDeclarationContext(Define_blockContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Define_blockContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
 
         def method_declaration(self):
             return self.getTypedRuleContext(BoardGameParser.Method_declarationContext,0)
 
 
-        def getRuleIndex(self):
-            return BoardGameParser.RULE_define_block
-
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterDefine_block" ):
-                listener.enterDefine_block(self)
+            if hasattr( listener, "enterMethodDeclaration" ):
+                listener.enterMethodDeclaration(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitDefine_block" ):
-                listener.exitDefine_block(self)
+            if hasattr( listener, "exitMethodDeclaration" ):
+                listener.exitMethodDeclaration(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitDefine_block" ):
-                return visitor.visitDefine_block(self)
+            if hasattr( visitor, "visitMethodDeclaration" ):
+                return visitor.visitMethodDeclaration(self)
             else:
                 return visitor.visitChildren(self)
-
 
 
 
@@ -614,6 +642,7 @@ class BoardGameParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,2,self._ctx)
             if la_ == 1:
+                localctx = BoardGameParser.DefineContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 107
                 self.match(BoardGameParser.DEFINE)
@@ -640,6 +669,7 @@ class BoardGameParser ( Parser ):
                 pass
 
             elif la_ == 2:
+                localctx = BoardGameParser.MethodDeclarationContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 116
                 self.method_declaration()
@@ -662,36 +692,45 @@ class BoardGameParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def START(self):
-            return self.getToken(BoardGameParser.START, 0)
-
-        def COLON(self):
-            return self.getToken(BoardGameParser.COLON, 0)
-
-        def code_block(self):
-            return self.getTypedRuleContext(BoardGameParser.Code_blockContext,0)
-
-
-        def END(self):
-            return self.getToken(BoardGameParser.END, 0)
 
         def getRuleIndex(self):
             return BoardGameParser.RULE_gameplay_block
 
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class GameplayContext(Gameplay_blockContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Gameplay_blockContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def START(self):
+            return self.getToken(BoardGameParser.START, 0)
+        def COLON(self):
+            return self.getToken(BoardGameParser.COLON, 0)
+        def code_block(self):
+            return self.getTypedRuleContext(BoardGameParser.Code_blockContext,0)
+
+        def END(self):
+            return self.getToken(BoardGameParser.END, 0)
+
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterGameplay_block" ):
-                listener.enterGameplay_block(self)
+            if hasattr( listener, "enterGameplay" ):
+                listener.enterGameplay(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitGameplay_block" ):
-                listener.exitGameplay_block(self)
+            if hasattr( listener, "exitGameplay" ):
+                listener.exitGameplay(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitGameplay_block" ):
-                return visitor.visitGameplay_block(self)
+            if hasattr( visitor, "visitGameplay" ):
+                return visitor.visitGameplay(self)
             else:
                 return visitor.visitChildren(self)
-
 
 
 
@@ -700,6 +739,7 @@ class BoardGameParser ( Parser ):
         localctx = BoardGameParser.Gameplay_blockContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_gameplay_block)
         try:
+            localctx = BoardGameParser.GameplayContext(self, localctx)
             self.enterOuterAlt(localctx, 1)
             self.state = 119
             self.match(BoardGameParser.START)
@@ -1159,36 +1199,111 @@ class BoardGameParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def int_literal(self):
-            return self.getTypedRuleContext(BoardGameParser.Int_literalContext,0)
-
-
-        def FLOAT_LITERAL(self):
-            return self.getToken(BoardGameParser.FLOAT_LITERAL, 0)
-
-        def STRING_LITERAL(self):
-            return self.getToken(BoardGameParser.STRING_LITERAL, 0)
-
-        def BOOLEAN_LITERAL(self):
-            return self.getToken(BoardGameParser.BOOLEAN_LITERAL, 0)
 
         def getRuleIndex(self):
             return BoardGameParser.RULE_literal
 
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class IntegerContext(LiteralContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.LiteralContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def int_literal(self):
+            return self.getTypedRuleContext(BoardGameParser.Int_literalContext,0)
+
+
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLiteral" ):
-                listener.enterLiteral(self)
+            if hasattr( listener, "enterInteger" ):
+                listener.enterInteger(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLiteral" ):
-                listener.exitLiteral(self)
+            if hasattr( listener, "exitInteger" ):
+                listener.exitInteger(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitLiteral" ):
-                return visitor.visitLiteral(self)
+            if hasattr( visitor, "visitInteger" ):
+                return visitor.visitInteger(self)
             else:
                 return visitor.visitChildren(self)
 
+
+    class FloatContext(LiteralContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.LiteralContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def FLOAT_LITERAL(self):
+            return self.getToken(BoardGameParser.FLOAT_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterFloat" ):
+                listener.enterFloat(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitFloat" ):
+                listener.exitFloat(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFloat" ):
+                return visitor.visitFloat(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class StringContext(LiteralContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.LiteralContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def STRING_LITERAL(self):
+            return self.getToken(BoardGameParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterString" ):
+                listener.enterString(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitString" ):
+                listener.exitString(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitString" ):
+                return visitor.visitString(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class BooleanContext(LiteralContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.LiteralContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def BOOLEAN_LITERAL(self):
+            return self.getToken(BoardGameParser.BOOLEAN_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterBoolean" ):
+                listener.enterBoolean(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitBoolean" ):
+                listener.exitBoolean(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBoolean" ):
+                return visitor.visitBoolean(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1201,21 +1316,25 @@ class BoardGameParser ( Parser ):
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [69, 70]:
+                localctx = BoardGameParser.IntegerContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 154
                 self.int_literal()
                 pass
             elif token in [71]:
+                localctx = BoardGameParser.FloatContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 155
                 self.match(BoardGameParser.FLOAT_LITERAL)
                 pass
             elif token in [72]:
+                localctx = BoardGameParser.StringContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 156
                 self.match(BoardGameParser.STRING_LITERAL)
                 pass
             elif token in [73]:
+                localctx = BoardGameParser.BooleanContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 157
                 self.match(BoardGameParser.BOOLEAN_LITERAL)

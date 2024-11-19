@@ -3,7 +3,7 @@ options {
     tokenVocab=BoardGameLexer;
 }
 
-program : GAME IDENTIFIER define_block+ gameplay_block                          # Program
+program : GAME IDENTIFIER define_block+ gameplay_block
         ;
 
 define_block : DEFINE (IDENTIFIER | object_access) COLON code_block END         # Define
@@ -61,8 +61,8 @@ literal : int_literal                           # Integer
 
 primary : literal
         | object_access
-        | list                                  # List
-        | IDENTIFIER                            # Identifier
+        | list                                  
+        | IDENTIFIER
         | OPEN_PAR expression CLOSE_PAR
         | method_call
 ;

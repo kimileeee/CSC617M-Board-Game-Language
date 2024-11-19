@@ -11,17 +11,21 @@ class BoardGameParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#program.
     def visitProgram(self, ctx:BoardGameParser.ProgramContext):
-        print("Creating a new board game...")
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#define_block.
-    def visitDefine_block(self, ctx:BoardGameParser.Define_blockContext):
+    # Visit a parse tree produced by BoardGameParser#Define.
+    def visitDefine(self, ctx:BoardGameParser.DefineContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#gameplay_block.
-    def visitGameplay_block(self, ctx:BoardGameParser.Gameplay_blockContext):
+    # Visit a parse tree produced by BoardGameParser#MethodDeclaration.
+    def visitMethodDeclaration(self, ctx:BoardGameParser.MethodDeclarationContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#Gameplay.
+    def visitGameplay(self, ctx:BoardGameParser.GameplayContext):
         return self.visitChildren(ctx)
 
 
@@ -42,18 +46,26 @@ class BoardGameParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#int_literal.
     def visitInt_literal(self, ctx:BoardGameParser.Int_literalContext):
-        try:
-            int_literal = int(ctx.getText())
-            print(type(ctx.getText()), type(int_literal))
-        except Exception as err:
-            print(f"Unexpected {err=}, {type(err)=}")
-            raise
-        
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#literal.
-    def visitLiteral(self, ctx:BoardGameParser.LiteralContext):
+    # Visit a parse tree produced by BoardGameParser#Integer.
+    def visitInteger(self, ctx:BoardGameParser.IntegerContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#Float.
+    def visitFloat(self, ctx:BoardGameParser.FloatContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#String.
+    def visitString(self, ctx:BoardGameParser.StringContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#Boolean.
+    def visitBoolean(self, ctx:BoardGameParser.BooleanContext):
         return self.visitChildren(ctx)
 
 

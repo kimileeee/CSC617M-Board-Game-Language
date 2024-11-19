@@ -64,10 +64,21 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     def visitInt_literal(self, ctx:BoardGameParser.Int_literalContext):
         return int(ctx.getText())
 
+    # Visit a parse tree produced by BoardGameParser#Integer.
+    def visitInteger(self, ctx:BoardGameParser.IntegerContext):
+        return int(ctx.getText())
 
-    # Visit a parse tree produced by BoardGameParser#literal.
-    def visitLiteral(self, ctx:BoardGameParser.LiteralContext):
-        return self.visitChildren(ctx)
+    # Visit a parse tree produced by BoardGameParser#Float.
+    def visitFloat(self, ctx:BoardGameParser.FloatContext):
+        return float(ctx.getText())
+
+    # Visit a parse tree produced by BoardGameParser#String.
+    def visitString(self, ctx:BoardGameParser.StringContext):
+        return str(ctx.getText())
+
+    # Visit a parse tree produced by BoardGameParser#Boolean.
+    def visitBoolean(self, ctx:BoardGameParser.BooleanContext):
+        return bool(ctx.getText())
 
     # Visit a parse tree produced by BoardGameParser#primary.
     def visitPrimary(self, ctx:BoardGameParser.PrimaryContext):
@@ -134,28 +145,41 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#expression.
     def visitExpression(self, ctx:BoardGameParser.ExpressionContext):
-        l = self.visit(ctx.left)
-        r = self.visit(ctx.right)
+        # l = self.visit(ctx.base_expression())
+        print("-0", ctx.getChild(0).getText())
+        
+        l = self.visit(ctx.getChild(0))
 
-        if ctx.logical_opt().text == BoardGameLexer.symbolicNames[BoardGameLexer.AND_OPT]:
-            return l and r
-        else:
-            return l or r
+        if ctx.logical_opt():
+            print("-", ctx.logical_opt().getText(), ctx.getChild(2).getText())
+            r = self.visit(ctx.getChild(2))
+
+            if ctx.logical_opt().getText() == BoardGameLexer.symbolicNames[BoardGameLexer.AND_OPT]:
+                return l and r
+            else:
+                return l or r
+
+        # else:
+        #     print("-1", ctx.getChild(1).getText())
+        #     r = self.visit(ctx.getChild(1))
 
     # Visit a parse tree produced by BoardGameParser#conditional_expression.
     def visitConditional_expression(self, ctx:BoardGameParser.Conditional_expressionContext):
-        l = self.visit(ctx.left)
-        r = self.visit(ctx.right)
+        print(ctx.getText())
+        print(len(ctx.children))
 
-        if ctx.conditional_opt().text == BoardGameLexer.symbolicNames[BoardGameLexer.EQUAL_OPT]:
+        l = self.visit(ctx.getChild(0))
+        r = self.visit(ctx.getChild(2))
+
+        if ctx.conditional_opt().getText() == BoardGameLexer.symbolicNames[BoardGameLexer.EQUAL_OPT]:
             return l == r
-        elif ctx.conditional_opt().text == BoardGameLexer.symbolicNames[BoardGameLexer.LESS_THAN_OPT]:
+        elif ctx.conditional_opt().getText() == BoardGameLexer.symbolicNames[BoardGameLexer.LESS_THAN_OPT]:
             return l < r
-        elif ctx.conditional_opt().text == BoardGameLexer.symbolicNames[BoardGameLexer.LESS_EQUAL_OPT]:
+        elif ctx.conditional_opt().getText() == BoardGameLexer.symbolicNames[BoardGameLexer.LESS_EQUAL_OPT]:
             return l <= r
-        elif ctx.conditional_opt().text == BoardGameLexer.symbolicNames[BoardGameLexer.GREATER_THAN_OPT]:
+        elif ctx.conditional_opt().getText() == BoardGameLexer.symbolicNames[BoardGameLexer.GREATER_THAN_OPT]:
             return l > r
-        elif ctx.conditional_opt().text == BoardGameLexer.symbolicNames[BoardGameLexer.GREATER_EQUAL_OPT]:
+        elif ctx.conditional_opt().getText() == BoardGameLexer.symbolicNames[BoardGameLexer.GREATER_EQUAL_OPT]:
             return l >= r
         
         return self.visitChildren(ctx)
@@ -163,8 +187,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#in_expression.
     def visitIn_expression(self, ctx:BoardGameParser.In_expressionContext):
-        l = self.visit(ctx.left)
-        r = self.visit(ctx.right)
+        l = self.visit(ctx.getChild(0))
+        r = self.visit(ctx.getChild(2))
 
         for item in r:
             if item == l:
@@ -175,24 +199,21 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#at_expression.
     def visitAt_expression(self, ctx:BoardGameParser.At_expressionContext):
-        l = self.visit(ctx.left)
-        r = self.visit(ctx.right)
+        l = self.visit(ctx.getChild(0))
+        r = self.visit(ctx.getChild(2))
         
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by BoardGameParser#any_expression.
     def visitAny_expression(self, ctx:BoardGameParser.Any_expressionContext):
-        l = self.visit(ctx.left)
-        r = self.visit(ctx.right)
-        
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by BoardGameParser#assignment_expression.
     def visitAssignment_expression(self, ctx:BoardGameParser.Assignment_expressionContext):
-        l = self.visit(ctx.left)
-        r = self.visit(ctx.right)
+        l = self.visit(ctx.getChild(0))
+        r = self.visit(ctx.getChild(2))
         
         return self.visitChildren(ctx)
 
@@ -219,8 +240,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#additive.
     def visitAdditive(self, ctx:BoardGameParser.AdditiveContext):
-        l = self.visit(ctx.left)
-        r = self.visit(ctx.right)
+        l = self.visit(ctx.getChild(0))
+        r = self.visit(ctx.getChild(2))
 
         if ctx.ADD_OPT.text:
             return l + r
