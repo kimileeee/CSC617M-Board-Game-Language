@@ -1,36 +1,47 @@
-# Generated from BoardGameParser.g4 by ANTLR 4.13.2
-from antlr4 import *
-if "." in __name__:
-    from .BoardGameParser import BoardGameParser
-else:
-    from BoardGameParser import BoardGameParser
+from antlr_files.BoardGameLexer import BoardGameLexer
+from antlr_files.BoardGameParser import BoardGameParser
+from antlr_files.BoardGameParserVisitor import BoardGameParserVisitor
 
-# This class defines a complete generic visitor for a parse tree produced by BoardGameParser.
+class BoardGameInterpreter(BoardGameParserVisitor):
 
-class BoardGameParserVisitor(ParseTreeVisitor):
+    def __init__(self) -> None:
+        super(BoardGameParserVisitor, self).__init__()
+        self.res = {}
 
-    # Visit a parse tree produced by BoardGameParser#program.
     def visitProgram(self, ctx:BoardGameParser.ProgramContext):
+        # GAME IDENTIFIER define_block+ gameplay_block
+        GAME_NAME = ctx.IDENTIFIER()
+        print("Creating a new board game...")
+        print(f"Game name: {GAME_NAME}\n")
+
         return self.visitChildren(ctx)
+    
+    # Visit a parse tree produced by BoardGameParser#define_block.
+    def visitDefine_block(self, ctx:BoardGameParser.Define_blockContext):
+
+        if(ctx.IDENTIFIER()):               # Initializing game settings
+            print(ctx.IDENTIFIER())
+            self.visitChildren(ctx)
+
+        else:                               # Specifying game conditions
+            print(ctx.object_access().getText())
+            self.visitChildren(ctx)
+        
+        print("\n")
+        # print(ctx.IDENTIFIER(), ctx.object_access())
+        # print(f"Children of define_block: {[child.getText() for child in ctx.children]}")
 
 
-    # Visit a parse tree produced by BoardGameParser#Define.
-    def visitDefine(self, ctx:BoardGameParser.DefineContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#MethodDeclaration.
-    def visitMethodDeclaration(self, ctx:BoardGameParser.MethodDeclarationContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#Gameplay.
-    def visitGameplay(self, ctx:BoardGameParser.GameplayContext):
+    # Visit a parse tree produced by BoardGameParser#gameplay_block.
+    def visitGameplay_block(self, ctx:BoardGameParser.Gameplay_blockContext):
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by BoardGameParser#code_block.
     def visitCode_block(self, ctx:BoardGameParser.Code_blockContext):
+        # for c in ctx.children:
+        #     print(type(c), c)
+
         return self.visitChildren(ctx)
 
 
@@ -41,38 +52,37 @@ class BoardGameParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#game_entities.
     def visitGame_entities(self, ctx:BoardGameParser.Game_entitiesContext):
+
         return self.visitChildren(ctx)
 
+
+    ########################
+    ###     LITERALS     ###
+    ########################
 
     # Visit a parse tree produced by BoardGameParser#int_literal.
     def visitInt_literal(self, ctx:BoardGameParser.Int_literalContext):
-        return self.visitChildren(ctx)
-
+        return int(ctx.getText())
 
     # Visit a parse tree produced by BoardGameParser#Integer.
     def visitInteger(self, ctx:BoardGameParser.IntegerContext):
-        return self.visitChildren(ctx)
-
+        return int(ctx.getText())
 
     # Visit a parse tree produced by BoardGameParser#Float.
     def visitFloat(self, ctx:BoardGameParser.FloatContext):
-        return self.visitChildren(ctx)
-
+        return float(ctx.getText())
 
     # Visit a parse tree produced by BoardGameParser#String.
     def visitString(self, ctx:BoardGameParser.StringContext):
-        return self.visitChildren(ctx)
-
+        return str(ctx.getText())
 
     # Visit a parse tree produced by BoardGameParser#Boolean.
     def visitBoolean(self, ctx:BoardGameParser.BooleanContext):
-        return self.visitChildren(ctx)
-
+        return bool(ctx.getText())
 
     # Visit a parse tree produced by BoardGameParser#primary.
     def visitPrimary(self, ctx:BoardGameParser.PrimaryContext):
         return self.visitChildren(ctx)
-
 
     # Visit a parse tree produced by BoardGameParser#param_list.
     def visitParam_list(self, ctx:BoardGameParser.Param_listContext):
@@ -96,11 +106,6 @@ class BoardGameParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#conditional_opt.
     def visitConditional_opt(self, ctx:BoardGameParser.Conditional_optContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#expression.
-    def visitExpression(self, ctx:BoardGameParser.ExpressionContext):
         return self.visitChildren(ctx)
 
 
@@ -134,18 +139,69 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    ###########################
+    ###     EXPRESSIONS     ###
+    ###########################
+
+    # Visit a parse tree produced by BoardGameParser#expression.
+    def visitExpression(self, ctx:BoardGameParser.ExpressionContext):
+        # l = self.visit(ctx.base_expression())
+        print("-0", ctx.getChild(0).getText())
+        
+        l = self.visit(ctx.getChild(0))
+
+        if ctx.logical_opt():
+            print("-", ctx.logical_opt().getText(), ctx.getChild(2).getText())
+            r = self.visit(ctx.getChild(2))
+
+            if ctx.logical_opt().getText() == BoardGameLexer.symbolicNames[BoardGameLexer.AND_OPT]:
+                return l and r
+            else:
+                return l or r
+
+        # else:
+        #     print("-1", ctx.getChild(1).getText())
+        #     r = self.visit(ctx.getChild(1))
+
     # Visit a parse tree produced by BoardGameParser#conditional_expression.
     def visitConditional_expression(self, ctx:BoardGameParser.Conditional_expressionContext):
+        print(ctx.getText())
+        print(len(ctx.children))
+
+        l = self.visit(ctx.getChild(0))
+        r = self.visit(ctx.getChild(2))
+
+        if ctx.conditional_opt().getText() == BoardGameLexer.symbolicNames[BoardGameLexer.EQUAL_OPT]:
+            return l == r
+        elif ctx.conditional_opt().getText() == BoardGameLexer.symbolicNames[BoardGameLexer.LESS_THAN_OPT]:
+            return l < r
+        elif ctx.conditional_opt().getText() == BoardGameLexer.symbolicNames[BoardGameLexer.LESS_EQUAL_OPT]:
+            return l <= r
+        elif ctx.conditional_opt().getText() == BoardGameLexer.symbolicNames[BoardGameLexer.GREATER_THAN_OPT]:
+            return l > r
+        elif ctx.conditional_opt().getText() == BoardGameLexer.symbolicNames[BoardGameLexer.GREATER_EQUAL_OPT]:
+            return l >= r
+        
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by BoardGameParser#in_expression.
     def visitIn_expression(self, ctx:BoardGameParser.In_expressionContext):
-        return self.visitChildren(ctx)
+        l = self.visit(ctx.getChild(0))
+        r = self.visit(ctx.getChild(2))
+
+        for item in r:
+            if item == l:
+                return True
+        
+        return False
 
 
     # Visit a parse tree produced by BoardGameParser#at_expression.
     def visitAt_expression(self, ctx:BoardGameParser.At_expressionContext):
+        l = self.visit(ctx.getChild(0))
+        r = self.visit(ctx.getChild(2))
+        
         return self.visitChildren(ctx)
 
 
@@ -156,22 +212,41 @@ class BoardGameParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#assignment_expression.
     def visitAssignment_expression(self, ctx:BoardGameParser.Assignment_expressionContext):
+        l = self.visit(ctx.getChild(0))
+        r = self.visit(ctx.getChild(2))
+        
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by BoardGameParser#exponent.
     def visitExponent(self, ctx:BoardGameParser.ExponentContext):
-        return self.visitChildren(ctx)
+        l = self.visit(ctx.left)
+        r = self.visit(ctx.right)
 
+        if ctx.EXP_OPT.text:
+            return l ** r
 
     # Visit a parse tree produced by BoardGameParser#multiplicative.
     def visitMultiplicative(self, ctx:BoardGameParser.MultiplicativeContext):
-        return self.visitChildren(ctx)
+        l = self.visit(ctx.left)
+        r = self.visit(ctx.right)
 
+        if ctx.MUL_OPT.text:
+            return l * r
+        elif ctx.DIV_OPT.text:
+            if r == 0:
+                raise ZeroDivisionError
+            return l / r
 
     # Visit a parse tree produced by BoardGameParser#additive.
     def visitAdditive(self, ctx:BoardGameParser.AdditiveContext):
-        return self.visitChildren(ctx)
+        l = self.visit(ctx.getChild(0))
+        r = self.visit(ctx.getChild(2))
+
+        if ctx.ADD_OPT.text:
+            return l + r
+        elif ctx.SUB_OPT.text:
+            return l - r
 
 
     # Visit a parse tree produced by BoardGameParser#math_expression.
@@ -182,15 +257,51 @@ class BoardGameParserVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by BoardGameParser#logical_opt.
     def visitLogical_opt(self, ctx:BoardGameParser.Logical_optContext):
         return self.visitChildren(ctx)
-
+    
+    
+    ##########################
+    ###     STATEMENTS     ###
+    ##########################
 
     # Visit a parse tree produced by BoardGameParser#game_entities_statement.
     def visitGame_entities_statement(self, ctx:BoardGameParser.Game_entities_statementContext):
-        return self.visitChildren(ctx)
+        game_entity = ctx.game_entities().getText()
+        
+        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.BOARD]:
+            print("Setting up board")
+
+        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.GAME]:
+            print("Setting up game")
+
+        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.PLAYERS]:
+            print("Setting up players")
+
+        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.CONDITIONS]:
+            print("Setting up conditions")
+
+        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.RULES]:
+            print("Setting up rules")
+
+        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.PIECES]:
+            print("Setting up pieces")
+
+        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.OBSTACLES]:
+            print("Setting up obstacles")
+
+        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.BOOSTERS]:
+            print("Setting up boosters")
+
+        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.COLOR]:
+            print("Setting up color")
+
+        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.SCORE]:
+            print("Setting up score")
+
 
 
     # Visit a parse tree produced by BoardGameParser#player_statement.
     def visitPlayer_statement(self, ctx:BoardGameParser.Player_statementContext):
+        print(ctx.getText())
         return self.visitChildren(ctx)
 
 
@@ -232,6 +343,15 @@ class BoardGameParserVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by BoardGameParser#turn_statement.
     def visitTurn_statement(self, ctx:BoardGameParser.Turn_statementContext):
         return self.visitChildren(ctx)
+    
+    # Visit a parse tree produced by BoardGameParser#timer_statement.
+    def visitTimer_statement(self, ctx:BoardGameParser.Timer_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#dice_statement.
+    def visitDice_statement(self, ctx:BoardGameParser.Dice_statementContext):
+        return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by BoardGameParser#if_statement.
@@ -262,17 +382,3 @@ class BoardGameParserVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by BoardGameParser#return_statement.
     def visitReturn_statement(self, ctx:BoardGameParser.Return_statementContext):
         return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#timer_statement.
-    def visitTimer_statement(self, ctx:BoardGameParser.Timer_statementContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#dice_statement.
-    def visitDice_statement(self, ctx:BoardGameParser.Dice_statementContext):
-        return self.visitChildren(ctx)
-
-
-
-del BoardGameParser

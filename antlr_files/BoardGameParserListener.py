@@ -130,12 +130,39 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#literal.
-    def enterLiteral(self, ctx:BoardGameParser.LiteralContext):
+    # Enter a parse tree produced by BoardGameParser#Integer.
+    def enterInteger(self, ctx:BoardGameParser.IntegerContext):
         pass
 
-    # Exit a parse tree produced by BoardGameParser#literal.
-    def exitLiteral(self, ctx:BoardGameParser.LiteralContext):
+    # Exit a parse tree produced by BoardGameParser#Integer.
+    def exitInteger(self, ctx:BoardGameParser.IntegerContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#Float.
+    def enterFloat(self, ctx:BoardGameParser.FloatContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#Float.
+    def exitFloat(self, ctx:BoardGameParser.FloatContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#String.
+    def enterString(self, ctx:BoardGameParser.StringContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#String.
+    def exitString(self, ctx:BoardGameParser.StringContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#Boolean.
+    def enterBoolean(self, ctx:BoardGameParser.BooleanContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#Boolean.
+    def exitBoolean(self, ctx:BoardGameParser.BooleanContext):
         pass
 
 

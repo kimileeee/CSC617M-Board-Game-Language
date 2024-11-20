@@ -7,25 +7,20 @@ else:
 
 # This class defines a complete generic visitor for a parse tree produced by BoardGameParser.
 
-class BoardGameParserVisitor(ParseTreeVisitor):
+class BoardGameVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#program.
     def visitProgram(self, ctx:BoardGameParser.ProgramContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#Define.
-    def visitDefine(self, ctx:BoardGameParser.DefineContext):
+    # Visit a parse tree produced by BoardGameParser#define_block.
+    def visitDefine_block(self, ctx:BoardGameParser.Define_blockContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#MethodDeclaration.
-    def visitMethodDeclaration(self, ctx:BoardGameParser.MethodDeclarationContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#Gameplay.
-    def visitGameplay(self, ctx:BoardGameParser.GameplayContext):
+    # Visit a parse tree produced by BoardGameParser#gameplay_block.
+    def visitGameplay_block(self, ctx:BoardGameParser.Gameplay_blockContext):
         return self.visitChildren(ctx)
 
 
@@ -49,23 +44,8 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#Integer.
-    def visitInteger(self, ctx:BoardGameParser.IntegerContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#Float.
-    def visitFloat(self, ctx:BoardGameParser.FloatContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#String.
-    def visitString(self, ctx:BoardGameParser.StringContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#Boolean.
-    def visitBoolean(self, ctx:BoardGameParser.BooleanContext):
+    # Visit a parse tree produced by BoardGameParser#literal.
+    def visitLiteral(self, ctx:BoardGameParser.LiteralContext):
         return self.visitChildren(ctx)
 
 

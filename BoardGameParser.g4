@@ -6,11 +6,11 @@ options {
 program : GAME IDENTIFIER define_block+ gameplay_block
         ;
 
-define_block : DEFINE (IDENTIFIER | object_access) COLON code_block END
-             | method_declaration
+define_block : DEFINE (IDENTIFIER | object_access) COLON code_block END         # Define
+             | method_declaration                                               # MethodDeclaration
              ;
 
-gameplay_block : START COLON code_block END
+gameplay_block : START COLON code_block END                                     # Gameplay
                ;
 
 code_block  : (statement)+ //person should have at least one or more statements when creating code
@@ -53,19 +53,19 @@ int_literal : POSITIVE_INT_LITERAL
             | NEGATIVE_INT_LITERAL
             ;
 
-literal : int_literal
-        | FLOAT_LITERAL
-        | STRING_LITERAL
-        | BOOLEAN_LITERAL
+literal : int_literal                           # Integer
+        | FLOAT_LITERAL                         # Float
+        | STRING_LITERAL                        # String
+        | BOOLEAN_LITERAL                       # Boolean
         ;
 
-        primary : literal
-                | object_access
-                | list
-                | IDENTIFIER
-                | OPEN_PAR expression CLOSE_PAR
-                | method_call
-        ;
+primary : literal
+        | object_access
+        | list                                  
+        | IDENTIFIER
+        | OPEN_PAR expression CLOSE_PAR
+        | method_call
+;
 
 param_list : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR
            | (ALL | ANY | NONE) COMMA param_list
