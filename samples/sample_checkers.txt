@@ -1,13 +1,13 @@
 GAME checkers
 
 DEFINE checkers:
+     BOARD (8, 8, "checker")
      PLAYERS (me, you) 
      CONDITIONS (ANY)
      RULES (ALL)
      PIECES (regular, king)
      OBSTACLES (NONE)
      BOOSTERS (NONE)
-     BOARD (8, 8, layout_here)
      TIMER(1800)
 END
 

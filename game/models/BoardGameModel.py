@@ -1,51 +1,5 @@
-class Board:
-    def __init__(self, rows, cols, default_value=None):
-        """Create a game board of specified dimensions with a default value."""
-        self.rows = rows
-        self.cols = cols
-        self.board = [[default_value for _ in range(cols)] for _ in range(rows)]
-
-    def display(self):
-        """Print the game board."""
-        for row in self.board:
-            print(" | ".join(str(cell or ".") for cell in row))
-        print("\n")
-
-    def set_cell(self, row, col, value):
-        """Set the value of a cell on the board."""
-        self.board[row][col] = value
-
-    def get_cell(self, row, col):
-        """Get the value of a cell on the board."""
-        return self.board[row][col]
-
-class Player:
-    def __init__(self, name, symbol):
-        """Initialize a player with a name and a symbol (e.g., 'X' or 'O')."""
-        self.name = name
-        self.symbol = symbol
-        self.pieces = []
-
-    def add_piece(self, piece):
-        """Add a piece to the player's list of pieces."""
-        self.pieces.append(piece)
-
-    def move_piece(self, piece, new_row, new_col):
-        """Move a piece owned by the player."""
-        piece.move(new_row, new_col)
-
-class Piece:
-    def __init__(self, name, row, col, symbol):
-        """Create a piece with a name, initial position (row, col), and symbol."""
-        self.name = name
-        self.row = row
-        self.col = col
-        self.symbol = symbol
-
-    def move(self, new_row, new_col):
-        """Move the piece to a new position on the board."""
-        self.row = new_row
-        self.col = new_col
+from game.models.BoardModel import Board, BoardType
+from game.models.PlayerModel import Player
 
 class BoardGame:
     def __init__(self, name):
@@ -58,14 +12,22 @@ class BoardGame:
         self.turn_order = []
         self.current_turn = 0
 
-    def set_board(self, rows, cols, default_value=None):
+    def set_board(self, rows, cols, type=BoardType.STANDARD.value):
         """Set up the game board."""
-        self.board = Board(rows, cols, default_value)
+        self.board = Board(rows, cols, type)
+
+    def display_board(self):
+        """Display the game board."""
+        self.board.display()
 
     def add_player(self, name, symbol):
         """Add a player to the game."""
         player = Player(name, symbol)
         self.players.append(player)
+
+    def get_player(self, name):
+        """Get a player by name."""
+        return next(p for p in self.players if p.name == name)
 
     def add_piece(self, player_name, piece_name, row, col, symbol):
         """Add a piece to a player's collection of pieces."""
@@ -100,6 +62,20 @@ class BoardGame:
     def display_board(self):
         """Print the game board."""
         self.board.display()
+
+class Piece:
+    def __init__(self, name, row, col, symbol):
+        """Create a piece with a name, initial position (row, col), and symbol."""
+        self.name = name
+        self.row = row
+        self.col = col
+        self.symbol = symbol
+
+    def move(self, new_row, new_col):
+        """Move the piece to a new position on the board."""
+        self.row = new_row
+        self.col = new_col
+
 
 # Example: Define a Game of Tic-Tac-Toe
 def tic_tac_toe_example():

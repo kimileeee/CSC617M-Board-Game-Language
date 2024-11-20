@@ -1,24 +1,27 @@
 from antlr_files.BoardGameLexer import BoardGameLexer
 from antlr_files.BoardGameParser import BoardGameParser
 from antlr_files.BoardGameParserVisitor import BoardGameParserVisitor
+# from game.Controller import Controler
+from game.models.BoardGameModel import BoardGame
 
 class BoardGameInterpreter(BoardGameParserVisitor):
 
     def __init__(self) -> None:
         super(BoardGameParserVisitor, self).__init__()
         self.res = {}
+        self.game = None
 
     def visitProgram(self, ctx:BoardGameParser.ProgramContext):
         # GAME IDENTIFIER define_block+ gameplay_block
         GAME_NAME = ctx.IDENTIFIER()
         print("Creating a new board game...")
-        print(f"Game name: {GAME_NAME}\n")
+        self.game = BoardGame(GAME_NAME)
+        print(f"Game name: {self.game.name}\n")
 
         return self.visitChildren(ctx)
     
     # Visit a parse tree produced by BoardGameParser#define_block.
     def visitDefine_block(self, ctx:BoardGameParser.Define_blockContext):
-
         if(ctx.IDENTIFIER()):               # Initializing game settings
             print(ctx.IDENTIFIER())
             self.visitChildren(ctx)
@@ -74,7 +77,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#String.
     def visitString(self, ctx:BoardGameParser.StringContext):
-        return str(ctx.getText())
+        return str(ctx.getText().strip('"'))
 
     # Visit a parse tree produced by BoardGameParser#Boolean.
     def visitBoolean(self, ctx:BoardGameParser.BooleanContext):
@@ -84,9 +87,67 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     def visitPrimary(self, ctx:BoardGameParser.PrimaryContext):
         return self.visitChildren(ctx)
 
-    # Visit a parse tree produced by BoardGameParser#param_list.
-    def visitParam_list(self, ctx:BoardGameParser.Param_listContext):
+    # Visit a parse tree produced by BoardGameParser#ScoreParam.
+    def visitScoreParam(self, ctx:BoardGameParser.ScoreParamContext):
         return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#AllAnyNoneParam.
+    def visitAllAnyNoneParam(self, ctx:BoardGameParser.AllAnyNoneParamContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#AssignmentParam.
+    def visitAssignmentParam(self, ctx:BoardGameParser.AssignmentParamContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#VariableParam.
+    def visitVariableParam(self, ctx:BoardGameParser.VariableParamContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#LiteralParam.
+    def visitLiteralParam(self, ctx:BoardGameParser.LiteralParamContext):
+        val = self.visit(ctx.literal())
+        params_list = []
+        params_list.append(val)
+
+        others = self.visit(ctx.param_list())
+        
+        return params_list + others
+
+
+    # Visit a parse tree produced by BoardGameParser#ObjectAccessParam.
+    def visitObjectAccessParam(self, ctx:BoardGameParser.ObjectAccessParamContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#ListLiteralParam.
+    def visitListLiteralParam(self, ctx:BoardGameParser.ListLiteralParamContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#SingleParam.
+    def visitSingleParam(self, ctx:BoardGameParser.SingleParamContext):
+        params_list = []
+        
+        if ctx.ALL():
+            params_list.append("ALL") #TODO: Implement this
+        elif ctx.ANY():
+            params_list.append("ANY") #TODO: Implement this
+        elif ctx.NONE():
+            params_list.append("NONE") #TODO: Implement this
+        elif ctx.IDENTIFIER():
+            params_list.append(ctx.IDENTIFIER().getText()) #TODO: Implement this
+        elif ctx.literal():
+            params_list.append(self.visit(ctx.literal()))
+        elif ctx.object_access():
+            params_list.append(self.visit(ctx.object_access())) #TODO: Implement this
+        elif ctx.list_():
+            params_list.append(self.visit(ctx.list_())) #TODO: Implement this
+
+        return params_list
 
 
     # Visit a parse tree produced by BoardGameParser#list.
@@ -248,7 +309,6 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         elif ctx.SUB_OPT.text:
             return l - r
 
-
     # Visit a parse tree produced by BoardGameParser#math_expression.
     def visitMath_expression(self, ctx:BoardGameParser.Math_expressionContext):
         return self.visitChildren(ctx)
@@ -268,34 +328,41 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         game_entity = ctx.game_entities().getText()
         
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.BOARD]:
-            print("Setting up board")
+            print("\nSetting up board")
+            params_list = self.visit(ctx.param_list())
+            
+            # for param in params_list:
+            #     print(param, type(param))
+
+            self.game.set_board(params_list[0], params_list[1], params_list[2])
+            self.game.display_board()
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.GAME]:
-            print("Setting up game")
+            print("\nSetting up game")
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.PLAYERS]:
-            print("Setting up players")
+            print("\nSetting up players")
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.CONDITIONS]:
-            print("Setting up conditions")
+            print("\nSetting up conditions")
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.RULES]:
-            print("Setting up rules")
+            print("\nSetting up rules")
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.PIECES]:
-            print("Setting up pieces")
+            print("\nSetting up pieces")
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.OBSTACLES]:
-            print("Setting up obstacles")
+            print("\nSetting up obstacles")
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.BOOSTERS]:
-            print("Setting up boosters")
+            print("\nSetting up boosters")
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.COLOR]:
-            print("Setting up color")
+            print("\nSetting up color")
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.SCORE]:
-            print("Setting up score")
+            print("\nSetting up score")
 
 
 
