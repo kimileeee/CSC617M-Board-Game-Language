@@ -16,7 +16,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         GAME_NAME = ctx.IDENTIFIER()
         print("Creating a new board game...")
         self.game = BoardGame(GAME_NAME)
-        print(f"Game name: {self.game.name}\n")
+        print(f"Game name: {self.game.name}")
 
         return self.visitChildren(ctx)
     
@@ -94,7 +94,20 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#AllAnyNoneParam.
     def visitAllAnyNoneParam(self, ctx:BoardGameParser.AllAnyNoneParamContext):
-        return self.visitChildren(ctx)
+        val = None
+        if ctx.ALL():
+            val = "ALL"
+        elif ctx.ANY():
+            val = "ANY"
+        elif ctx.NONE():
+            val = "NONE"
+
+        params_list = []
+        params_list.append(val)
+
+        others = self.visit(ctx.param_list())
+        
+        return params_list + others
 
 
     # Visit a parse tree produced by BoardGameParser#AssignmentParam.
@@ -104,7 +117,14 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#VariableParam.
     def visitVariableParam(self, ctx:BoardGameParser.VariableParamContext):
-        return self.visitChildren(ctx)
+        val = ctx.IDENTIFIER().getText() # TODO: how to make it a variable/access the variable
+        print(val)
+        params_list = []
+        params_list.append(val)
+
+        others = self.visit(ctx.param_list())
+        
+        return params_list + others
 
 
     # Visit a parse tree produced by BoardGameParser#LiteralParam.
@@ -326,25 +346,44 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     # Visit a parse tree produced by BoardGameParser#game_entities_statement.
     def visitGame_entities_statement(self, ctx:BoardGameParser.Game_entities_statementContext):
         game_entity = ctx.game_entities().getText()
-        
-        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.BOARD]:
-            print("\nSetting up board")
-            params_list = self.visit(ctx.param_list())
-            
-            # for param in params_list:
-            #     print(param, type(param))
-
-            self.game.set_board(params_list[0], params_list[1], params_list[2])
-            self.game.display_board()
+        params_list = self.visit(ctx.param_list())
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.GAME]:
             print("\nSetting up game")
+        
+        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.BOARD]:
+            print("\nSetting up board")
+            
+            print("Params list:")
+            for param in params_list:
+                print(param, type(param))
+
+            if len(params_list) == 2:
+                self.game.set_board(params_list[0], params_list[1])
+            else:
+                self.game.set_board(params_list[0], params_list[1], params_list[2])
+            self.game.display_board()
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.PLAYERS]:
             print("\nSetting up players")
 
+            print("Params list:")
+            for param in params_list:
+                print(param, type(param))
+                self.game.add_player(param)
+
+            self.game.display_all_players()
+
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.CONDITIONS]:
             print("\nSetting up conditions")
+
+            print("Params list:")
+            for param in params_list:
+                print(param, type(param))
+            
+            self.game.set_win_condition(params_list[0])
+
+            self.game.display_win_condition()
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.RULES]:
             print("\nSetting up rules")
@@ -363,7 +402,6 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.SCORE]:
             print("\nSetting up score")
-
 
 
     # Visit a parse tree produced by BoardGameParser#player_statement.

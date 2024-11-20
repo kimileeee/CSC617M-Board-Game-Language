@@ -1,12 +1,14 @@
 from game.models.BoardModel import Board, BoardType
 from game.models.PlayerModel import Player
+from game.models.ConditionModel import Condition
 
 class BoardGame:
-    def __init__(self, name):
+    def __init__(self, name: str):
         """Initialize the board game with a name."""
         self.name = name
         self.board = None
         self.players = []
+        self.win_condition = None
         self.pieces = []
         self.rules = []
         self.turn_order = []
@@ -20,14 +22,31 @@ class BoardGame:
         """Display the game board."""
         self.board.display()
 
-    def add_player(self, name, symbol):
+    def add_player(self, name):
         """Add a player to the game."""
-        player = Player(name, symbol)
+        player = Player(name)
         self.players.append(player)
 
     def get_player(self, name):
         """Get a player by name."""
         return next(p for p in self.players if p.name == name)
+    
+    def get_players(self):
+        """Get all players."""
+        return self.players
+    
+    def display_all_players(self):
+        """Display all players."""
+        for player in self.players:
+            print(player)
+
+    def set_win_condition(self, condition):
+        """Set the win condition for the game."""
+        self.win_condition = condition
+
+    def display_win_condition(self):
+        """Display the win condition."""
+        print(self.win_condition)
 
     def add_piece(self, player_name, piece_name, row, col, symbol):
         """Add a piece to a player's collection of pieces."""

@@ -11,7 +11,7 @@ class BoardType(Enum):
 class Board:
     """Represents a game board."""
     
-    def __init__(self, rows, cols, board_type=BoardType.STANDARD.value):
+    def __init__(self, rows: int, cols: int, board_type: str=BoardType.STANDARD.value):
         """
         Initialize the board.
 

@@ -1,13 +1,13 @@
 GAME snakes_and_ladders
 
 DEFINE snakes_and_ladders:
+    BOARD (10, 10, "zigzag")
     PLAYERS (me, you, them)
     CONDITIONS (ANY)
     RULES (NONE)
     PIECES (regular)
     OBSTACLES (pit)
     BOOSTERS (teleport)
-    BOARD (10, 10, s-shape)
     DICE(1, 6)
     TIMER(600)
 END

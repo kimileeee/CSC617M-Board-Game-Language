@@ -13,3 +13,10 @@ class Player:
     def move_piece(self, piece, new_row, new_col):
         """Move a piece owned by the player."""
         piece.move(new_row, new_col)
+
+    def __repr__(self):
+        """String representation of the player."""
+        return f"Player(name={self.name}, color={self.color}, side={self.side}, pieces={self.pieces})"
+    
+    def __eq__(self, value):
+        return self.name == value.name
