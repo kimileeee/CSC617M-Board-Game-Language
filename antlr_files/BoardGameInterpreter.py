@@ -7,6 +7,9 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     def __init__(self) -> None:
         super(BoardGameParserVisitor, self).__init__()
         self.res = {}
+        self.order = []
+        self.players = {}
+        self.temp = None
 
     def visitProgram(self, ctx:BoardGameParser.ProgramContext):
         # GAME IDENTIFIER define_block+ gameplay_block
@@ -34,6 +37,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#gameplay_block.
     def visitGameplay_block(self, ctx:BoardGameParser.Gameplay_blockContext):
+        #this block is actually not accessed or noticed at all??
         return self.visitChildren(ctx)
 
 
@@ -86,16 +90,54 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#param_list.
     def visitParam_list(self, ctx:BoardGameParser.Param_listContext):
+        print("IN PARAM LIST")
+        parent = ctx.parentCtx
+        #check parent type and see if its players
+        print(type(parent))
+        if type(parent) == BoardGameParser.ListContext:
+            #if it is a list get, parameters then store order
+            #get first child, store it as going first
+            #second child gets stored as second
+            #modify this since param_list is actually called twice
+            print("PLAYERS IN PARAM LIST")
+            last = ctx.getChildCount() - 1
+            print(ctx.getChild(0))
+            print(ctx.getChild(2))
+            self.order.append(ctx.getChild(0))
+            self.order.append(ctx.getChild(2))
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by BoardGameParser#list.
     def visitList(self, ctx:BoardGameParser.ListContext):
+        print("IN LIST")
+        parent = ctx.parentCtx
+        #check parent type and see if its players
+        print(type(parent))
+        if type(parent) == BoardGameParser.Player_statementContext:
+            #check contents of children
+            print("VALUE OF CHILD IS ")
+            print(ctx.getChild(1))
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by BoardGameParser#object_access.
     def visitObject_access(self, ctx:BoardGameParser.Object_accessContext):
+        #check object access and then check which was the parent node above??
+        print("IN OBJECT ACCESS")
+        parent = ctx.parentCtx
+        #check parent type and see if its players
+        print(type(parent))
+        if type(parent) == BoardGameParser.Player_statementContext:
+            #if player parent content
+            #always get terminal node
+            #gets the child count and then uses the terminal node to assign as input for player
+            value = ctx.getChild(ctx.getChildCount() - 1)
+            self.players[self.temp] = value
+            print("VALUE OF PLAYER AND ITS COLOR")
+            print(self.temp) 
+            print(self.players[self.temp])
+        
         return self.visitChildren(ctx)
 
 
@@ -214,8 +256,10 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     def visitAssignment_expression(self, ctx:BoardGameParser.Assignment_expressionContext):
         l = self.visit(ctx.getChild(0))
         r = self.visit(ctx.getChild(2))
-        
-        return self.visitChildren(ctx)
+        #store results of assignment statement in initialization depending on assignment statement
+        #clarify further with group of usage of this assignment statement?
+
+        return self.visitChildren(ctx) 
 
 
     # Visit a parse tree produced by BoardGameParser#exponent.
@@ -301,6 +345,17 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#player_statement.
     def visitPlayer_statement(self, ctx:BoardGameParser.Player_statementContext):
+        #get identifier, object access and add it to board setup
+        #take note of order and set that as turn???
+        print("VISIT PLAYERS")
+        print("CHECK OBJECT ACCESS")
+        #initialize initially as none then contents will be handled later
+        #first step is to check whether beginning word is PLAYER or ORDER
+        if ctx.PLAYER(): 
+            self.temp = ctx.IDENTIFIER() #temp is used to take note of which player gets assigned which value
+            self.players[ctx.IDENTIFIER()] = None
+        elif ctx.ORDER():
+            print("CHECK ORDER")
         print(ctx.getText())
         return self.visitChildren(ctx)
 
