@@ -9,11 +9,17 @@ def checkers():
     game.add_player("me")
     game.add_player("you")
 
+    game.set_win_condition("ANY")
+
+    game.set_rules("ALL")
+
+
 def snakes_and_ladders():
     game2 = BoardGame("snakes_and_ladders")
     game2.set_board(10, 10, "zigzag")
     print(f"\n{game2.board.board_type} Board:")
     game2.display_board()
+
 
 def go():
     game3 = BoardGame("Go")

@@ -71,7 +71,6 @@ param_list : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR                 
            | (ALL | ANY | NONE) COMMA param_list                                                # AllAnyNoneParam      
            | assignment_expression COMMA param_list                                             # AssignmentParam
         //    | IDENTIFIER ASSIGN_OPT (literal | objects | method_call) COMMA param_list
-        //    | method_call ASSIGN_OPT (literal | objects | method_call) COMMA param_list
            | IDENTIFIER COMMA param_list                                                        # VariableParam
            | literal COMMA param_list                                                           # LiteralParam
            | object_access COMMA param_list                                                     # ObjectAccessParam

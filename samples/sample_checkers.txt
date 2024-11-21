@@ -3,9 +3,9 @@ GAME checkers
 DEFINE checkers:
      BOARD (8, 8, "checker")
      PLAYERS (me, you) 
+     PIECES (regular, king)
      CONDITIONS (ANY)
      RULES (ALL)
-     PIECES (regular, king)
      OBSTACLES (NONE)
      BOOSTERS (NONE)
      TIMER(1800)

@@ -8,12 +8,15 @@ class BoardGame:
         self.name = name
         self.board = None
         self.players = []
-        self.win_condition = None
         self.pieces = []
+        self.win_condition = None
+        self.conditions = []
+        self.rule_condition = None
         self.rules = []
         self.turn_order = []
         self.current_turn = 0
 
+    # BOARD methods
     def set_board(self, rows, cols, type=BoardType.STANDARD.value):
         """Set up the game board."""
         self.board = Board(rows, cols, type)
@@ -22,6 +25,7 @@ class BoardGame:
         """Display the game board."""
         self.board.display()
 
+    # PLAYER methods
     def add_player(self, name):
         """Add a player to the game."""
         player = Player(name)
@@ -40,24 +44,13 @@ class BoardGame:
         for player in self.players:
             print(player)
 
-    def set_win_condition(self, condition):
-        """Set the win condition for the game."""
-        self.win_condition = condition
-
-    def display_win_condition(self):
-        """Display the win condition."""
-        print(self.win_condition)
-
+    # PIECE methods
     def add_piece(self, player_name, piece_name, row, col, symbol):
         """Add a piece to a player's collection of pieces."""
         piece = Piece(piece_name, row, col, symbol)
         self.pieces.append(piece)
         player = next(p for p in self.players if p.name == player_name)
         player.add_piece(piece)
-
-    def set_turn_order(self, order):
-        """Define the turn order for players."""
-        self.turn_order = order
 
     def move_piece(self, player_name, piece_name, new_row, new_col):
         """Move a piece on the board."""
@@ -66,6 +59,44 @@ class BoardGame:
         piece.move(new_row, new_col)
         self.board.set_cell(new_row, new_col, piece.symbol)
 
+    # CONDITION methods
+    def set_win_condition(self, condition):
+        """Set the win condition for the game."""
+        self.win_condition = condition
+
+    def add_condition(self, condition):
+        """Add a condition to the game."""
+        self.conditions.append(condition)
+
+    def display_win_condition(self):
+        """Display the win condition."""
+        print(self.win_condition)
+
+    def check_win_condition(self):
+        """Check if the win condition has been met."""
+        # TODO: Implement this method
+        pass
+
+    # RULE methods
+    def set_rule_condition(self, rule_condition):
+        """Set the rules for the game."""
+        self.rule_condition = rule_condition
+
+    def add_rule(self, rule):
+        """Add a rule to the game."""
+        self.rules.append(rule)
+
+    def apply_rules(self):
+        """Apply all rules to the current game state."""
+        for rule in self.rules:
+            rule(self)
+
+    # ORDER methods
+    def set_turn_order(self, order):
+        """Define the turn order for players."""
+        self.turn_order = order
+
+    # TURN methods
     def play_turn(self):
         """Simulate a single turn."""
         current_player = self.turn_order[self.current_turn % len(self.turn_order)]
@@ -73,14 +104,6 @@ class BoardGame:
         self.apply_rules()
         self.current_turn += 1
 
-    def apply_rules(self):
-        """Apply all rules to the current game state."""
-        for rule in self.rules:
-            rule(self)
-
-    def display_board(self):
-        """Print the game board."""
-        self.board.display()
 
 class Piece:
     def __init__(self, name, row, col, symbol):
