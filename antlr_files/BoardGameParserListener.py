@@ -198,8 +198,71 @@ class BoardGameParserListener(ParseTreeListener):
         else:
             print("INVALID INPUT")
 
-    # Exit a parse tree produced by BoardGameParser#param_list.
-    def exitParam_list(self, ctx:BoardGameParser.Param_listContext):
+    # Exit a parse tree produced by BoardGameParser#ScoreParam.
+    def exitScoreParam(self, ctx:BoardGameParser.ScoreParamContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#AllAnyNoneParam.
+    def enterAllAnyNoneParam(self, ctx:BoardGameParser.AllAnyNoneParamContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#AllAnyNoneParam.
+    def exitAllAnyNoneParam(self, ctx:BoardGameParser.AllAnyNoneParamContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#AssignmentParam.
+    def enterAssignmentParam(self, ctx:BoardGameParser.AssignmentParamContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#AssignmentParam.
+    def exitAssignmentParam(self, ctx:BoardGameParser.AssignmentParamContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#VariableParam.
+    def enterVariableParam(self, ctx:BoardGameParser.VariableParamContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#VariableParam.
+    def exitVariableParam(self, ctx:BoardGameParser.VariableParamContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#LiteralParam.
+    def enterLiteralParam(self, ctx:BoardGameParser.LiteralParamContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#LiteralParam.
+    def exitLiteralParam(self, ctx:BoardGameParser.LiteralParamContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#ObjectAccessParam.
+    def enterObjectAccessParam(self, ctx:BoardGameParser.ObjectAccessParamContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#ObjectAccessParam.
+    def exitObjectAccessParam(self, ctx:BoardGameParser.ObjectAccessParamContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#ListLiteralParam.
+    def enterListLiteralParam(self, ctx:BoardGameParser.ListLiteralParamContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#ListLiteralParam.
+    def exitListLiteralParam(self, ctx:BoardGameParser.ListLiteralParamContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#SingleParam.
+    def enterSingleParam(self, ctx:BoardGameParser.SingleParamContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#SingleParam.
+    def exitSingleParam(self, ctx:BoardGameParser.SingleParamContext):
         pass
 
 

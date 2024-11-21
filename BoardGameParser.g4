@@ -67,15 +67,15 @@ primary : literal
         | method_call
 ;
 
-param_list : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR
-           | (ALL | ANY | NONE) COMMA param_list
-           | IDENTIFIER ASSIGN_OPT (literal | objects | method_call) COMMA param_list
-           | method_call ASSIGN_OPT (literal | objects | method_call) COMMA param_list
-           | IDENTIFIER COMMA param_list
-           | literal COMMA param_list
-           | object_access COMMA param_list
-           | list COMMA param_list
-           | (ALL | ANY | NONE | IDENTIFIER | literal | object_access | list)
+param_list : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR                                 # ScoreParam
+           | (ALL | ANY | NONE) COMMA param_list                                                # AllAnyNoneParam      
+           | assignment_expression COMMA param_list                                             # AssignmentParam
+        //    | IDENTIFIER ASSIGN_OPT (literal | objects | method_call) COMMA param_list
+           | IDENTIFIER COMMA param_list                                                        # VariableParam
+           | literal COMMA param_list                                                           # LiteralParam
+           | object_access COMMA param_list                                                     # ObjectAccessParam
+           | list COMMA param_list                                                              # ListLiteralParam
+           | (ALL | ANY | NONE | IDENTIFIER | literal | object_access | list)                   # SingleParam
            ;
 
 list : OPEN_BRACKET param_list CLOSE_BRACKET
@@ -147,6 +147,7 @@ any_expression : ANY (IDENTIFIER | object_access | list | game_entities)
                ;
 
 assignment_expression : (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT expression
+                      | IDENTIFIER ASSIGN_OPT method_call
                       | (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT input_statement
                      ;
 
