@@ -18,7 +18,7 @@ To compile the lexer and parser files from the grammar definitions, use ANTLR:
 
 ```bash
 antlr4 -Dlanguage=Python3 BoardGameLexer.g4 -o ./antlr_files
-antlr4 -Dlanguage=Python3 BoardGameParser.g4 -o ./antlr_files
+antlr4 -Dlanguage=Python3 BoardGameParser.g4 -o ./antlr_files -visitor
 ```
 
 ### 2. Generating Tokens from Sample Code

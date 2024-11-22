@@ -105,20 +105,6 @@ class BoardGame:
         self.current_turn += 1
 
 
-class Piece:
-    def __init__(self, name, row, col, symbol):
-        """Create a piece with a name, initial position (row, col), and symbol."""
-        self.name = name
-        self.row = row
-        self.col = col
-        self.symbol = symbol
-
-    def move(self, new_row, new_col):
-        """Move the piece to a new position on the board."""
-        self.row = new_row
-        self.col = new_col
-
-
 # Example: Define a Game of Tic-Tac-Toe
 def tic_tac_toe_example():
     game = BoardGame("Tic-Tac-Toe")
