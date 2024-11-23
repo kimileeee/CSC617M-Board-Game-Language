@@ -44,6 +44,12 @@ class BoardGame:
         for player in self.players:
             print(player)
 
+    def set_player_colors(self, player_name, color):
+        #sets the player color 
+        for player in self.players:
+            if player.name == str(player_name):
+                player.set_color(color)
+
     # PIECE methods
     def add_piece(self, player_name, piece_name, row, col, symbol):
         """Add a piece to a player's collection of pieces."""
