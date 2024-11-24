@@ -11,6 +11,10 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         super(BoardGameParserVisitor, self).__init__()
         self.res = {}
         self.game = None
+        self.order = []
+        self.players = {}
+        self.temp = None
+        self.temp_command = None
 
     def visitProgram(self, ctx:BoardGameParser.ProgramContext):
         # GAME IDENTIFIER define_block+ gameplay_block
@@ -38,6 +42,10 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#gameplay_block.
     def visitGameplay_block(self, ctx:BoardGameParser.Gameplay_blockContext):
+        #this is where the start of the game happens
+        #problem is parse tree never reaches this point???
+        print("IN START GAME")
+        self.game.start_game()
         return self.visitChildren(ctx)
 
 
@@ -160,6 +168,12 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         params_list.append(val)
 
         others = self.visit(ctx.param_list())
+        #if temp command was order, it gets the parameters from the param list
+        #depending on how it was processed in node, that is the order
+        #since DFS, left to right is the order of players
+        if self.temp_command == "ORDER":
+            self.game.set_turn_order(params_list + others)
+            self.temp_command = None
         
         return params_list + others
 
@@ -209,11 +223,33 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#list.
     def visitList(self, ctx:BoardGameParser.ListContext):
+        parent = ctx.parentCtx
+        #check parent type and see if its players
+        print(type(parent))
+        #checks if previous called was actually a player statement
+        #if player statement, it does this
+        #check if it can be generalized or should be kept like this
+        if type(parent) == BoardGameParser.Player_statementContext:
+            #check contents of children
+            print(ctx.getChild(1))
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by BoardGameParser#object_access.
     def visitObject_access(self, ctx:BoardGameParser.Object_accessContext):
+        #check object access and then check which was the parent node above??
+        parent = ctx.parentCtx
+        #check parent type and see if its players
+        print(type(parent))
+        if type(parent) == BoardGameParser.Player_statementContext:
+            #if player parent content
+            #always get terminal node
+            #gets the child count and then uses the terminal node to assign as input for player
+            value = ctx.getChild(ctx.getChildCount() - 1)
+            self.players[self.temp] = value
+            #self.temp is player and value refers to color but is it always color here??
+
+            self.game.set_player_colors(self.temp, value)
         return self.visitChildren(ctx)
 
 
@@ -524,8 +560,15 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#player_statement.
     def visitPlayer_statement(self, ctx:BoardGameParser.Player_statementContext):
-        print("\nDefining PLAYERs")
-        
+        #get identifier, object access and add it to board setup
+        #take note of order and set that as turn???
+        #initialize initially as none then contents will be handled later
+        #first step is to check whether beginning word is PLAYER or ORDER
+        if ctx.PLAYER(): 
+            self.temp = ctx.IDENTIFIER() #temp is used to take note of which player gets assigned which value
+            self.players[ctx.IDENTIFIER()] = None
+        elif ctx.ORDER():
+            self.temp_command = "ORDER"
         print(ctx.getText())
         return self.visitChildren(ctx)
 

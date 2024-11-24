@@ -4,6 +4,7 @@ from game.models.PieceModel import Piece
 from game.models.ObstacleModel import Obstacle
 from game.models.BoosterModel import Booster
 from game.models.ConditionModel import Condition
+import pygame
 
 class BoardGame:
     def __init__(self, name: str):
@@ -54,6 +55,12 @@ class BoardGame:
         print("Players:")
         for player in self.players:
             print(player)
+
+    def set_player_colors(self, player_name, color):
+        #sets the player color 
+        for player in self.players:
+            if player.name == str(player_name):
+                player.set_color(color)
 
     # PIECE methods
     def create_piece(self, name):
@@ -176,6 +183,23 @@ class BoardGame:
         print(f"It's {current_player}'s turn!")
         self.apply_rules()
         self.current_turn += 1
+
+    def start_game(self):
+        #setup the game using pygame 
+        #insert details later on
+        print("GAME START!")
+        width = 800
+        height = 800
+        pygame.init()
+        screen = pygame.display.set_mode([width, height])
+        run = True
+        while run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                
+        pygame.quit()
+
 
 
 # Example: Define a Game of Tic-Tac-Toe
