@@ -41,6 +41,10 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#gameplay_block.
     def visitGameplay_block(self, ctx:BoardGameParser.Gameplay_blockContext):
+        #this is where the start of the game happens
+        #problem is parse tree never reaches this point???
+        print("IN START GAME")
+        self.game.start_game()
         return self.visitChildren(ctx)
 
 
