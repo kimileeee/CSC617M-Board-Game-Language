@@ -1,87 +1,56 @@
 # Generated from BoardGameParser.g4 by ANTLR 4.13.2
 from antlr4 import *
-import pygame
 if "." in __name__:
     from .BoardGameParser import BoardGameParser
 else:
     from BoardGameParser import BoardGameParser
 
-running = False
 # This class defines a complete listener for a parse tree produced by BoardGameParser.
 class BoardGameParserListener(ParseTreeListener):
 
-    def __init__(self):
-        self.board_size = (8, 8)
-        self.board = [[None for _ in range(self.board_size[1])] for _ in range(self.board_size[0])]
-        self.players = []
-        self.conditions = []
-        self.rules = []
-        self.pieces = {}
-        self.obstacles = []
-        self.boosters = []
-        self.timer = None
-        self.score_condition = None
-        self.turns = []
-        self.current_player = None
-        self.game = None
-        self.temp = None
-
     # Enter a parse tree produced by BoardGameParser#program.
     def enterProgram(self, ctx:BoardGameParser.ProgramContext):
-        # this is the part where the board game is defined
-        # get the game that the program is referencing and modify it if needed
-        # game is defined and then person is asked 
-        print("ENTER PROGRAM")
-        self.game = ctx.IDENTIFIER() #stores name of game as input
+        pass
 
     # Exit a parse tree produced by BoardGameParser#program.
     def exitProgram(self, ctx:BoardGameParser.ProgramContext):
-        print("EXIT PROGRAM")
+        pass
 
 
-    # Enter a parse tree produced by BoardGameParser#define_block.
-    def enterDefine_block(self, ctx:BoardGameParser.Define_blockContext):
-        #after entering define block, code should check if it is object access or not
-        if ctx.IDENTIFIER(): #this means there is a value
-            self.game = ctx.IDENTIFIER()
-            print("ENTER DEFINE")
-            print("GAME CURRENTLY IS " + str(self.game))
-        else:   #object access is the one being done and replace with necessary processes for object access
-            print("object access is being done")
+    # Enter a parse tree produced by BoardGameParser#Define.
+    def enterDefine(self, ctx:BoardGameParser.DefineContext):
+        pass
 
-    # Exit a parse tree produced by BoardGameParser#define_block.
-    def exitDefine_block(self, ctx:BoardGameParser.Define_blockContext):
-        print("EXIT DEFINE")
+    # Exit a parse tree produced by BoardGameParser#Define.
+    def exitDefine(self, ctx:BoardGameParser.DefineContext):
+        pass
 
 
-    # Enter a parse tree produced by BoardGameParser#gameplay_block.
-    def enterGameplay_block(self, ctx:BoardGameParser.Gameplay_blockContext):
-        #create an initial game engine that takes in all of the objects defined in the define block
-        #namely create a pygame window that will open depending on the setup of the game
-        #take in all the information provided by the define blocks previously done
-        print("ENTER GAMEPLAY BLOCK")
-        pygame.init()
-        screen = pygame.display.set_mode([800, 800])
-        running = True
+    # Enter a parse tree produced by BoardGameParser#MethodDeclaration.
+    def enterMethodDeclaration(self, ctx:BoardGameParser.MethodDeclarationContext):
+        pass
 
-    # Exit a parse tree produced by BoardGameParser#gameplay_block.
-    def exitGameplay_block(self, ctx:BoardGameParser.Gameplay_blockContext):
-        #occurs when game ends 
-        #close game window 
-        #triggers when game window is closed
-        print("EXIT GAMEPLAY BLOCK")
-        if running == False:
-            print("game ends")
+    # Exit a parse tree produced by BoardGameParser#MethodDeclaration.
+    def exitMethodDeclaration(self, ctx:BoardGameParser.MethodDeclarationContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#Gameplay.
+    def enterGameplay(self, ctx:BoardGameParser.GameplayContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#Gameplay.
+    def exitGameplay(self, ctx:BoardGameParser.GameplayContext):
+        pass
 
 
     # Enter a parse tree produced by BoardGameParser#code_block.
     def enterCode_block(self, ctx:BoardGameParser.Code_blockContext):
-        print("ENTER CODE BLOCK")
-
+        pass
 
     # Exit a parse tree produced by BoardGameParser#code_block.
     def exitCode_block(self, ctx:BoardGameParser.Code_blockContext):
-        print("EXIT CODE BLOCK")
+        pass
 
 
     # Enter a parse tree produced by BoardGameParser#statement.
@@ -95,26 +64,7 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Enter a parse tree produced by BoardGameParser#game_entities.
     def enterGame_entities(self, ctx:BoardGameParser.Game_entitiesContext):
-        #code should go through each keyword and parameter and take note of attributes and store them
-        print("ENTER GAME ENTITIES") 
-        #check which game entity is active
-        if ctx.PLAYERS(): #means its ctx players and then we check and go through the param
-            self.temp = "players"
-        elif ctx.CONDITIONS():
-            self.temp = "conditions"
-        elif ctx.RULES():
-            self.temp = "rules"
-        elif ctx.PIECES():
-            self.temp = "pieces"
-        elif ctx.OBSTACLES():
-            self.temp = "obstacles"
-        elif ctx.BOOSTERS():
-            self.temp = "boosters"
-        elif ctx.BOARD():
-            self.temp = "board"
-        else:
-            print("INVALID INPUT")
-        print("VALUE OF TEMP IS " + str(self.temp))
+        pass
 
     # Exit a parse tree produced by BoardGameParser#game_entities.
     def exitGame_entities(self, ctx:BoardGameParser.Game_entitiesContext):
@@ -175,28 +125,9 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#param_list.
-    def enterParam_list(self, ctx:BoardGameParser.Param_listContext):
-        print("ENTER PARAM LIST")
-        print("VALUE OF TEMP IS " + str(self.temp))
-        #after entering param_list is there a way to connect this method and pass the data to the method before it
-        if self.temp == "players":
-            self.players.append(ctx.param_list())
-        elif self.temp == "conditions":
-            self.conditions.append(ctx.param_list())
-        elif self.temp == "rules":
-            self.rules.append(ctx.param_list())
-        elif self.temp == "pieces":
-            #do we assume that the order of the players is the order of what piece they get?
-            pass #modify this later on to handle how piece will be known
-        elif self.temp == "obstacles":
-            self.obstacles.append(ctx.param_list())
-        elif self.temp == "boosters":
-            self.boosters.append(ctx.param_list())
-        elif self.temp == "board":
-            self.board.append(ctx.param_list())
-        else:
-            print("INVALID INPUT")
+    # Enter a parse tree produced by BoardGameParser#ScoreParam.
+    def enterScoreParam(self, ctx:BoardGameParser.ScoreParamContext):
+        pass
 
     # Exit a parse tree produced by BoardGameParser#ScoreParam.
     def exitScoreParam(self, ctx:BoardGameParser.ScoreParamContext):
@@ -284,12 +215,30 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#board_pos.
-    def enterBoard_pos(self, ctx:BoardGameParser.Board_posContext):
+    # Enter a parse tree produced by BoardGameParser#BoardPosIdentifier.
+    def enterBoardPosIdentifier(self, ctx:BoardGameParser.BoardPosIdentifierContext):
         pass
 
-    # Exit a parse tree produced by BoardGameParser#board_pos.
-    def exitBoard_pos(self, ctx:BoardGameParser.Board_posContext):
+    # Exit a parse tree produced by BoardGameParser#BoardPosIdentifier.
+    def exitBoardPosIdentifier(self, ctx:BoardGameParser.BoardPosIdentifierContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#BoardPosRange.
+    def enterBoardPosRange(self, ctx:BoardGameParser.BoardPosRangeContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#BoardPosRange.
+    def exitBoardPosRange(self, ctx:BoardGameParser.BoardPosRangeContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#BoardPosRosCol.
+    def enterBoardPosRosCol(self, ctx:BoardGameParser.BoardPosRosColContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#BoardPosRosCol.
+    def exitBoardPosRosCol(self, ctx:BoardGameParser.BoardPosRosColContext):
         pass
 
 
@@ -308,6 +257,15 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by BoardGameParser#expression.
     def exitExpression(self, ctx:BoardGameParser.ExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#entity_count_expression.
+    def enterEntity_count_expression(self, ctx:BoardGameParser.Entity_count_expressionContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#entity_count_expression.
+    def exitEntity_count_expression(self, ctx:BoardGameParser.Entity_count_expressionContext):
         pass
 
 
@@ -466,18 +424,7 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Enter a parse tree produced by BoardGameParser#player_statement.
     def enterPlayer_statement(self, ctx:BoardGameParser.Player_statementContext):
-        #go through the ctx, find all identifiers and append
-        #this is specifically for keywords PLAYERS
-        print("ENTER PLAYERS KEYWORD")
-
-        identifiers = ctx.IDENTIFIER()
-        self.players.append(identifiers)
-        print("identifier is" + str(identifiers))
-        print("current list of players is " )
-        for index, player in enumerate(self.players):
-            print(f"Index: {index}, Player: {player}")
-
-        
+        pass
 
     # Exit a parse tree produced by BoardGameParser#player_statement.
     def exitPlayer_statement(self, ctx:BoardGameParser.Player_statementContext):
@@ -486,15 +433,7 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Enter a parse tree produced by BoardGameParser#condition_statement.
     def enterCondition_statement(self, ctx:BoardGameParser.Condition_statementContext):
-        #go through the conditions list and add them to conditions object
-        #this can later be used to implement what conditons are needed for win?
-        #is there a way to check the previously called function to see what was done?
-        print("ENTER CONDITIONS keyword")
-        # self.conditions.append(condition)
-        # print("identifier is" + str(condition))
-        # print("current list of condition is " )
-        # for index, condition in enumerate(self.conditions):
-        #     print(f"Index: {index}, Condition: {condition}")
+        pass
 
     # Exit a parse tree produced by BoardGameParser#condition_statement.
     def exitCondition_statement(self, ctx:BoardGameParser.Condition_statementContext):
@@ -512,14 +451,6 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Enter a parse tree produced by BoardGameParser#piece_statement.
     def enterPiece_statement(self, ctx:BoardGameParser.Piece_statementContext):
-        #this code checks and sets up board based on position
-
-        
-        # print("ENTER PIECES keyword")
-        # identifiers = ctx.IDENTIFIER()
-        # print("identifier is" + str(identifiers))
-        # print("current list of players is " )
-
         pass
 
     # Exit a parse tree produced by BoardGameParser#piece_statement.
@@ -628,9 +559,6 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Enter a parse tree produced by BoardGameParser#timer_statement.
     def enterTimer_statement(self, ctx:BoardGameParser.Timer_statementContext):
-        #check timer and get value and set it as timer val
-        print("ENTER TIMER")
-        self.timer = ctx.POSITIVE_INT_LITERAL
         pass
 
     # Exit a parse tree produced by BoardGameParser#timer_statement.

@@ -65,6 +65,7 @@ primary : literal
         | IDENTIFIER
         | OPEN_PAR expression CLOSE_PAR
         | method_call
+        | entity_count_expression
 ;
 
 param_list : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR                                 # ScoreParam
@@ -88,9 +89,9 @@ object_access : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)* /
         
 //BOARD DOT IDENTIFIER can also be handled by object access thanks to game_entities DOT IDENTIFIER?
 //solution is to either remove BOARD from game entities and let it purely be handled by board_pos?
-board_pos : BOARD DOT IDENTIFIER
-          | BOARD DOT (ROW | COLUMN) DOT (int_literal)
-          | board_pos ELIPSIS board_pos
+board_pos : BOARD DOT IDENTIFIER                                # BoardPosIdentifier
+          | BOARD DOT (ROW | COLUMN) DOT (int_literal)          # BoardPosRosCol
+          | board_pos ELIPSIS board_pos                         # BoardPosRange
           ;
 
 conditional_opt : EQUAL_OPT 
@@ -104,6 +105,9 @@ expression : base_expression logical_opt expression
            | base_expression
            ;
 
+entity_count_expression : game_entities DOT COUNT 
+             ;
+
 base_expression
     : assignment_expression
     | math_expression
@@ -114,6 +118,7 @@ base_expression
     | any_expression expression
     | primary
     | NOT_OPT expression
+    | entity_count_expression
     ;
 
 objects : IDENTIFIER

@@ -1,13 +1,13 @@
 GAME chess
 
 DEFINE chess:
-    PLAYERS (2)
     BOARD (8,8)
-    CONDITIONS (ANY)
-    RULES (ALL)
+    PLAYERS (white, black)
     PIECES (pawn, rook, knight, bishop, queen, king)
     OBSTACLES (NONE)
     BOOSTERS (NONE)
+    CONDITIONS (ANY)
+    RULES (ALL)
     TIMER(1800)
 END
 

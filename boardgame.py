@@ -9,9 +9,14 @@ def checkers():
     game.add_player("me")
     game.add_player("you")
 
+    game.create_piece("regular")
+    game.create_piece("king")
+
+    game.create_booster("double_jump")
+
     game.set_win_condition("ANY")
 
-    game.set_rules("ALL")
+    # game.set_rules("ALL")
 
 
 def snakes_and_ladders():

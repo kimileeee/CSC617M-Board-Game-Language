@@ -1,4 +1,5 @@
 from game.models.Colors import Colors
+from game.models.BoardCellModel import Cell
 from enum import Enum
 
 class BoardType(Enum):
@@ -100,26 +101,27 @@ class Board:
         else:
             raise ValueError("Invalid board type.")
         
-class Cell:
-    """Represents a single cell on the board."""
+    def get_cell_by_name(self, name):
+        """
+        Get a cell object based on the cell name.
+        """
+        for row in self.grid:
+            for cell in row:
+                if cell.name == name:
+                    return cell
+        raise ValueError("Cell not found.")
     
-    def __init__(self, name, color=None, piece=None, booster=None, obstacle=None):
-        """
-        Initialize a cell.
+    def set_cell_piece(self, row, col, piece):
+        """Set a piece in a cell."""
+        cell = self.get_cell(row, col)
+        cell.set_piece(piece)
 
-        Args:
-            name (str): The cell's identifier (e.g., 'A1', 1, or (0, 0)).
-            color (str, optional): The color of the cell (e.g., 'black' or 'white').
-            piece (str, optional): A piece placed in the cell.
-            booster (str, optional): A booster in the cell.
-            obstacle (str, optional): An obstacle in the cell.
-        """
-        self.name = name
-        self.color = color
-        self.piece = piece
-        self.booster = booster
-        self.obstacle = obstacle
+    def set_cell_booster(self, row, col, booster):
+        """Set a booster in a cell."""
+        cell = self.get_cell(row, col)
+        cell.set_booster(booster)
 
-    def __repr__(self):
-        """String representation of the cell."""
-        return f"Cell(name={self.name}, color={self.color}, piece={self.piece}, booster={self.booster}, obstacle={self.obstacle})"
+    def set_cell_obstacle(self, row, col, obstacle):
+        """Set an obstacle in a cell."""
+        cell = self.get_cell(row, col)
+        cell.set_obstacle(obstacle)

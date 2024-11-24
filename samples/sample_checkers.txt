@@ -4,10 +4,10 @@ DEFINE checkers:
      BOARD (8, 8, "checker")
      PLAYERS (me, you) 
      PIECES (regular, king)
-     CONDITIONS (ANY)
-     RULES (ALL)
      OBSTACLES (NONE)
      BOOSTERS (NONE)
+     CONDITIONS (ANY)
+     RULES (ALL)
      TIMER(1800)
 END
 
@@ -18,7 +18,7 @@ DEFINE checkers.PLAYERS:
 END
 
 DEFINE checkers.CONDITIONS:
-     CONDITION (ANY PLAYERS PIECES.count == 0)
+     CONDITION (ANY PLAYERS PIECES.COUNT == 0)
 END
 
 DEFINE checkers.SCORE:

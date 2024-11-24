@@ -1,5 +1,8 @@
 from game.models.BoardModel import Board, BoardType
 from game.models.PlayerModel import Player
+from game.models.PieceModel import Piece
+from game.models.ObstacleModel import Obstacle
+from game.models.BoosterModel import Booster
 from game.models.ConditionModel import Condition
 
 class BoardGame:
@@ -8,11 +11,18 @@ class BoardGame:
         self.name = name
         self.board = None
         self.players = []
+        self.base_pieces = []
         self.pieces = []
+
+        self.obstacles = []
+        self.boosters = []
+
         self.win_condition = None
         self.conditions = []
+
         self.rule_condition = None
         self.rules = []
+
         self.turn_order = []
         self.current_turn = 0
 
@@ -41,16 +51,45 @@ class BoardGame:
     
     def display_all_players(self):
         """Display all players."""
+        print("Players:")
         for player in self.players:
             print(player)
 
     # PIECE methods
+    def create_piece(self, name):
+        """Create a piece with a name, row, column, and symbol."""
+        piece = Piece(name)
+        self.base_pieces.append(piece)
+
+    def display_base_pieces(self):
+        """Display all base pieces."""
+        print("Base Pieces:")
+        for piece in self.base_pieces:
+            print(piece)
+    
+    ## called in DEFINE checkers
+    def get_base_pieces(self, name):
+        return next(p for p in self.base_pieces if p.name == name)
+    
+    ## called in DEFINE checkers.PIECES
+    def define_piece_moves(self, piece_name, moves):
+        """Define the moves for a piece."""
+        piece = next(p for p in self.base_pieces if p.name == piece_name)
+        # TODO: Implement how the piece moves and if it consumes
+        pass
+
+    ## called in DEFINE checkers.BOARD
     def add_piece(self, player_name, piece_name, row, col, symbol):
         """Add a piece to a player's collection of pieces."""
-        piece = Piece(piece_name, row, col, symbol)
-        self.pieces.append(piece)
+        base_piece = self.get_base_pieces(piece_name)
+        new_piece = base_piece.copy()
+
         player = next(p for p in self.players if p.name == player_name)
-        player.add_piece(piece)
+        new_piece.set_color(player.color)
+        new_piece.set_pos(row, col)
+
+        self.pieces.append(new_piece)
+        player.add_piece(new_piece)
 
     def move_piece(self, player_name, piece_name, new_row, new_col):
         """Move a piece on the board."""
@@ -58,6 +97,40 @@ class BoardGame:
         piece = next(p for p in player.pieces if p.name == piece_name)
         piece.move(new_row, new_col)
         self.board.set_cell(new_row, new_col, piece.symbol)
+
+    # OBSTACLE methods
+    def create_obstacle(self, name):
+        """Add an obstacle to the board."""
+        obstacle = Obstacle(name)
+        self.obstacles.append(obstacle)
+
+    def place_obstacle(self, name, row, col):
+        """Place an obstacle on the board."""
+        obstacle = next(o for o in self.obstacles if o.name == name)
+        self.board.set_cell_obstacle(row, col, obstacle)
+
+    def display_obstacles(self):
+        """Display all obstacles."""
+        print("Obstacles:")
+        for obstacle in self.obstacles:
+            print(obstacle)
+
+    # BOOSTER methods
+    def create_booster(self, name):
+        """Add a booster to the board."""
+        booster = Booster(name)
+        self.boosters.append(booster)
+
+    def place_booster(self, name, row, col):
+        """Place a booster on the board."""
+        booster = next(b for b in self.boosters if b.name == name)
+        self.board.set_cell_booster(row, col, booster)
+
+    def display_boosters(self):
+        """Display all boosters."""
+        print("Boosters:")
+        for booster in self.boosters:
+            print(booster)
 
     # CONDITION methods
     def set_win_condition(self, condition):
@@ -70,7 +143,7 @@ class BoardGame:
 
     def display_win_condition(self):
         """Display the win condition."""
-        print(self.win_condition)
+        print("Win Condition:", self.win_condition)
 
     def check_win_condition(self):
         """Check if the win condition has been met."""
