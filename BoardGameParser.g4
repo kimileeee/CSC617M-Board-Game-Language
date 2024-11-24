@@ -76,7 +76,7 @@ param_list : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR                 
            | literal COMMA param_list                                                           # LiteralParam
            | object_access COMMA param_list                                                     # ObjectAccessParam
            | list COMMA param_list                                                              # ListLiteralParam
-           | (ALL | ANY | NONE | IDENTIFIER | literal | object_access | list)                   # SingleParam
+           | (ALL | ANY | NONE | IDENTIFIER | literal | object_access | list | assignment_expression)                   # SingleParam
            ;
 
 list : OPEN_BRACKET param_list CLOSE_BRACKET
@@ -151,8 +151,9 @@ at_expression : (IDENTIFIER | object_access) AT board_pos
 any_expression : ANY (IDENTIFIER | object_access | list | game_entities)
                ;
 
-assignment_expression : (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT expression
+assignment_expression : IDENTIFIER ASSIGN_OPT literal
                       | IDENTIFIER ASSIGN_OPT method_call
+                      | (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT expression
                       | (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT input_statement
                      ;
 
@@ -188,8 +189,8 @@ rule_statement : RULE IDENTIFIER OPEN_PAR expression CLOSE_PAR
                ;
 
 piece_statement : PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) COUNT int_literal 
-                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
-                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR | ANY | NONE) ACTION IDENTIFIER OPEN_PAR expression CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR expression CLOSE_PAR)*
+                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) ACTION OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
+                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR | ANY | NONE) ACTION OPEN_PAR expression CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR expression CLOSE_PAR)*
                 | PIECE assignment_expression
                 ;
 

@@ -33,11 +33,8 @@ DEFINE checkers.PIECES:
      PIECE regular COUNT 12
      PIECE king COUNT 0
 
-     PIECE regular ACTION move(diagonal, 1, 1)
-     PIECE regular ACTION consume(diagonal, 2, 2)
-
-     PIECE king ACTION consume(diagonal, across, skip)
-     PIECE king ACTION move(diagonal, uni_direction, across)
+     PIECE regular ACTION (direction = diagonal, min_count = 1, max_count = 1, skip = True, across = False, backtrack = False, consume = True)
+     PIECE king ACTION (direction = diagonal, skip = True, across = True, backtrack = True, consume = True)
 END
 
 DEFINE checkers.BOARD:

@@ -599,8 +599,46 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     # Visit a parse tree produced by BoardGameParser#piece_statement.
     def visitPiece_statement(self, ctx:BoardGameParser.Piece_statementContext):
         print("\nDefining PIECEs")
-        
-        return self.visitChildren(ctx)
+        if ctx.COUNT():
+            print("\nSetting count")
+            identifier_nodes = ctx.IDENTIFIER()
+            count = int(ctx.int_literal().getText())
+            for node in identifier_nodes:
+                name = node.getText()
+                piece = self.game.get_base_pieces(name)
+                piece.set_count(count)
+                print(piece.__repr__())
+        else:
+            print("\nSetting move")
+            param_nodes = ctx.param_list()
+            identifier_nodes = ctx.IDENTIFIER()
+
+            for param_list in param_nodes:
+                params = param_list.getText()
+                params = params.split(",")
+
+                param_dict = {}
+
+                for param in params:
+                    key, value = param.split("=")
+
+                    if value.lower() == 'true':
+                        value = True
+                    elif value.lower() == 'false':
+                        value = False
+                    elif value.isdigit():
+                        value = int(value)
+                    else:
+                        value = value.strip()
+
+                    param_dict[key.strip()] = value
+
+            for node in identifier_nodes:
+                name = node.getText()
+                piece = self.game.get_base_pieces(name)
+                piece.set_move(**param_dict)
+                print(piece.__repr__())
+        # return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by BoardGameParser#board_statement.
