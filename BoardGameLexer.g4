@@ -97,7 +97,7 @@ POSITIVE_INT_LITERAL : NUMBER;
 NEGATIVE_INT_LITERAL : '-' NUMBER;
 FLOAT_LITERAL : INTEGER '.' NUMBER;
 STRING_LITERAL : '"' (~["])* '"';
-BOOLEAN_LITERAL : 'true' | 'false';
+BOOLEAN_LITERAL : 'True' | 'False';
 
 // Identifiers
 IDENTIFIER : [a-zA-Z][a-zA-Z0-9_]*;

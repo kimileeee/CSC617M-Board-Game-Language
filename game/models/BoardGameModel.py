@@ -144,9 +144,18 @@ class BoardGame:
         """Set the win condition for the game."""
         self.win_condition = condition
 
-    def add_condition(self, condition):
+    def add_condition(self, func_name, condition_func_string):
         """Add a condition to the game."""
-        self.conditions.append(condition)
+        # Parse the stringified condition function
+        namespace = {}
+        exec(condition_func_string, namespace)
+        
+        # Ensure the function is extracted and valid
+        if func_name not in namespace:
+            raise ValueError("The provided string must define a function named 'condition'.")
+        
+        parsed_condition = namespace[func_name]
+        self.conditions.append(parsed_condition)
 
     def display_win_condition(self):
         """Display the win condition."""
@@ -154,8 +163,23 @@ class BoardGame:
 
     def check_win_condition(self):
         """Check if the win condition has been met."""
-        # TODO: Implement this method
-        pass
+        # TODO: Implement this method. check all conditions in self.conditions
+        if self.win_condition is None:
+            raise ValueError("Win condition not set.")
+        
+        elif self.win_condition == "ALL":
+            for condition in self.conditions:
+                if not condition():
+                    return False  # If any condition fails, return False
+            
+            return True  # All conditions met
+        
+        elif self.win_condition == "ANY":
+            for condition in self.conditions:
+                if condition():
+                    return True
+                
+            return False  # No conditions met
 
     # RULE methods
     def set_rule_condition(self, rule_condition):

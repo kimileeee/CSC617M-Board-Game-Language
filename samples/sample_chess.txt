@@ -18,7 +18,7 @@ DEFINE chess.PLAYERS:
 END
 
 DEFINE chess.CONDITIONS:
-    CONDITION (white.king.count() == 0 OR black.king.count() == 0)
+    CONDITION (white.king.COUNT == 0 OR black.king.COUNT == 0)
 END
 
 DEFINE checkers.SCORE:
