@@ -166,6 +166,12 @@ class BoardGame:
         """Display the win condition."""
         print("Win Condition:", self.win_condition)
 
+    def display_conditions(self):
+        """Display all conditions."""
+        self.display_win_condition()
+        for condition in self.conditions:
+            print(condition)
+
     def check_win_condition(self):
         """Check if the win condition has been met."""
         # TODO: Implement this method. check all conditions in self.conditions
