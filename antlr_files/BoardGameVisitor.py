@@ -244,10 +244,6 @@ class BoardGameVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#timer_statement.
-    def visitTimer_statement(self, ctx:BoardGameParser.Timer_statementContext):
-        return self.visitChildren(ctx)
-
 
     # Visit a parse tree produced by BoardGameParser#dice_statement.
     def visitDice_statement(self, ctx:BoardGameParser.Dice_statementContext):

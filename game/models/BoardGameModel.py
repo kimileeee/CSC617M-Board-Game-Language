@@ -27,6 +27,16 @@ class BoardGame:
         self.turn_order = []
         self.current_turn = 0
 
+        self.rule_condition = None
+        self.rules = []
+
+        self.turn_order = []
+        self.current_turn = 0
+
+        self.timer = None  # Total timer value (in seconds)
+        self.timer_running = False
+        self.start_time = 0
+
     # BOARD methods
     def set_board(self, rows, cols, type=BoardType.STANDARD.value):
         """Set up the game board."""
@@ -219,6 +229,45 @@ class BoardGame:
         self.apply_rules()
         self.current_turn += 1
 
+    # TIMER methods
+    def set_timer(self, seconds: int):
+        """Set the game timer (in seconds)."""
+        if seconds < 0:
+            raise ValueError("Timer value must be non-negative.")
+        self.timer = seconds
+        print(f"Timer set to {self.timer} seconds.")
+
+    def display_timer(self):
+        """Display the game timer."""
+        print(f"Timer: {self.timer} seconds")
+
+    def start_timer(self):
+        """Start the game timer."""
+        if self.timer is None:
+            raise ValueError("Timer has not been set. Use set_timer() first.")
+        self.timer_running = True
+        self.start_time = pygame.time.get_ticks()
+        print(f"Timer started at {self.start_time} ms.")
+
+    def stop_timer(self):
+        """Stop the game timer."""
+        self.timer_running = False
+        print("Timer stopped.")
+
+    def check_timer(self):
+        """Check the remaining time on the timer."""
+        if not self.timer_running:
+            return self.timer  # Return the set timer value if not running
+
+        elapsed_time = (pygame.time.get_ticks() - self.start_time) / 1000  # Convert ms to seconds
+        remaining_time = max(self.timer - elapsed_time, 0)
+        if remaining_time <= 0:
+            self.timer_running = False
+            print("Time is up!")
+        return remaining_time
+        
+
+    # GAMEPLAY methods
     def start_game(self):
         #setup the game using pygame 
         #insert details later on

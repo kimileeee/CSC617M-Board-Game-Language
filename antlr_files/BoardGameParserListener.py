@@ -206,12 +206,30 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#object_access.
-    def enterObject_access(self, ctx:BoardGameParser.Object_accessContext):
+    # Enter a parse tree produced by BoardGameParser#ObjectEntityAccess.
+    def enterObjectEntityAccess(self, ctx:BoardGameParser.ObjectEntityAccessContext):
         pass
 
-    # Exit a parse tree produced by BoardGameParser#object_access.
-    def exitObject_access(self, ctx:BoardGameParser.Object_accessContext):
+    # Exit a parse tree produced by BoardGameParser#ObjectEntityAccess.
+    def exitObjectEntityAccess(self, ctx:BoardGameParser.ObjectEntityAccessContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#GameEntityAccess.
+    def enterGameEntityAccess(self, ctx:BoardGameParser.GameEntityAccessContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#GameEntityAccess.
+    def exitGameEntityAccess(self, ctx:BoardGameParser.GameEntityAccessContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#IdentifierAccess.
+    def enterIdentifierAccess(self, ctx:BoardGameParser.IdentifierAccessContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#IdentifierAccess.
+    def exitIdentifierAccess(self, ctx:BoardGameParser.IdentifierAccessContext):
         pass
 
 
@@ -260,12 +278,21 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#entity_count_expression.
-    def enterEntity_count_expression(self, ctx:BoardGameParser.Entity_count_expressionContext):
+    # Enter a parse tree produced by BoardGameParser#CountEntity.
+    def enterCountEntity(self, ctx:BoardGameParser.CountEntityContext):
         pass
 
-    # Exit a parse tree produced by BoardGameParser#entity_count_expression.
-    def exitEntity_count_expression(self, ctx:BoardGameParser.Entity_count_expressionContext):
+    # Exit a parse tree produced by BoardGameParser#CountEntity.
+    def exitCountEntity(self, ctx:BoardGameParser.CountEntityContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#CountObjectAccess.
+    def enterCountObjectAccess(self, ctx:BoardGameParser.CountObjectAccessContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#CountObjectAccess.
+    def exitCountObjectAccess(self, ctx:BoardGameParser.CountObjectAccessContext):
         pass
 
 
@@ -572,15 +599,6 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by BoardGameParser#return_statement.
     def exitReturn_statement(self, ctx:BoardGameParser.Return_statementContext):
-        pass
-
-
-    # Enter a parse tree produced by BoardGameParser#timer_statement.
-    def enterTimer_statement(self, ctx:BoardGameParser.Timer_statementContext):
-        pass
-
-    # Exit a parse tree produced by BoardGameParser#timer_statement.
-    def exitTimer_statement(self, ctx:BoardGameParser.Timer_statementContext):
         pass
 
 

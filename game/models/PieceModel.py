@@ -10,6 +10,10 @@ class Piece:
         """Set the color of the piece."""
         self.color = color
 
+    def get_color(self):
+        """Get the color of the piece."""
+        return self.color
+
     def set_pos(self, row, col):
         """Set the position of the piece on the board."""
         self.pos = (row, col)

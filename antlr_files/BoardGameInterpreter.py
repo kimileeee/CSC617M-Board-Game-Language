@@ -3,6 +3,8 @@ from antlr_files.BoardGameParser import BoardGameParser
 from antlr_files.BoardGameParserVisitor import BoardGameParserVisitor
 # from game.Controller import Controler
 from game.models.BoardGameModel import BoardGame
+from game.models.PieceModel import Piece
+from game.models.PlayerModel import Player
 from game.models.Colors import Colors
 from antlr_files.utils import utils
 
@@ -299,24 +301,92 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         #     #check contents of children
         #     print(ctx.getChild(1))
         return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#object_access.
-    def visitObject_access(self, ctx:BoardGameParser.Object_accessContext):
-        #check object access and then check which was the parent node above??
+    
+    # Visit a parse tree produced by BoardGameParser#ObjectEntityAccess.
+    def visitObjectEntityAccess(self, ctx:BoardGameParser.ObjectEntityAccessContext):
         parent = ctx.parentCtx
-        #check parent type and see if its players
-        # print(type(parent))
-        if type(parent) == BoardGameParser.Player_statementContext:
+
+        if type(parent) not in [BoardGameParser.DefineContext, BoardGameParser.Player_statementContext]:
+
+            if "COLOR" in ctx.getText():
+                return ctx.getChild(ctx.getChildCount() - 1).getText()
+            
+            objs = ctx.getText().split(".")
+            script = f"self.game"
+
+            for obj in objs:
+                type_obj = type(self.lookup_symbol(obj))
+                
+                if type_obj == Piece:
+                    script += f".get_pieces_by_name('{obj}')"
+                elif type_obj == Player:
+                    script += f".get_player('{obj}')"
+
+            return script
+        
+        elif type(parent) == BoardGameParser.Player_statementContext:
             #if player parent content
             #always get terminal node
             #gets the child count and then uses the terminal node to assign as input for player
             value = ctx.getChild(ctx.getChildCount() - 1)
             self.players[self.temp] = value
             #self.temp is player and value refers to color but is it always color here??
-
             self.game.set_player_colors(self.temp, value)
+
         return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#GameEntityAccess.
+    def visitGameEntityAccess(self, ctx:BoardGameParser.GameEntityAccessContext):
+        parent = ctx.parentCtx
+
+        if type(parent) not in [BoardGameParser.DefineContext, BoardGameParser.Player_statementContext]:
+
+            objs = ctx.getText().split(".")
+            script = ""
+
+            for obj in objs:
+                if objs == BoardGameLexer.symbolicNames[BoardGameLexer.GAME]:
+                    script += "self.game"
+
+                elif objs == BoardGameLexer.symbolicNames[BoardGameLexer.BOARD]:
+                    script += "self.game.board"
+
+                elif objs == BoardGameLexer.symbolicNames[BoardGameLexer.PLAYERS]:
+                    script += "self.game.players"
+
+                elif objs == BoardGameLexer.symbolicNames[BoardGameLexer.PIECES]:
+                    script += "self.game.base_pieces"
+
+                elif objs == BoardGameLexer.symbolicNames[BoardGameLexer.OBSTACLES]:
+                    script += "self.game.obstacles"
+
+                elif objs == BoardGameLexer.symbolicNames[BoardGameLexer.BOOSTERS]:
+                    script += "self.game.boosters"
+
+                elif objs == BoardGameLexer.symbolicNames[BoardGameLexer.CONDITIONS]:
+                    script += "self.game.conditions"
+
+                elif objs == BoardGameLexer.symbolicNames[BoardGameLexer.RULES]:
+                    script += "self.game.rules"
+
+                elif objs == BoardGameLexer.symbolicNames[BoardGameLexer.TIMER]:
+                    script += "self.game.timer"
+
+                else:
+                    script += f"{obj}"
+
+                if obj != objs[-1]:
+                    script += "."
+
+            return script
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#IdentifierAccess.
+    def visitIdentifierAccess(self, ctx:BoardGameParser.IdentifierAccessContext):
+        return self.visitObjectEntityAccess(ctx)
+
 
 
     # Visit a parse tree produced by BoardGameParser#BoardPosIdentifier.
@@ -333,15 +403,12 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     def visitBoardPosRange(self, ctx:BoardGameParser.BoardPosRangeContext):
         start = self.visit(ctx.getChild(0))
         end = self.visit(ctx.getChild(2))
-        
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by BoardGameParser#BoardPosRosCol.
     def visitBoardPosRosCol(self, ctx:BoardGameParser.BoardPosRosColContext):
         num = ctx.int_literal().getText()
-
-
         return self.visitChildren(ctx)
 
 
@@ -362,7 +429,9 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#method_call.
     def visitMethod_call(self, ctx:BoardGameParser.Method_callContext):
-        return self.visitChildren(ctx)
+        objects = self.visit(ctx.objects())
+        method = ctx.IDENTIFIER().getText() + "()"
+        return f"{objects}.{method}"
 
 
     # Visit a parse tree produced by BoardGameParser#class_define_block.
@@ -410,15 +479,24 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             return l + r
         elif ctx.getChildCount() == 1:
             return l
-
-    # Visit a parse tree produced by BoardGameParser#entity_count_expression.
-    def visitEntity_count_expression(self, ctx:BoardGameParser.Entity_count_expressionContext):
+    
+    # Visit a parse tree produced by BoardGameParser#CountEntity.
+    def visitCountEntity(self, ctx:BoardGameParser.CountEntityContext):
         # game_entity = self.visit(ctx.game_entities())
 
         # return len(game_entity)
         game_entity = self.visit(ctx.game_entities())
         # return f"count_val = len(attr_val) if hasattr(attr_val, '__len__') else None\n"
         return "len(" + game_entity + ")"
+
+
+    # Visit a parse tree produced by BoardGameParser#CountObjectAccess.
+    def visitCountObjectAccess(self, ctx:BoardGameParser.CountObjectAccessContext):
+        object_access = self.visit(ctx.object_access())
+        print(object_access)
+        script = f"len({object_access})"
+        return script
+        # return "len(" + object_access + ")"
     
     # Visit a parse tree produced by BoardGameParser#conditional_expression.
     def visitConditional_expression(self, ctx:BoardGameParser.Conditional_expressionContext):
@@ -438,26 +516,6 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         exp = f"{self.indent}return {l} {cond_opt} {r}\n"
         # print(exp)
         return exp
-
-        # if cond_opt == utils.get_literal_name(BoardGameLexer.EQUAL_OPT):
-        #     # return l == r
-        #     # exp = f"{self.indent}if {l} == {r}:\n"
-        #     # self.indent += "\t"
-        #     # exp += f"{self.indent}return True"
-        #     exp = f"{self.indent}return {l} == {r}\n"
-        #     print(exp)
-        #     return exp
-        # elif cond_opt == utils.get_literal_name(BoardGameLexer.LESS_THAN_OPT):
-        #     return l < r
-        # elif cond_opt == utils.get_literal_name(BoardGameLexer.LESS_EQUAL_OPT):
-        #     return l <= r
-        # elif cond_opt == utils.get_literal_name(BoardGameLexer.GREATER_THAN_OPT):
-        #     return l > r
-        # elif cond_opt == utils.get_literal_name(BoardGameLexer.GREATER_EQUAL_OPT):
-        #     return l >= r
-        
-        # return self.visitChildren(ctx)
-
 
     # Visit a parse tree produced by BoardGameParser#in_expression.
     def visitIn_expression(self, ctx:BoardGameParser.In_expressionContext):
@@ -532,18 +590,18 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#exponent.
     def visitExponent(self, ctx:BoardGameParser.ExponentContext):
-        l = self.visit(ctx.left)
-        r = self.visit(ctx.right)
+        l = self.visit(ctx.getChild(0))
+        r = self.visit(ctx.getChild(2))
 
-        if ctx.EXP_OPT.text:
+        if ctx.EXP_OPT().getText():
             return l ** r
 
     # Visit a parse tree produced by BoardGameParser#multiplicative.
     def visitMultiplicative(self, ctx:BoardGameParser.MultiplicativeContext):
-        l = self.visit(ctx.left)
-        r = self.visit(ctx.right)
+        l = self.visit(ctx.getChild(0))
+        r = self.visit(ctx.getChild(2))
 
-        if ctx.MUL_OPT.text:
+        if ctx.MUL_OPT().getText():
             return l * r
         elif ctx.DIV_OPT.text:
             if r == 0:
@@ -555,9 +613,9 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         l = self.visit(ctx.getChild(0))
         r = self.visit(ctx.getChild(2))
 
-        if ctx.ADD_OPT.text:
+        if ctx.ADD_OPT().getText():
             return l + r
-        elif ctx.SUB_OPT.text:
+        elif ctx.SUB_OPT().getText():
             return l - r
 
     # Visit a parse tree produced by BoardGameParser#math_expression.
@@ -656,8 +714,10 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.COLOR]:
             print("\nSetting up color")
 
-        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.SCORE]:
-            print("\nSetting up score")
+        if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.TIMER]:
+            print("\nSetting up timer\n")
+            self.game.set_timer(params_list[0])
+            self.game.display_timer()
 
 
     # Visit a parse tree produced by BoardGameParser#player_statement.
@@ -685,23 +745,24 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#condition_statement.
     def visitCondition_statement(self, ctx:BoardGameParser.Condition_statementContext):
-        print("\nDefining CONDITIONs")
+        # print("\nDefining CONDITIONs")
 
         func_name = f"check_condition_{len(self.game.conditions)}"
         func_script = f"def {func_name}(self):\n"
         self.indent += "\t"
 
         # print("disecting expression\n")
-        func_script += self.visit(ctx.expression())
+        func_script += str(self.visit(ctx.expression()))
 
         # print("--Symbol Table--")
         # self.print_symbol_table()
 
-        print("--Final Script--")
+        print("\n--Final Script--")
         print(func_script)
 
         self.game.add_condition(func_name, func_script)
         self.game.display_conditions()
+        self.indent = ""
 
 
     # Visit a parse tree produced by BoardGameParser#rule_statement.
@@ -744,13 +805,6 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     def visitTurn_statement(self, ctx:BoardGameParser.Turn_statementContext):
         # print("\nTaking TURN")
         return self.visitChildren(ctx)
-    
-    # Visit a parse tree produced by BoardGameParser#timer_statement.
-    def visitTimer_statement(self, ctx:BoardGameParser.Timer_statementContext):
-        # print("\nSetting TIMER")
-        # print(ctx.getText())
-        return self.visitChildren(ctx)
-
 
     # Visit a parse tree produced by BoardGameParser#dice_statement.
     def visitDice_statement(self, ctx:BoardGameParser.Dice_statementContext):
