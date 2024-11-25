@@ -21,10 +21,6 @@ DEFINE checkers.CONDITIONS:
      CONDITION (ANY PLAYERS PIECES.COUNT == 0)
 END
 
-DEFINE checkers.SCORE:
-     SCORE(checkers.CONDITIONS)
-END
-
 DEFINE checkers.RULES :
      RULE promote_rule (white AT BOARD.ROW.7 OR black AT BOARD.ROW.0)
 END
