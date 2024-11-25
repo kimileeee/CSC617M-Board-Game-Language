@@ -323,15 +323,6 @@ class BoardGameInterpreter(BoardGameParserVisitor):
                     script += f".get_player('{obj}')"
 
             return script
-        
-        elif type(parent) == BoardGameParser.Player_statementContext:
-            #if player parent content
-            #always get terminal node
-            #gets the child count and then uses the terminal node to assign as input for player
-            value = ctx.getChild(ctx.getChildCount() - 1)
-            self.players[self.temp] = value
-            #self.temp is player and value refers to color but is it always color here??
-            self.game.set_player_colors(self.temp, value)
 
         return self.visitChildren(ctx)
 
@@ -380,6 +371,15 @@ class BoardGameInterpreter(BoardGameParserVisitor):
                     script += "."
 
             return script
+        elif type(parent) == BoardGameParser.Player_statementContext:
+            #if player parent content
+            #always get terminal node
+            #gets the child count and then uses the terminal node to assign as input for player
+            value = ctx.getChild(ctx.getChildCount() - 1)
+            self.players[self.temp] = value
+            #self.temp is player and value refers to color but is it always color here??
+            self.game.set_player_colors(self.temp, value)
+
         return self.visitChildren(ctx)
 
 
@@ -391,25 +391,59 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#BoardPosIdentifier.
     def visitBoardPosIdentifier(self, ctx:BoardGameParser.BoardPosIdentifierContext):
-        pos = ctx.IDENTIFIER().getText()
-        # alpha = __
-        # num = __
-        # board_cell = self.game.board.get_cell(alpha, num)
+        # BOARD DOT IDENTIFIER
+        
+        pos = ctx.IDENTIFIER().getText()  # Example: "A3"
+        board_cell = self.game.board.get_cell_by_name(pos)
 
-        # return board_cell
-
+        return [board_cell]
 
     # Visit a parse tree produced by BoardGameParser#BoardPosRange.
     def visitBoardPosRange(self, ctx:BoardGameParser.BoardPosRangeContext):
-        start = self.visit(ctx.getChild(0))
-        end = self.visit(ctx.getChild(2))
-        return self.visitChildren(ctx)
+        # board_pos ELIPSIS board_pos
+        pos1 = self.visit(ctx.getChild(0))[0].name  # First position, e.g., "A1"
+        pos2 = self.visit(ctx.getChild(2))[0].name  # Second position, e.g., "A5"
+
+        # Extract row and column from positions
+        start_row, start_col = ord(pos1[0]), int(pos1[1:])  # e.g., 'A' -> 65, '1' -> 1
+        end_row, end_col = ord(pos2[0]), int(pos2[1:])  # e.g., 'A' -> 65, '5' -> 5
+
+        # Check if the positions are in the same row or column
+        if start_row != end_row and start_col != end_col:
+            raise ValueError(f"Invalid range: {pos1} and {pos2} must be in the same row or column.")
+
+        # Generate the list of positions in the range
+        positions = []
+        if start_row == end_row:  # Same row
+            for col in range(start_col, end_col + 1 if start_col < end_col else end_col - 1, 1 if start_col < end_col else -1):
+                positions.append(f"{chr(start_row)}{col}")
+        elif start_col == end_col:  # Same column
+            for row in range(start_row, end_row + 1 if start_row < end_row else end_row - 1, 1 if start_row < end_row else -1):
+                positions.append(f"{chr(row)}{start_col}")
+
+        # print("range", positions)
+        board_cells = [self.game.board.get_cell_by_name(pos) for pos in positions]
+        return board_cells
 
 
-    # Visit a parse tree produced by BoardGameParser#BoardPosRosCol.
-    def visitBoardPosRosCol(self, ctx:BoardGameParser.BoardPosRosColContext):
-        num = ctx.int_literal().getText()
-        return self.visitChildren(ctx)
+    # Visit a parse tree produced by BoardGameParser#BoardPosRowCol.
+    def visitBoardPosRowCol(self, ctx:BoardGameParser.BoardPosRowColContext):
+        # BOARD DOT (ROW | COLUMN) DOT (int_literal)
+        dimension = ctx.getChild(2).getText()  # "ROW" or "COLUMN"
+        index = int(ctx.getChild(4).getText())  # Extract the row or column index
+
+        board = self.game.board
+        num_rows, num_cols = board.rows, board.cols
+
+        positions = []
+        if dimension == "ROW":
+            positions = [f"{chr(65 + index - 1)}{col}" for col in range(1, num_cols + 1)]
+        elif dimension == "COLUMN":
+            positions = [f"{chr(65 + row)}{index}" for row in range(0, num_rows)]
+
+        # print("rowcol", positions)
+        board_cells = [board.get_cell_by_name(pos) for pos in positions]
+        return board_cells
 
 
     # Visit a parse tree produced by BoardGameParser#conditional_opt.
@@ -488,12 +522,19 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         game_entity = self.visit(ctx.game_entities())
         # return f"count_val = len(attr_val) if hasattr(attr_val, '__len__') else None\n"
         return "len(" + game_entity + ")"
+    
+    # Visit a parse tree produced by BoardGameParser#CountIdentifier.
+    # def visitCountIdentifier(self, ctx:BoardGameParser.CountIdentifierContext):
+    #     val = self.lookup_symbol(ctx.IDENTIFIER().getText())
+    #     if type(val) == Piece:
 
+    #     # return f"count_val = len(attr_val) if hasattr(attr_val, '__len__') else None\n"
+    #     return "len(" + game_entity + ")"
 
     # Visit a parse tree produced by BoardGameParser#CountObjectAccess.
     def visitCountObjectAccess(self, ctx:BoardGameParser.CountObjectAccessContext):
         object_access = self.visit(ctx.object_access())
-        print(object_access)
+        # print(object_access)
         script = f"len({object_access})"
         return script
         # return "len(" + object_access + ")"

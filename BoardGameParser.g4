@@ -90,7 +90,7 @@ object_access : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)*  
 //BOARD DOT IDENTIFIER can also be handled by object access thanks to game_entities DOT IDENTIFIER?
 //solution is to either remove BOARD from game entities and let it purely be handled by board_pos?
 board_pos : BOARD DOT IDENTIFIER                                # BoardPosIdentifier
-          | BOARD DOT (ROW | COLUMN) DOT (int_literal)          # BoardPosRosCol
+          | BOARD DOT (ROW | COLUMN) DOT (int_literal)          # BoardPosRowCol
           | board_pos ELIPSIS board_pos                         # BoardPosRange
           ;
 
@@ -106,6 +106,7 @@ expression : base_expression logical_opt expression
            ;
 
 entity_count_expression : game_entities DOT COUNT           # CountEntity
+                        | IDENTIFIER DOT COUNT              # CountIdentifier
                         | object_access DOT COUNT           # CountObjectAccess
                         ;
 
