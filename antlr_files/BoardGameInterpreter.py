@@ -606,6 +606,34 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     # Visit a parse tree produced by BoardGameParser#board_statement.
     def visitBoard_statement(self, ctx:BoardGameParser.Board_statementContext):
         print("\nDefining BOARD")
+
+        # prints player
+        for player in ctx.PLAYER():
+            print("Player:", player.getText())  
+
+        # can have 1 or 2; 
+        # if 1, its the piece's name 
+        # if 2, its the player's name then the piece's name
+        for identifier in ctx.IDENTIFIER():
+            print("Identifier:", identifier.getText()) 
+
+        # prints each keyword
+        if ctx.PIECE():
+            print("Piece:", ctx.PIECE().getText())
+        if ctx.OBSTACLE():
+            print("Obstacle:", ctx.OBSTACLE().getText())
+        if ctx.BOOSTER():
+            print("Booster:", ctx.BOOSTER().getText())
+
+        # prints SETUP
+        print("Setup:", ctx.SETUP().getText())
+
+        # prints parameters of the SETUP
+        if ctx.param_list():
+            print("Params:", ctx.param_list().getText())
+        if ctx.board_pos():
+            print("Board positions:", ctx.board_pos().getText())
+
         return self.visitChildren(ctx)
 
 
