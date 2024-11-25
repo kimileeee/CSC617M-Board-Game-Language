@@ -38,15 +38,11 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         # print(ctx.IDENTIFIER(), ctx.object_access())
         # print(f"Children of define_block: {[child.getText() for child in ctx.children]}")
 
-
-    # Visit a parse tree produced by BoardGameParser#gameplay_block.
-    def visitGameplay_block(self, ctx:BoardGameParser.Gameplay_blockContext):
-        #this is where the start of the game happens
-        #problem is parse tree never reaches this point???
+    # Visit a parse tree produced by BoardGameParser#Gameplay.
+    def visitGameplay(self, ctx:BoardGameParser.GameplayContext):
         print("IN START GAME")
         self.game.start_game()
         return self.visitChildren(ctx)
-
 
     # Visit a parse tree produced by BoardGameParser#code_block.
     def visitCode_block(self, ctx:BoardGameParser.Code_blockContext):
@@ -73,6 +69,15 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#int_literal.
     def visitInt_literal(self, ctx:BoardGameParser.Int_literalContext):
+        parent = ctx.parentCtx
+        if type(parent) == BoardGameParser.Board_posContext:
+            print("CHECK IF POSITIVE OR NEGATIVE INT LITERAL")
+            if ctx.POSITIVE_INT_LITERAL():
+                #store value of input as board position
+                print("CORRECT INPUT")
+            elif ctx.NEGATIVE_INT_LITERAL():
+                print("INCORRECT INPUT")
+                #board positions CANNOT be negative
         return int(ctx.getText())
 
     # Visit a parse tree produced by BoardGameParser#Integer.
@@ -218,6 +223,17 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#board_pos.
     def visitBoard_pos(self, ctx:BoardGameParser.Board_posContext):
+        parent = ctx.parentCtx
+        if type(parent) == BoardGameParser.Player_statementContext:
+            print("IN PLAYERS BOARD POS")
+            #get board pos values
+            if ctx.ROW():
+                print("ROW")
+            elif ctx.COLUMN():
+                print("COLUMN")
+            else:
+                print("Invalid input! Input should refer to object position\n")
+
         return self.visitChildren(ctx)
 
 
@@ -449,6 +465,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         if ctx.PLAYER(): 
             self.temp = ctx.IDENTIFIER() #temp is used to take note of which player gets assigned which value
             self.players[ctx.IDENTIFIER()] = None
+            print("BOARD POS VALUE IS ")
         elif ctx.ORDER():
             self.temp_command = "ORDER"
         print(ctx.getText())
