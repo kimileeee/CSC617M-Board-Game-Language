@@ -607,32 +607,56 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     def visitBoard_statement(self, ctx:BoardGameParser.Board_statementContext):
         print("\nDefining BOARD")
 
-        # prints player
-        for player in ctx.PLAYER():
-            print("Player:", player.getText())  
+        positions = ctx.param_list().getText().split(',')
 
-        # can have 1 or 2; 
-        # if 1, its the piece's name 
-        # if 2, its the player's name then the piece's name
-        for identifier in ctx.IDENTIFIER():
-            print("Identifier:", identifier.getText()) 
+        list_positions = []
+        for pos in positions:
+            # Get the part after 'BOARD.'
+            value = pos.split('BOARD.')[-1]
+            row_part = value[0]  # 'C'
+            col_part = value[1]  # '1'
 
-        # prints each keyword
+            # check if row_part is a character
+            if row_part.isalpha():  
+                # convert to uppercase and mod 65 (if row starts at 0)
+                row_value = (ord(row_part.upper()) % 66)  
+            else:
+                row_value = int(row_part)  # if already a number, just use it
+
+            # check if char_part is a character
+            if col_part.isalpha():  
+                # convert to uppercase and mod 65 (if row starts at 0)
+                col_part = (ord(col_part.upper()) % 66)  
+
+            else:
+                col_value = int(col_part)  # if already a number, just use it
+
+            # Append processed values as tuple
+            list_positions.append((row_value, col_value))
+        
+
+        # if its a piece 
         if ctx.PIECE():
             print("Piece:", ctx.PIECE().getText())
+            if len(ctx.IDENTIFIER()) > 1:
+                
+                for position in list_positions:
+                    self.game.add_piece(ctx.IDENTIFIER()[0], ctx.IDENTIFIER()[1], position[0], position[1], None)
+            else:
+                for position in list_positions:
+                    self.game.add_piece(None, ctx.IDENTIFIER()[0], position[0], position[1], None) 
+
+        # if its an obstacle
         if ctx.OBSTACLE():
             print("Obstacle:", ctx.OBSTACLE().getText())
+            for position in list_positions:
+                self.game.place_obstacle(ctx.IDENTIFIER(), position[0], position[1])
+
+        # if its a booster
         if ctx.BOOSTER():
             print("Booster:", ctx.BOOSTER().getText())
-
-        # prints SETUP
-        print("Setup:", ctx.SETUP().getText())
-
-        # prints parameters of the SETUP
-        if ctx.param_list():
-            print("Params:", ctx.param_list().getText())
-        if ctx.board_pos():
-            print("Board positions:", ctx.board_pos().getText())
+            for position in list_positions:
+                self.game.place_booster(ctx.IDENTIFIER(), position[0], position[1])
 
         return self.visitChildren(ctx)
 
