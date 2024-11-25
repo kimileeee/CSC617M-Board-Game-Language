@@ -641,22 +641,22 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             if len(ctx.IDENTIFIER()) > 1:
                 
                 for position in list_positions:
-                    self.game.add_piece(ctx.IDENTIFIER()[0], ctx.IDENTIFIER()[1], position[0], position[1], None)
+                    self.game.add_piece(ctx.IDENTIFIER()[0].getText().strip(), ctx.IDENTIFIER()[1].getText().strip(), position[0], position[1], None)
             else:
                 for position in list_positions:
-                    self.game.add_piece(None, ctx.IDENTIFIER()[0], position[0], position[1], None) 
+                    self.game.add_piece(None, ctx.IDENTIFIER()[0].getText().strip(), position[0], position[1], None) 
 
         # if its an obstacle
         if ctx.OBSTACLE():
             print("Obstacle:", ctx.OBSTACLE().getText())
             for position in list_positions:
-                self.game.place_obstacle(ctx.IDENTIFIER(), position[0], position[1])
+                self.game.place_obstacle(ctx.IDENTIFIER().getText().strip(), position[0], position[1])
 
         # if its a booster
         if ctx.BOOSTER():
             print("Booster:", ctx.BOOSTER().getText())
             for position in list_positions:
-                self.game.place_booster(ctx.IDENTIFIER(), position[0], position[1])
+                self.game.place_booster(ctx.IDENTIFIER().getText().strip(), position[0], position[1])
 
         return self.visitChildren(ctx)
 

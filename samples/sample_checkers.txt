@@ -41,7 +41,7 @@ DEFINE checkers.PIECES:
 END
 
 DEFINE checkers.BOARD:
-     PIECE regular SETUP (BOARD.C1, BOARD.C3) 
+     PLAYER me PIECE regular SETUP (BOARD.C1, BOARD.C3) 
 END
 
 START:

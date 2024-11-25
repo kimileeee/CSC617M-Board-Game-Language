@@ -91,7 +91,7 @@ class BoardGame:
         base_piece = self.get_base_pieces(piece_name)
         new_piece = base_piece.copy()
 
-        player = next(p for p in self.players if p.name == player_name)
+        player = next(p for p in self.players if p.name.strip() == player_name.strip())
         new_piece.set_color(player.color)
         new_piece.set_pos(row, col)
 
