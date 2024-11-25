@@ -151,9 +151,9 @@ at_expression : (IDENTIFIER | object_access) AT board_pos
 any_expression : ANY (IDENTIFIER | object_access | list | game_entities)
                ;
 
-assignment_expression : (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT expression
-                      | IDENTIFIER ASSIGN_OPT method_call
-                      | (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT input_statement
+assignment_expression : (IDENTIFIER) ASSIGN_OPT expression              # AssignExpression
+                      | IDENTIFIER ASSIGN_OPT method_call               # AssignMethodCall
+                      | (IDENTIFIER) ASSIGN_OPT input_statement         # AssignInput
                      ;
 
 exponent : primary (EXP_OPT primary)*

@@ -41,6 +41,7 @@ class BoardGame:
         """Add a player to the game."""
         player = Player(name)
         self.players.append(player)
+        return player
 
     def get_player(self, name):
         """Get a player by name."""
@@ -67,6 +68,7 @@ class BoardGame:
         """Create a piece with a name, row, column, and symbol."""
         piece = Piece(name)
         self.base_pieces.append(piece)
+        return piece
 
     def display_base_pieces(self):
         """Display all base pieces."""
@@ -97,6 +99,7 @@ class BoardGame:
 
         self.pieces.append(new_piece)
         player.add_piece(new_piece)
+        return (f"{player.name}.{new_piece.name}", new_piece)
 
     def move_piece(self, player_name, piece_name, new_row, new_col):
         """Move a piece on the board."""
@@ -110,6 +113,7 @@ class BoardGame:
         """Add an obstacle to the board."""
         obstacle = Obstacle(name)
         self.obstacles.append(obstacle)
+        return obstacle
 
     def place_obstacle(self, name, row, col):
         """Place an obstacle on the board."""
@@ -127,6 +131,7 @@ class BoardGame:
         """Add a booster to the board."""
         booster = Booster(name)
         self.boosters.append(booster)
+        return booster
 
     def place_booster(self, name, row, col):
         """Place a booster on the board."""
@@ -223,6 +228,9 @@ class BoardGame:
                     run = False
                 
         pygame.quit()
+
+    def __repr__(self):
+        return f"BoardGame({self.name})"
 
 
 

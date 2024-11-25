@@ -204,8 +204,18 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#assignment_expression.
-    def visitAssignment_expression(self, ctx:BoardGameParser.Assignment_expressionContext):
+    # Visit a parse tree produced by BoardGameParser#AssignExpression.
+    def visitAssignExpression(self, ctx:BoardGameParser.AssignExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#AssignMethodCall.
+    def visitAssignMethodCall(self, ctx:BoardGameParser.AssignMethodCallContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#AssignInput.
+    def visitAssignInput(self, ctx:BoardGameParser.AssignInputContext):
         return self.visitChildren(ctx)
 
 

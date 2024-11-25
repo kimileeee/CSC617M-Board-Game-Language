@@ -3,6 +3,7 @@ from antlr_files.BoardGameParser import BoardGameParser
 from antlr_files.BoardGameParserVisitor import BoardGameParserVisitor
 # from game.Controller import Controler
 from game.models.BoardGameModel import BoardGame
+from game.models.Colors import Colors
 from antlr_files.utils import utils
 
 class BoardGameInterpreter(BoardGameParserVisitor):
@@ -16,43 +17,92 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         self.temp = None
         self.temp_command = None
         self.indent = ""
+        self.symbol_table = [{}]
+        self.entities = {}
 
+    def enter_scope(self):
+        """Enter a new scope."""
+        self.symbol_table.append({})
+
+    def exit_scope(self):
+        """Exit the current scope."""
+        self.symbol_table.pop()
+
+    def declare_symbol(self, name, value=None):
+        """Declare a new symbol in the current scope."""
+        if name in self.symbol_table[-1]:
+            raise Exception(f"Error: Symbol '{name}' is already declared in this scope.")
+        self.symbol_table[-1][name] = value
+
+    def assign_symbol(self, name, value):
+        """Assign a value to an existing symbol or declare a new one in the current scope."""
+        for scope in reversed(self.symbol_table):
+            if name in scope:
+                scope[name] = value
+                return
+        # If not found, declare it in the current scope
+        self.declare_symbol(name, value)
+
+    def lookup_symbol(self, name):
+        """Look up a symbol in the current and enclosing scopes."""
+        for scope in reversed(self.symbol_table):
+            if name in scope:
+                return scope[name]
+        raise Exception(f"Error: Symbol '{name}' not found.")
+    
+    def print_symbol_table(self):
+        """Print the current state of the symbol table."""
+        print("\nSymbol Table:")
+        for i, scope in enumerate(self.symbol_table):
+            print(f"Scope {i}: {scope}")
+        print()  # Add a blank line for better readability
+
+    ###############
+    ### VISITOR ###
+    ###############
+
+    # Visit a parse tree produced by BoardGameParser#program.
     def visitProgram(self, ctx:BoardGameParser.ProgramContext):
         # GAME IDENTIFIER define_block+ gameplay_block
         GAME_NAME = ctx.IDENTIFIER()
-        print("Creating a new board game...")
-        self.game = BoardGame(GAME_NAME)
-        print(f"Game name: {self.game.name}")
 
+        print(f"Creating a new board game: {GAME_NAME}")
+        self.game = BoardGame(GAME_NAME)
+        self.declare_symbol("game", self.game)
         return self.visitChildren(ctx)
     
     # Visit a parse tree produced by BoardGameParser#define_block.
     def visitDefine_block(self, ctx:BoardGameParser.Define_blockContext):
+        # DEFINE (IDENTIFIER | object_access) COLON code_block END
+        # self.enter_scope()
+
         if(ctx.IDENTIFIER()):               # Initializing game settings
             # print(ctx.IDENTIFIER())
+            identifier = ctx.IDENTIFIER().getText()
+            self.declare_symbol(identifier)
+            print(f"Defined identifier: {identifier}")
             self.visitChildren(ctx)
 
         else:                               # Specifying game conditions
             # print(ctx.object_access().getText())
             self.visitChildren(ctx)
         
+        # self.exit_scope()
         print("\n")
-        # print(ctx.IDENTIFIER(), ctx.object_access())
-        # print(f"Children of define_block: {[child.getText() for child in ctx.children]}")
-
 
     # Visit a parse tree produced by BoardGameParser#Gameplay.
     def visitGameplay(self, ctx:BoardGameParser.GameplayContext):
-        print("IN START GAME")
+        # START COLON code_block END   
+        print("Starting gameplay...")
+        self.enter_scope()  # Enter a new scope for gameplay logic
         # self.game.start_game()
-        # return self.visitChildren(ctx)
+        self.visitChildren(ctx)
+        self.exit_scope()
 
 
     # Visit a parse tree produced by BoardGameParser#code_block.
     def visitCode_block(self, ctx:BoardGameParser.Code_blockContext):
-        # for c in ctx.children:
-        #     print(type(c), c)
-
+        # (statement)+
         return self.visitChildren(ctx)
 
 
@@ -63,6 +113,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#game_entities.
     def visitGame_entities(self, ctx:BoardGameParser.Game_entitiesContext):
+        
         if self.game is None:
             return self.visitChildren(ctx)
         # else:
@@ -258,6 +309,11 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             #self.temp is player and value refers to color but is it always color here??
 
             self.game.set_player_colors(self.temp, value)
+
+        print("object access")
+
+        for c in ctx.children:
+            print(c.getText())
         return self.visitChildren(ctx)
 
 
@@ -347,8 +403,6 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
         if ctx.getChildCount() > 1:
             r = self.visit(ctx.expression())
-            if "temp" in r:
-                r = r.replace("temp", "entity")
             return l + r
         elif ctx.getChildCount() == 1:
             return l
@@ -359,7 +413,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
         # return len(game_entity)
         game_entity = self.visit(ctx.game_entities())
-        return "len(" + game_entity + ")"
+        return f"count_val = len(attr_val) if hasattr(attr_val, '__len__') else None\n"
+        # return "len(" + game_entity + ")"
     
     # Visit a parse tree produced by BoardGameParser#conditional_expression.
     def visitConditional_expression(self, ctx:BoardGameParser.Conditional_expressionContext):
@@ -372,6 +427,9 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         print(r, type(r), "\n")
 
         cond_opt = ctx.conditional_opt().getText()
+
+        if type(ctx.getChild(0)) == BoardGameParser.Entity_count_expressionContext:
+            return f"{self.indent}return count_val {cond_opt} {r}\n"
 
         exp = f"{self.indent}return {l} {cond_opt} {r}\n"
         print(exp)
@@ -436,6 +494,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             py_script += game_entity
             py_script += ":\n"
             self.indent += "\t"
+            py_script += f"{self.indent}attr_val = getattr(entity, <attr>)\n"
 
             print("in any expression\n", py_script)
             self.temp_command = None
@@ -443,13 +502,28 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
         # return self.visitChildren(ctx).getText()
 
+    # Visit a parse tree produced by BoardGameParser#AssignExpression.
+    def visitAssignExpression(self, ctx:BoardGameParser.AssignExpressionContext):
+        variable_name = ctx.IDENTIFIER().getText()
+        value = self.visit(ctx.expression())
+        self.declare_symbol(variable_name, value)
+        print(f"Assigned {variable_name} = {value}")
 
-    # Visit a parse tree produced by BoardGameParser#assignment_expression.
-    def visitAssignment_expression(self, ctx:BoardGameParser.Assignment_expressionContext):
-        l = self.visit(ctx.getChild(0))
-        r = self.visit(ctx.getChild(2))
-        
-        return self.visitChildren(ctx)
+
+    # Visit a parse tree produced by BoardGameParser#AssignMethodCall.
+    def visitAssignMethodCall(self, ctx:BoardGameParser.AssignMethodCallContext):
+        variable_name = ctx.IDENTIFIER().getText()
+        value = self.visit(ctx.method_call())
+        self.declare_symbol(variable_name, value)
+        print(f"Assigned {variable_name} = {value}")
+
+
+    # Visit a parse tree produced by BoardGameParser#AssignInput.
+    def visitAssignInput(self, ctx:BoardGameParser.AssignInputContext):
+        variable_name = ctx.IDENTIFIER().getText()
+        value = self.visit(ctx.input_statement())
+        self.declare_symbol(variable_name, value)
+        print(f"Assigned {variable_name} = {value}")
 
 
     # Visit a parse tree produced by BoardGameParser#exponent.
@@ -498,6 +572,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#game_entities_statement.
     def visitGame_entities_statement(self, ctx:BoardGameParser.Game_entities_statementContext):
+        # game_entities OPEN_PAR param_list CLOSE_PAR
         game_entity = ctx.game_entities().getText()
         params_list = self.visit(ctx.param_list())
 
@@ -512,12 +587,14 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             else:
                 self.game.set_board(params_list[0], params_list[1], params_list[2])
             self.game.display_board()
+            self.declare_symbol("board", self.game.board)
 
         if game_entity == BoardGameLexer.symbolicNames[BoardGameLexer.PLAYERS]:
             print("\nSetting up players")
 
             for param in params_list:
-                self.game.add_player(param)
+                player = self.game.add_player(param)
+                self.declare_symbol(param, player)
 
             self.game.display_all_players()
 
@@ -528,7 +605,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
                 params_list.remove(None)
 
             for param in params_list:
-                self.game.create_piece(param)
+                base_piece = self.game.create_piece(param)
+                self.declare_symbol(param, base_piece)
 
             self.game.display_base_pieces()
 
@@ -539,7 +617,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
                 params_list.remove(None)
 
             for param in params_list:
-                self.game.create_obstacle(param)
+                obstacle = self.game.create_obstacle(param)
+                self.declare_symbol(param, obstacle)
 
             self.game.display_obstacles()
 
@@ -550,7 +629,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
                 params_list.remove(None)
 
             for param in params_list:
-                self.game.create_booster(param)
+                booster = self.game.create_booster(param)
+                self.declare_symbol(param, booster)
 
             self.game.display_boosters()
 
@@ -562,6 +642,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
             for param in params_list:
                 self.game.set_win_condition(param)
+                self.declare_symbol(param)
 
             self.game.display_win_condition()
 
@@ -584,6 +665,12 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         if ctx.PLAYER(): 
             self.temp = ctx.IDENTIFIER() #temp is used to take note of which player gets assigned which value
             self.players[ctx.IDENTIFIER()] = None
+
+            player_name = ctx.IDENTIFIER().getText()
+            player = self.game.get_player(player_name)
+            color = self.visit(ctx.object_access())
+            # self.assig
+
         elif ctx.ORDER():
             self.temp_command = "ORDER"
         print(ctx.getText())
@@ -603,6 +690,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         print("disecting expression\n")
         func_script += self.visit(ctx.expression())
 
+        print("--Symbol Table--")
+        self.print_symbol_table()
         print("--Final Script--")
         print(func_script)
 
