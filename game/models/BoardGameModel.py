@@ -90,10 +90,11 @@ class BoardGame:
         """Add a piece to a player's collection of pieces."""
         base_piece = self.get_base_pieces(piece_name)
         new_piece = base_piece.copy()
+        print(type(new_piece))
 
         player = next(p for p in self.players if p.name.strip() == player_name.strip())
         new_piece.set_color(player.color)
-        new_piece.set_pos(row, col)
+        new_piece.set_pos_2(row, col)
 
         self.pieces.append(new_piece)
         player.add_piece(new_piece)

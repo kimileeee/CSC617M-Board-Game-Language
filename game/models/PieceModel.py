@@ -10,11 +10,11 @@ class Piece:
         """Set the color of the piece."""
         self.color = color
 
-    def set_pos(self, row, col):
+    def set_pos_2(self, row, col):
         """Set the position of the piece on the board."""
         self.pos = (row, col)
 
-    def set_pos(self, pos):
+    def set_pos_1(self, pos):
         """Set the position of the piece on the board."""
         self.pos = pos
 
