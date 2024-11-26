@@ -866,10 +866,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             
             # if its a piece 
             if ctx.PIECE():
-                if len(ctx.IDENTIFIER()) > 1:
-                    self.game.add_piece(ctx.IDENTIFIER()[0].getText().strip(), ctx.IDENTIFIER()[1].getText().strip(), row, col, None)
-                else:
-                    self.game.add_piece(None, ctx.IDENTIFIER()[0].getText().strip(), row, col, None) 
+                self.game.add_piece(ctx.IDENTIFIER()[0].getText().strip(), ctx.IDENTIFIER()[1].getText().strip(), row, col, None)
             
             # if its an obstacle
             if ctx.OBSTACLE():

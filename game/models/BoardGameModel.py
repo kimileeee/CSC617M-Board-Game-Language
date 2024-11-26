@@ -123,16 +123,14 @@ class BoardGame:
         temp['col'] = col
         new_piece.set_pos(**temp)
 
-        # if player_name is not None
-        if player_name:
-            player = next(p for p in self.players if p.name.strip() == player_name.strip())
-            new_piece.set_color(player.color)
-            player.add_piece(new_piece)
+        player = next(p for p in self.players if p.name.strip() == player_name.strip())
+        new_piece.set_color(player.color)
+        player.add_piece(new_piece)
 
         self.pieces.append(new_piece)
         self.board.set_cell_piece(temp['row'], temp['col'], new_piece)
 
-        #return (f"{player.name}.{new_piece.name}", new_piece)
+        return (f"{player.name}.{new_piece.name}", new_piece)
 
     def move_piece(self, player_name, piece_name, new_row, new_col):
         """Move a piece on the board."""
