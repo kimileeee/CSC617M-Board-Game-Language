@@ -1,7 +1,7 @@
 from antlr_files.BoardGameLexer import BoardGameLexer
 from antlr_files.BoardGameParser import BoardGameParser
 from antlr_files.BoardGameParserVisitor import BoardGameParserVisitor
-# from game.Controller import Controler
+import antlr_files.BoardGameExceptions as exceptions
 from game.models.BoardGameModel import BoardGame
 from game.models.PieceModel import Piece
 from game.models.PlayerModel import Player
@@ -78,10 +78,13 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         self.declare_symbol("game", self.game)
         return self.visitChildren(ctx)
     
-    # Visit a parse tree produced by BoardGameParser#define_block.
-    def visitDefine_block(self, ctx:BoardGameParser.Define_blockContext):
+    # Visit a parse tree produced by BoardGameParser#Define.
+    def visitDefine(self, ctx:BoardGameParser.DefineContext):
         # DEFINE (IDENTIFIER | object_access) COLON code_block END
         # self.enter_scope()
+
+        if not ctx.END():
+            raise exceptions.BoardGameSyntaxError("Syntax error: Missing 'END' keyword.")
 
         if(ctx.IDENTIFIER()):               # Initializing game settings
             # print(ctx.IDENTIFIER())
@@ -98,17 +101,26 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         # self.exit_scope()
         print("\n")
 
+
+    # Visit a parse tree produced by BoardGameParser#MethodDeclaration.
+    def visitMethodDeclaration(self, ctx:BoardGameParser.MethodDeclarationContext):
+        return self.visitChildren(ctx)
+
     # Visit a parse tree produced by BoardGameParser#Gameplay.
     def visitGameplay(self, ctx:BoardGameParser.GameplayContext):
         # START COLON code_block END   
-        print("\n----------------------")
-        print("Starting gameplay...")
-        self.game.print_board()
+        if ctx.END() is None:
+            raise exceptions.BoardGameSyntaxError("Syntax error: Missing 'END' keyword.")
+        
+        else:
+            print("\n----------------------")
+            print("Starting gameplay...")
+            self.game.print_board()
 
-        self.enter_scope()  # Enter a new scope for gameplay logic
-        # self.game.start_game()
-        self.visitChildren(ctx)
-        self.exit_scope()
+            self.enter_scope()  # Enter a new scope for gameplay logic
+            # self.game.start_game()
+            self.visitChildren(ctx)
+            self.exit_scope()
 
 
     # Visit a parse tree produced by BoardGameParser#code_block.
@@ -587,8 +599,10 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#at_expression.
     def visitAt_expression(self, ctx:BoardGameParser.At_expressionContext):
-        l = self.visit(ctx.getChild(0))
-        r = self.visit(ctx.getChild(2))
+        object = self.visit(ctx.getChild(0))
+        board_pos = self.visit(ctx.getChild(2))
+
+        print(f"Object: {object}, Position: {board_pos}")
         
         return self.visitChildren(ctx)
 
@@ -816,9 +830,12 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         print("\n--Final Script--")
         print(func_script)
 
-        self.game.add_condition(func_name, func_script)
-        self.game.display_conditions()
-        self.indent = ""
+        try:
+            self.game.add_condition(func_name, func_script)
+            self.game.display_conditions()
+            self.indent = ""
+        except Exception as e:
+            raise exceptions.InvalidConditionException() from e
 
 
     # Visit a parse tree produced by BoardGameParser#rule_statement.

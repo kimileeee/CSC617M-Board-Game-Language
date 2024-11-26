@@ -33,9 +33,6 @@ class Piece:
     def move(self, pos):
         """Move the piece to a new position on the board."""
         self.pos = pos
-    
-    def copy(self):
-        return Piece(self.name)
 
     def __repr__(self):
         """String representation of the piece."""
