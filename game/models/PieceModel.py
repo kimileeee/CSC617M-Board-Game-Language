@@ -5,12 +5,16 @@ class Piece:
         self.color = None
         self.pos = None         # tuple (row, col), or number for board like s&l
         self.symbol = None
-        self.count = 0
+        self.ID = None
         self.actions = []
 
-    def set_count(self, count):
-        """Set the count of the piece."""
-        self.count = count
+    def set_ID(self, ID):
+        """Set the ID of the piece."""
+        self.ID = ID
+
+    def get_ID(self):
+        """Get the ID of the piece."""
+        return self.ID
 
     def set_color(self, color):
         """Set the color of the piece."""
@@ -27,6 +31,9 @@ class Piece:
             self.pos = (kwargs.get("row"), kwargs.get("col"))
         else:
             self.pos = kwargs.get("row")
+
+    def get_pos(self):
+        return self.pos
 
     def get_moves(self):
         """Get the possible moves for the piece."""
@@ -55,11 +62,12 @@ class Piece:
         else:
             move = {"name": name, "direction" : direction, "min_count": min_count, "max_count": max_count, "skip": skip, "backtrack": backtrack, "consume": consume}
 
-        self.actions.append(move)
+        if move not in self.actions:
+            self.actions.append(move)
     
     def copy(self):
         return Piece(self.name)
 
     def __repr__(self):
         """String representation of the piece."""
-        return f"Piece(name={self.name}, color={self.color}, pos={self.pos}, symbol={self.symbol}, count={self.count}, action={self.actions})"
+        return f"Piece(name={self.name}, color={self.color}, pos={self.pos}, symbol={self.symbol}, ID={self.ID}, action={self.actions})"

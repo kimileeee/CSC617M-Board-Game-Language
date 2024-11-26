@@ -7,6 +7,7 @@ from game.models.PieceModel import Piece
 from game.models.PlayerModel import Player
 from game.models.Colors import Colors
 from antlr_files.utils import utils
+import copy
 
 class BoardGameInterpreter(BoardGameParserVisitor):
 
@@ -814,20 +815,28 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     # Visit a parse tree produced by BoardGameParser#rule_statement.
     def visitRule_statement(self, ctx:BoardGameParser.Rule_statementContext):
         print("\nDefining RULEs")
+        print(self.print_symbol_table())
         # return self.visitChildren(ctx)
 
     # Visit a parse tree produced by BoardGameParser#piece_statement.
     def visitPiece_statement(self, ctx:BoardGameParser.Piece_statementContext):
         print("\nDefining PIECEs")
+        
         if ctx.COUNT():
             print("\nSetting count")
             identifier_nodes = ctx.IDENTIFIER()
             count = int(ctx.int_literal().getText())
+
             for node in identifier_nodes:
                 name = node.getText()
-                piece = self.game.get_base_pieces(name)
-                piece.set_count(count)
-                print(piece.__repr__())
+
+                for player in self.game.get_players():
+                    
+                    for i in range(count):
+                        piece = copy.deepcopy(self.game.get_base_pieces(name))
+                        piece.set_color(player.color)
+                        piece.set_ID(i + 1)
+                        player.add_piece(piece)
         else:
             print("\nSetting move")
             param_nodes = ctx.param_list()
@@ -855,9 +864,20 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
             for node in identifier_nodes:
                 name = node.getText()
-                piece = self.game.get_base_pieces(name)
-                piece.set_move(**param_dict)
-                print(piece.__repr__())
+
+                print(name)
+
+                for player in self.game.get_players():
+                    pieces = player.get_pieces_by_name(name)
+
+                    if pieces:
+                        for piece in pieces:
+                            print("ENTER HERE")
+                            piece.set_move(**param_dict)
+                    else:
+                        piece = self.game.get_base_pieces(name)
+                        piece.set_move(**param_dict)
+
         # return self.visitChildren(ctx)
 
 
