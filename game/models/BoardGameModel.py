@@ -45,6 +45,22 @@ class BoardGame:
     def display_board(self):
         """Display the game board."""
         self.board.display()
+        
+    def print_board(self):
+        for row_index in range(self.board.rows):
+            row_output = []
+
+            for col_index in range(self.board.cols):
+                cell_name = f"{chr(65 + row_index)}{col_index + 1}"  # E.g., A1, B2
+                cell = self.board.get_cell_by_name(cell_name)
+
+                if cell.piece:
+                    row_output.append(f"[{cell.piece.name}]") 
+                else:
+                    row_output.append(f"[{cell.name}]") 
+
+            # Print the row
+            print(" ".join(row_output))
 
     # PLAYER methods
     def add_player(self, name):
@@ -114,7 +130,9 @@ class BoardGame:
             player.add_piece(new_piece)
 
         self.pieces.append(new_piece)
-        return (f"{player.name}.{new_piece.name}", new_piece)
+        self.board.set_cell_piece(temp['row'], temp['col'], new_piece)
+
+        #return (f"{player.name}.{new_piece.name}", new_piece)
 
     def move_piece(self, player_name, piece_name, new_row, new_col):
         """Move a piece on the board."""
