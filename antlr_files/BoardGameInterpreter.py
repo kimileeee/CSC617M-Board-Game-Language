@@ -619,14 +619,15 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             # check if row_part is a character
             if row_part.isalpha():  
                 # convert to uppercase and mod 65 (if row starts at 0)
-                row_value = (ord(row_part.upper()) % 66)  
+                row_value = (ord(row_part.upper()) % 64)  
+                
             else:
                 row_value = int(row_part)  # if already a number, just use it
 
             # check if char_part is a character
             if col_part.isalpha():  
                 # convert to uppercase and mod 65 (if row starts at 0)
-                col_part = (ord(col_part.upper()) % 66)  
+                col_part = (ord(col_part.upper()) % 64)  
 
             else:
                 col_value = int(col_part)  # if already a number, just use it

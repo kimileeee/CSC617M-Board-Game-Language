@@ -30,7 +30,7 @@ class Board:
         """Initialize the grid with Cell objects based on the board type."""
         if board_type == BoardType.STANDARD.value:
             return [
-                [Cell(name=f"{chr(66 + row)}{col + 1}") for col in range(self.cols)] 
+                [Cell(name=f"{chr(64 + row)}{col + 1}") for col in range(self.cols)] 
                 for row in range(self.rows)
             ]
         elif board_type == BoardType.CHECKER.value:
@@ -40,7 +40,7 @@ class Board:
                 for col in range(self.cols):
                     # Determine cell color based on row and column
                     color = Colors.BLACK.normal_name() if (row + col) % 2 == 0 else Colors.WHITE.normal_name()
-                    row_cells.append(Cell(name=f"{chr(66 + row)}{col + 1}", color=color))
+                    row_cells.append(Cell(name=f"{chr(64 + row)}{col + 1}", color=color))
                 grid.append(row_cells)
             return grid
         elif board_type == BoardType.ZIGZAG.value:
