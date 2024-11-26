@@ -224,7 +224,7 @@ for_statement : FOR IDENTIFIER IN list COLON code_block END
 while_statement : WHILE expression COLON code_block END
                 ;
 
-input_statement : INPUT OPEN_PAR STRING_LITERAL* CLOSE_PAR
+input_statement : IDENTIFIER ASSIGN_OPT INPUT OPEN_PAR STRING_LITERAL* CLOSE_PAR
                 ;
 
 print_statement : PRINT OPEN_PAR (param_list) CLOSE_PAR

@@ -89,7 +89,6 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         if(ctx.IDENTIFIER()):               # Initializing game settings
             # print(ctx.IDENTIFIER())
             identifier = ctx.IDENTIFIER().getText()
-            self.declare_symbol(identifier)
             # print(f"Defined identifier: {identifier}")
 
             self.visitChildren(ctx)
@@ -638,7 +637,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     def visitAssignExpression(self, ctx:BoardGameParser.AssignExpressionContext):
         variable_name = ctx.IDENTIFIER().getText()
         value = self.visit(ctx.expression())
-        self.declare_symbol(variable_name, value)
+        self.assign_symbol(variable_name, value)
         print(f"Assigned {variable_name} = {value}")
 
 
@@ -646,7 +645,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     def visitAssignMethodCall(self, ctx:BoardGameParser.AssignMethodCallContext):
         variable_name = ctx.IDENTIFIER().getText()
         value = self.visit(ctx.method_call())
-        self.declare_symbol(variable_name, value)
+        self.assign_symbol(variable_name, value)
         print(f"Assigned {variable_name} = {value}")
 
 
@@ -654,7 +653,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     def visitAssignInput(self, ctx:BoardGameParser.AssignInputContext):
         variable_name = ctx.IDENTIFIER().getText()
         value = self.visit(ctx.input_statement())
-        self.declare_symbol(variable_name, value)
+        self.assign_symbol(variable_name, value)
         print(f"Assigned {variable_name} = {value}")
 
 
@@ -941,20 +940,22 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#input_statement.
     def visitInput_statement(self, ctx:BoardGameParser.Input_statementContext):
+        input_prompt = ""
         if ctx.STRING_LITERAL():
-            print(ctx.STRING_LITERAL().getText(), end="")
+            input_prompt = self.visitString(ctx.STRING_LITERAL()[0])
 
-        input_val = input()
-        
-        # return self.visitChildren(ctx)
-
+        identifier = ctx.IDENTIFIER().getText()
+        input_val = input(input_prompt)
+        self.assign_symbol(identifier, input_val)
 
     # Visit a parse tree produced by BoardGameParser#print_statement.
     def visitPrint_statement(self, ctx:BoardGameParser.Print_statementContext):
         to_print = self.visit(ctx.param_list())
 
         for item in to_print:
+            item = self.lookup_symbol(item) if item in self.symbol_table[-1] else item
             print(item, end=" ")
+        print()
 
 
     # Visit a parse tree produced by BoardGameParser#return_statement.

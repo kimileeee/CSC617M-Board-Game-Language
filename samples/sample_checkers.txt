@@ -44,7 +44,13 @@ END
 START:
      TURN white
      MOVE regular_1 TO BOARD.E4
+     player_move = INPUT("Enter move: ")
+     PRINT("Moved regular_1 to E4")
+     PRINT(player_move)
 
      TURN black
      MOVE regular_1 TO BOARD.F7
+     player_move = INPUT("Enter move: ")
+     PRINT("Moved regular_1 to F7")
+     PRINT(player_move)
 END
