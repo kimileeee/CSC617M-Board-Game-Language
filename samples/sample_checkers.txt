@@ -64,6 +64,7 @@ START:
      eval_output = EVALUATE((NOT 10 > 11) AND 7 - 7)
      eval_output = EVALUATE(NOT (10 > 11 AND 7 - 7))
      eval_output = EVALUATE((NOT 10 > 11 AND 7) - 7.0)
+     eval_output = EVALUATE(eval_output + 1)
 
      TURN white
      MOVE regular_1 TO BOARD.E4
