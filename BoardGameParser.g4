@@ -148,6 +148,7 @@ in_expression : primary IN primary
               ;
 
 at_expression : (IDENTIFIER | object_access) AT board_pos
+              | ANY (IDENTIFIER | object_access) AT board_pos
               ;
 
 any_expression : ANY (IDENTIFIER | object_access | list | game_entities)

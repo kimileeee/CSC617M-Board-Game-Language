@@ -813,8 +813,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#rule_statement.
     def visitRule_statement(self, ctx:BoardGameParser.Rule_statementContext):
-        # print("\nDefining RULEs")
-        return self.visitChildren(ctx)
+        print("\nDefining RULEs")
+        # return self.visitChildren(ctx)
 
     # Visit a parse tree produced by BoardGameParser#piece_statement.
     def visitPiece_statement(self, ctx:BoardGameParser.Piece_statementContext):

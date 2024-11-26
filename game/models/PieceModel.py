@@ -6,7 +6,11 @@ class Piece:
         self.pos = None         # tuple (row, col), or number for board like s&l
         self.symbol = None
         self.count = 0
-        self.move = None
+        self.actions = []
+
+    def set_count(self, count):
+        """Set the count of the piece."""
+        self.count = count
 
     def set_color(self, color):
         """Set the color of the piece."""
@@ -28,9 +32,10 @@ class Piece:
         """Get the possible moves for the piece."""
         pass
 
-    def set_move(self, **kwargs):
+    def set_move(self, name, **kwargs):
         """Move the piece to a new position on the board."""
 
+        name = kwargs.get("direction", None)
         direction = kwargs.get("direction", "adjacent")
         min_count = kwargs.get("min_count", 1)
         max_count = kwargs.get("max_count", 1)
@@ -40,18 +45,22 @@ class Piece:
         custom_movement = kwargs.get("custom_movement", None)
         consume = kwargs.get("consume", True)
 
-        if custom_movement is not None:
-            self.move = custom_movement
+        if name is None:
+            raise ValueError("A set action is missing a name. Check the action defintions and make sure that a name is set for each one.")
+        elif custom_movement is not None:
+            move = {"name": name, "moveset": custom_movement}
         elif across is not False:
             min_count = None
             max_count = None
-            self.move = {"direction": direction, "min_count" : min_count, "max_count" : max_count, "skip" : skip, "backtrack" : backtrack, "consume" : consume}
+            move = {"name": name, "direction": direction, "min_count" : min_count, "max_count" : max_count, "skip" : skip, "backtrack" : backtrack, "consume" : consume}
         else:
-            self.move = {"direction" : direction, "min_count": min_count, "max_count": max_count, "skip": skip, "backtrack": backtrack, "consume": consume}
+            move = {"name": name, "direction" : direction, "min_count": min_count, "max_count": max_count, "skip": skip, "backtrack": backtrack, "consume": consume}
+
+        self.actions.append(move)
     
     def copy(self):
         return Piece(self.name)
 
     def __repr__(self):
         """String representation of the piece."""
-        return f"Piece(name={self.name}, color={self.color}, pos={self.pos}, symbol={self.symbol}, count={self.count}, action={self.move})"
+        return f"Piece(name={self.name}, color={self.color}, pos={self.pos}, symbol={self.symbol}, count={self.count}, action={self.actions})"

@@ -37,12 +37,14 @@ START : 'START';
 END : 'END';
 MOVE : 'MOVE';
 TO : 'TO';
+CONVERT : 'CONVERT';
 TURN : 'TURN';
 ROW : 'ROW';
 COLUMN : 'COLUMN';
 
 IF : 'IF';
 ELSE : 'ELSE';
+THEN : 'THEN';
 FOR : 'FOR';
 WHILE : 'WHILE';
 INPUT : 'INPUT';
