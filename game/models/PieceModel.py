@@ -10,13 +10,13 @@ class Piece:
         """Set the color of the piece."""
         self.color = color
 
-    def set_pos(self, row, col):
+    def set_pos(self, **kwargs):
         """Set the position of the piece on the board."""
-        self.pos = (row, col)
 
-    def set_pos(self, pos):
-        """Set the position of the piece on the board."""
-        self.pos = pos
+        if kwargs.get("col"):
+            self.pos = (kwargs.get("row"), kwargs.get("col"))
+        else:
+            self.pos = kwargs.get("row")
 
     def get_moves(self):
         """Get the possible moves for the piece."""
@@ -29,6 +29,9 @@ class Piece:
     def move(self, pos):
         """Move the piece to a new position on the board."""
         self.pos = pos
+    
+    def copy(self):
+        return Piece(self.name)
 
     def __repr__(self):
         """String representation of the piece."""

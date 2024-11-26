@@ -90,13 +90,18 @@ class BoardGame:
         """Add a piece to a player's collection of pieces."""
         base_piece = self.get_base_pieces(piece_name)
         new_piece = base_piece.copy()
+        temp = {}
+        temp['row'] = row
+        temp['col'] = col
+        new_piece.set_pos(**temp)
 
-        player = next(p for p in self.players if p.name == player_name)
-        new_piece.set_color(player.color)
-        new_piece.set_pos(row, col)
+        # if player_name is not None
+        if player_name:
+            player = next(p for p in self.players if p.name.strip() == player_name.strip())
+            new_piece.set_color(player.color)
+            player.add_piece(new_piece)
 
         self.pieces.append(new_piece)
-        player.add_piece(new_piece)
 
     def move_piece(self, player_name, piece_name, new_row, new_col):
         """Move a piece on the board."""
