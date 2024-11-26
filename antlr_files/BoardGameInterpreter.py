@@ -245,6 +245,9 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         
         return params_list + others
 
+    # Visit a parse tree produced by BoardGameParser#BoardPosParam.
+    def visitBoardPosParam(self, ctx:BoardGameParser.BoardPosParamContext):
+        return self.visitChildren(ctx)
 
     # Visit a parse tree produced by BoardGameParser#LiteralParam.
     def visitLiteralParam(self, ctx:BoardGameParser.LiteralParamContext):
@@ -281,6 +284,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             params_list.append(ctx.IDENTIFIER().getText()) #TODO: Implement this
         elif ctx.literal():
             params_list.append(self.visit(ctx.literal()))
+        elif ctx.board_pos():
+            params_list.append(self.visit(ctx.board_pos()))
         elif ctx.object_access():
             params_list.append(self.visit(ctx.object_access())) #TODO: Implement this
         elif ctx.list_():
