@@ -22,8 +22,12 @@ DEFINE checkers.CONDITIONS:
 END
 
 DEFINE checkers.RULES :
-     RULE promote_rule_white (IF ANY regular AT BOARD.ROW.8 AND regular.color == white THEN regular CONVERT king)
-     RULE promote_rule_black (IF ANY regular AT BOARD.ROW.1 AND regular.color == black THEN regular CONVERT king)
+     RULE promote_rule_white (IF ANY regular AT BOARD.ROW.8 AND regular.color == white 
+                              THEN regular CONVERT king 
+                              END)
+     RULE promote_rule_black (IF ANY regular AT BOARD.ROW.1 AND regular.color == black 
+                              THEN regular CONVERT king 
+                              END)
 END
 
 DEFINE checkers.PIECES:
@@ -33,8 +37,8 @@ DEFINE checkers.PIECES:
      PIECE regular ACTION (name = move, direction = diagonal, min_count = 1, max_count = 1, skip = True, across = False, backtrack = False, consume = False)
      PIECE regular ACTION (name = consume, direction = diagonal, min_count = 1, max_count = 1, skip = True, across = False, backtrack = False, consume = True)
 
-     PIECE king ACTION (name = move, direction = diagonal, skip = True, across = True, backtrack = True, consume = False)
-     PIECE king ACTION (name = consume, direction = diagonal, skip = True, across = True, backtrack = True, consume = True)
+     PIECE king ACTION (name = move, direction = diagonal, min_count = 1, skip = True, across = True, backtrack = True, consume = False)
+     PIECE king ACTION (name = consume, direction = diagonal, min_count = 1, skip = True, across = True, backtrack = True, consume = True)
 END
 
 DEFINE checkers.BOARD:

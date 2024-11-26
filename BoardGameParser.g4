@@ -215,8 +215,8 @@ move_statement : MOVE (IDENTIFIER | object_access | ALL) TO board_pos
 turn_statement : TURN IDENTIFIER move_statement
                ;
 
-if_statement : IF expression COLON code_block  ELSE COLON code_block
-             | IF expression COLON code_block
+if_statement : IF expression THEN code_block ELSE code_block END
+             | IF expression THEN code_block END
              ;
 
 for_statement : FOR IDENTIFIER IN list COLON code_block END

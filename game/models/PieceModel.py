@@ -32,10 +32,10 @@ class Piece:
         """Get the possible moves for the piece."""
         pass
 
-    def set_move(self, name, **kwargs):
+    def set_move(self, **kwargs):
         """Move the piece to a new position on the board."""
 
-        name = kwargs.get("direction", None)
+        name = kwargs.get("name", None)
         direction = kwargs.get("direction", "adjacent")
         min_count = kwargs.get("min_count", 1)
         max_count = kwargs.get("max_count", 1)
@@ -46,11 +46,10 @@ class Piece:
         consume = kwargs.get("consume", True)
 
         if name is None:
-            raise ValueError("A set action is missing a name. Check the action defintions and make sure that a name is set for each one.")
+            raise TypeError("A set action is missing a name. Check the action defintions and make sure that a name is set for each one.")
         elif custom_movement is not None:
             move = {"name": name, "moveset": custom_movement}
         elif across is not False:
-            min_count = None
             max_count = None
             move = {"name": name, "direction": direction, "min_count" : min_count, "max_count" : max_count, "skip" : skip, "backtrack" : backtrack, "consume" : consume}
         else:
