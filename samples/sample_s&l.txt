@@ -56,8 +56,8 @@ END
 START:
     TURN me
     MOVE regular_1
-    "You rolled a 5, regular_1 TO BOARD.6"
+    PRINT("You rolled a 5, regular_1 TO BOARD.6")
     TURN you
     MOVE regular_1
-    "You rolled a 1, regular_1 TO BOARD.87"
+    PRINT("You rolled a 1, regular_1 TO BOARD.87")
 END

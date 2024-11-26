@@ -195,9 +195,9 @@ piece_statement : PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list 
                 | PIECE assignment_expression
                 ;
 
-board_statement : (PLAYER IDENTIFIER) PIECE (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
-                | (PLAYER IDENTIFIER) OBSTACLE (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
-                | (PLAYER IDENTIFIER) BOOSTER (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
+board_statement : PLAYER IDENTIFIER PIECE (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
+                | PLAYER IDENTIFIER OBSTACLE (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
+                | PLAYER IDENTIFIER BOOSTER (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
                 ;
 
 obstacle_statement : OBSTACLE (IDENTIFIER | object_access | ALL) COUNT int_literal
