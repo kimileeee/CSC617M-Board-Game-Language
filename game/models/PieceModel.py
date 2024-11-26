@@ -21,6 +21,12 @@ class Piece:
             self.pos = (kwargs.get("row"), kwargs.get("col"))
         else:
             self.pos = kwargs.get("row")
+        
+    def get_pos(self):
+        return self.pos
+    
+    def get_first_two_letters(self):
+        return self.name[:2]
 
     def get_moves(self):
         """Get the possible moves for the piece."""
