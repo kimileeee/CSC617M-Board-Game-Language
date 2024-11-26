@@ -71,12 +71,12 @@ primary : literal
 param_list : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR                                 # ScoreParam
            | (ALL | ANY | NONE) COMMA param_list                                                # AllAnyNoneParam      
            | assignment_expression COMMA param_list                                             # AssignmentParam
-        //    | IDENTIFIER ASSIGN_OPT (literal | objects | method_call) COMMA param_list
-           | IDENTIFIER COMMA param_list                                                        # VariableParam
            | literal COMMA param_list                                                           # LiteralParam
+           | IDENTIFIER COMMA param_list                                                        # VariableParam
+           | board_pos COMMA param_list                                                         # BoardPosParam
            | object_access COMMA param_list                                                     # ObjectAccessParam
            | list COMMA param_list                                                              # ListLiteralParam
-           | (ALL | ANY | NONE | IDENTIFIER | literal | object_access | list)                   # SingleParam
+           | (ALL | ANY | NONE | IDENTIFIER | literal | object_access | list | board_pos)       # SingleParam
            ;
 
 list : OPEN_BRACKET param_list CLOSE_BRACKET

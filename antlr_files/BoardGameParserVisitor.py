@@ -89,13 +89,18 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BoardGameParser#LiteralParam.
+    def visitLiteralParam(self, ctx:BoardGameParser.LiteralParamContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BoardGameParser#VariableParam.
     def visitVariableParam(self, ctx:BoardGameParser.VariableParamContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#LiteralParam.
-    def visitLiteralParam(self, ctx:BoardGameParser.LiteralParamContext):
+    # Visit a parse tree produced by BoardGameParser#BoardPosParam.
+    def visitBoardPosParam(self, ctx:BoardGameParser.BoardPosParamContext):
         return self.visitChildren(ctx)
 
 
