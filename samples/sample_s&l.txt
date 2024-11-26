@@ -15,11 +15,12 @@ END
 DEFINE snakes_and_ladders.PLAYERS:
     PLAYER me COLOR COLOR.white 
     PLAYER you COLOR COLOR.black
+    PLAYER them COLOR COLOR.blue
     ORDER ([me, you, them])               
 END
 
 DEFINE snakes_and_ladders.CONDITIONS:
-    CONDITION (ANY PLAYER PIECE regular AT BOARD.100)
+    CONDITION (ANY PIECE AT BOARD.100)
 END
 
 DEFINE snakes_and_ladders.SCORE:

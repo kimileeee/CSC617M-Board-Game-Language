@@ -10,6 +10,14 @@ class Player:
         """Add a piece to the player's list of pieces."""
         self.pieces.append(piece)
 
+    def get_piece(self, name):
+        """Get a piece by name."""
+        return next(p for p in self.pieces if p.name == name)
+    
+    def get_pieces_by_name(self, name):
+        """Get all pieces by name."""
+        return [p for p in self.pieces if p.name == name]
+
     def move_piece(self, piece, new_row, new_col):
         """Move a piece owned by the player."""
         piece.move(new_row, new_col)

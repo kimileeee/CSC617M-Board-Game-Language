@@ -12,19 +12,17 @@ DEFINE game_of_the_generals:
 END
 
 DEFINE game_of_the_generals.PLAYERS:
-    PLAYER me COLOR COLOR.blue AT BOARD.ROW.0
-    PLAYER you COLOR COLOR.red AT BOARD.ROW.7 
+    PLAYER me COLOR COLOR.blue AT BOARD.ROW.1
+    PLAYER you COLOR COLOR.red AT BOARD.ROW.8 
     ORDER ([me, you])
 END
 
 DEFINE checkers.CONDITIONS:
-    CONDITION(ANY PLAYERS flag.count == 0)
-    CONDITION(me.flag AT BOARD.ROW.8 OR you.flag AT BOARD.ROW.1)
-    CONDITION(me.status == "resigned" OR you.status == "resigned")
-    CONDITION(me.status == "draw" AND you.status == "draw")
+    CONDITION(me.flag.COUNT == 0)
+    CONDITION(you.flag.COUNT == 0)
+    CONDITION(me.flag AT BOARD.ROW.8)
+    CONDITION(you.flag AT BOARD.ROW.1)
 END
-
-
 
 DEFINE checkers.PIECES:
     PIECE five_star COUNT 1

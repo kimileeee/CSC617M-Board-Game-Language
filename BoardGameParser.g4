@@ -26,7 +26,6 @@ statement   : game_entities_statement
             | booster_statement
             | turn_statement
             | move_statement
-            | timer_statement
             | dice_statement
             | expression
             | if_statement
@@ -47,6 +46,7 @@ game_entities : BOARD
               | BOOSTERS
               | COLOR
               | SCORE //added this to indicate that it can be set
+              | TIMER
               ;
 
 int_literal : POSITIVE_INT_LITERAL
@@ -60,9 +60,9 @@ literal : int_literal                           # Integer
         ;
 
 primary : literal
-        | object_access
-        | list                                  
+        | list       
         | IDENTIFIER
+        | object_access              
         | OPEN_PAR expression CLOSE_PAR
         | method_call
         | entity_count_expression
@@ -82,15 +82,15 @@ param_list : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR                 
 list : OPEN_BRACKET param_list CLOSE_BRACKET
      ;
 
-object_access : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)* //do we allow something like BOARD.PIECES.OBSTACLES??
-              | game_entities DOT IDENTIFIER (DOT game_entities | IDENTIFIER)* //should it be DOT identifier 
-              | IDENTIFIER DOT IDENTIFIER (DOT game_entities | IDENTIFIER)*
+object_access : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)*                  # ObjectEntityAccess
+              | game_entities DOT IDENTIFIER (DOT game_entities | IDENTIFIER)*                  # GameEntityAccess
+              | IDENTIFIER DOT IDENTIFIER (DOT game_entities | IDENTIFIER)*                     # IdentifierAccess
               ;
         
 //BOARD DOT IDENTIFIER can also be handled by object access thanks to game_entities DOT IDENTIFIER?
 //solution is to either remove BOARD from game entities and let it purely be handled by board_pos?
 board_pos : BOARD DOT IDENTIFIER                                # BoardPosIdentifier
-          | BOARD DOT (ROW | COLUMN) DOT (int_literal)          # BoardPosRosCol
+          | BOARD DOT (ROW | COLUMN) DOT (int_literal)          # BoardPosRowCol
           | board_pos ELIPSIS board_pos                         # BoardPosRange
           ;
 
@@ -105,25 +105,27 @@ expression : base_expression logical_opt expression
            | base_expression
            ;
 
-entity_count_expression : game_entities DOT COUNT 
-             ;
+entity_count_expression : game_entities DOT COUNT           # CountEntity
+                        | IDENTIFIER DOT COUNT              # CountIdentifier
+                        | object_access DOT COUNT           # CountObjectAccess
+                        ;
 
 base_expression
-    : assignment_expression
+    : primary
+    | assignment_expression
     | math_expression
     | in_expression
     | at_expression
     | conditional_expression
     | move_statement
     | any_expression expression
-    | primary
     | NOT_OPT expression
     | entity_count_expression
     ;
 
 objects : IDENTIFIER
-        | object_access
         | board_pos
+        | object_access
         ;
 
 method_declaration : DEFINE IDENTIFIER OPEN_PAR param_list CLOSE_PAR COLON code_block END
@@ -151,9 +153,9 @@ at_expression : (IDENTIFIER | object_access) AT board_pos
 any_expression : ANY (IDENTIFIER | object_access | list | game_entities)
                ;
 
-assignment_expression : (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT expression
-                      | IDENTIFIER ASSIGN_OPT method_call
-                      | (IDENTIFIER | IDENTIFIER OPEN_PAR IDENTIFIER CLOSE_PAR) ASSIGN_OPT input_statement
+assignment_expression : (IDENTIFIER) ASSIGN_OPT expression              # AssignExpression
+                      | IDENTIFIER ASSIGN_OPT method_call               # AssignMethodCall
+                      | (IDENTIFIER) ASSIGN_OPT input_statement         # AssignInput
                      ;
 
 exponent : primary (EXP_OPT primary)*
@@ -231,8 +233,8 @@ print_statement : PRINT OPEN_PAR (param_list) CLOSE_PAR
 return_statement : RETURN expression
                  ;
 
-timer_statement : TIMER OPEN_PAR POSITIVE_INT_LITERAL CLOSE_PAR //i set this as positive_int_literal since timer cannot be negative
-                ;
+// timer_statement : TIMER OPEN_PAR POSITIVE_INT_LITERAL CLOSE_PAR //i set this as positive_int_literal since timer cannot be negative
+//                 ;
 
 dice_statement  : DICE OPEN_PAR int_literal COMMA int_literal CLOSE_PAR //i imagine it as DICE(1,6) where it rolls the possible numbers
                 ; //currently its set as this in case of games that allow negative numbers since some games allow those type of dice rolls

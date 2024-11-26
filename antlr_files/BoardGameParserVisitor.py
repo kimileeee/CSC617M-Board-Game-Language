@@ -119,8 +119,23 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#object_access.
-    def visitObject_access(self, ctx:BoardGameParser.Object_accessContext):
+    # Visit a parse tree produced by BoardGameParser#ObjectEntityAccess.
+    def visitObjectEntityAccess(self, ctx:BoardGameParser.ObjectEntityAccessContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#GameEntityAccess.
+    def visitGameEntityAccess(self, ctx:BoardGameParser.GameEntityAccessContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#IdentifierAccess.
+    def visitIdentifierAccess(self, ctx:BoardGameParser.IdentifierAccessContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#BoardPosRowCol.
+    def visitBoardPosRowCol(self, ctx:BoardGameParser.BoardPosRowColContext):
         return self.visitChildren(ctx)
 
 
@@ -134,11 +149,6 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#BoardPosRosCol.
-    def visitBoardPosRosCol(self, ctx:BoardGameParser.BoardPosRosColContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by BoardGameParser#conditional_opt.
     def visitConditional_opt(self, ctx:BoardGameParser.Conditional_optContext):
         return self.visitChildren(ctx)
@@ -149,8 +159,18 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#entity_count_expression.
-    def visitEntity_count_expression(self, ctx:BoardGameParser.Entity_count_expressionContext):
+    # Visit a parse tree produced by BoardGameParser#CountEntity.
+    def visitCountEntity(self, ctx:BoardGameParser.CountEntityContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#CountIdentifier.
+    def visitCountIdentifier(self, ctx:BoardGameParser.CountIdentifierContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#CountObjectAccess.
+    def visitCountObjectAccess(self, ctx:BoardGameParser.CountObjectAccessContext):
         return self.visitChildren(ctx)
 
 
@@ -204,8 +224,18 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#assignment_expression.
-    def visitAssignment_expression(self, ctx:BoardGameParser.Assignment_expressionContext):
+    # Visit a parse tree produced by BoardGameParser#AssignExpression.
+    def visitAssignExpression(self, ctx:BoardGameParser.AssignExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#AssignMethodCall.
+    def visitAssignMethodCall(self, ctx:BoardGameParser.AssignMethodCallContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#AssignInput.
+    def visitAssignInput(self, ctx:BoardGameParser.AssignInputContext):
         return self.visitChildren(ctx)
 
 
@@ -311,11 +341,6 @@ class BoardGameParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#return_statement.
     def visitReturn_statement(self, ctx:BoardGameParser.Return_statementContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#timer_statement.
-    def visitTimer_statement(self, ctx:BoardGameParser.Timer_statementContext):
         return self.visitChildren(ctx)
 
 
