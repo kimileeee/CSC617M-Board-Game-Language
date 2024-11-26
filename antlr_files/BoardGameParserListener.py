@@ -413,6 +413,15 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BoardGameParser#AssignEvaluate.
+    def enterAssignEvaluate(self, ctx:BoardGameParser.AssignEvaluateContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#AssignEvaluate.
+    def exitAssignEvaluate(self, ctx:BoardGameParser.AssignEvaluateContext):
+        pass
+
+
     # Enter a parse tree produced by BoardGameParser#AssignMethodCall.
     def enterAssignMethodCall(self, ctx:BoardGameParser.AssignMethodCallContext):
         pass
@@ -428,6 +437,60 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by BoardGameParser#AssignInput.
     def exitAssignInput(self, ctx:BoardGameParser.AssignInputContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#eval_base_expressions.
+    def enterEval_base_expressions(self, ctx:BoardGameParser.Eval_base_expressionsContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#eval_base_expressions.
+    def exitEval_base_expressions(self, ctx:BoardGameParser.Eval_base_expressionsContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#eval_expression.
+    def enterEval_expression(self, ctx:BoardGameParser.Eval_expressionContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#eval_expression.
+    def exitEval_expression(self, ctx:BoardGameParser.Eval_expressionContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#not_expression.
+    def enterNot_expression(self, ctx:BoardGameParser.Not_expressionContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#not_expression.
+    def exitNot_expression(self, ctx:BoardGameParser.Not_expressionContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#evaluate_statement.
+    def enterEvaluate_statement(self, ctx:BoardGameParser.Evaluate_statementContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#evaluate_statement.
+    def exitEvaluate_statement(self, ctx:BoardGameParser.Evaluate_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#primary_eval.
+    def enterPrimary_eval(self, ctx:BoardGameParser.Primary_evalContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#primary_eval.
+    def exitPrimary_eval(self, ctx:BoardGameParser.Primary_evalContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#unary.
+    def enterUnary(self, ctx:BoardGameParser.UnaryContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#unary.
+    def exitUnary(self, ctx:BoardGameParser.UnaryContext):
         pass
 
 

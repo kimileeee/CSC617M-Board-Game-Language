@@ -234,6 +234,11 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BoardGameParser#AssignEvaluate.
+    def visitAssignEvaluate(self, ctx:BoardGameParser.AssignEvaluateContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BoardGameParser#AssignMethodCall.
     def visitAssignMethodCall(self, ctx:BoardGameParser.AssignMethodCallContext):
         return self.visitChildren(ctx)
@@ -241,6 +246,36 @@ class BoardGameParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#AssignInput.
     def visitAssignInput(self, ctx:BoardGameParser.AssignInputContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#eval_base_expressions.
+    def visitEval_base_expressions(self, ctx:BoardGameParser.Eval_base_expressionsContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#eval_expression.
+    def visitEval_expression(self, ctx:BoardGameParser.Eval_expressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#not_expression.
+    def visitNot_expression(self, ctx:BoardGameParser.Not_expressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#evaluate_statement.
+    def visitEvaluate_statement(self, ctx:BoardGameParser.Evaluate_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#primary_eval.
+    def visitPrimary_eval(self, ctx:BoardGameParser.Primary_evalContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#unary.
+    def visitUnary(self, ctx:BoardGameParser.UnaryContext):
         return self.visitChildren(ctx)
 
 

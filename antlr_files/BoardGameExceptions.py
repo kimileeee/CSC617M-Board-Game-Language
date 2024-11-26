@@ -18,3 +18,7 @@ class BoardGameSyntaxError(BoardGameException):
     def __init__(self, message="Syntax error in your board game code. Please check your syntax."):
         super().__init__(message)
 
+class InvalidOperatorException(BoardGameException):
+    def __init__(self, message="Invalid operator. Please check your operator."):
+        super().__init__(message)
+

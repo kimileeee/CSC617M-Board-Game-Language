@@ -95,11 +95,12 @@ board_pos : BOARD DOT IDENTIFIER                                # BoardPosIdenti
           ;
 
 conditional_opt : EQUAL_OPT 
-             | LESS_THAN_OPT 
-             | LESS_EQUAL_OPT 
-             | GREATER_THAN_OPT 
-             | GREATER_EQUAL_OPT
-             ;
+                | NOT_EQUAL_OPT
+                | LESS_THAN_OPT 
+                | LESS_EQUAL_OPT 
+                | GREATER_THAN_OPT 
+                | GREATER_EQUAL_OPT
+                ;
 
 expression : base_expression logical_opt expression
            | base_expression
@@ -141,7 +142,8 @@ class_statement : assignment_expression
                 | method_declaration
                 ;
 
-conditional_expression : primary conditional_opt primary
+conditional_expression : additive (conditional_opt additive)*
+                       | primary conditional_opt primary
                        ;
 
 in_expression : primary IN primary
@@ -153,21 +155,44 @@ at_expression : (IDENTIFIER | object_access) AT board_pos
 any_expression : ANY (IDENTIFIER | object_access | list | game_entities)
                ;
 
-assignment_expression : (IDENTIFIER) ASSIGN_OPT expression              # AssignExpression
+assignment_expression : IDENTIFIER ASSIGN_OPT expression              # AssignExpression
+                      | IDENTIFIER ASSIGN_OPT evaluate_statement        # AssignEvaluate
                       | IDENTIFIER ASSIGN_OPT method_call               # AssignMethodCall
-                      | (IDENTIFIER) ASSIGN_OPT input_statement         # AssignInput
+                      | IDENTIFIER ASSIGN_OPT input_statement         # AssignInput
                      ;
 
-exponent : primary (EXP_OPT primary)*
-         ;
+eval_base_expressions   : conditional_expression
+                        | not_expression
+                        ;
 
-multiplicative : multiplicative (MUL_OPT | DIV_OPT) exponent
-               | exponent
+eval_expression : eval_base_expressions logical_opt eval_expression
+                | eval_base_expressions
+                ;
+
+not_expression : NOT_OPT conditional_expression
                ;
 
-additive : additive (ADD_OPT | SUB_OPT) multiplicative
-         | multiplicative
+evaluate_statement : EVALUATE OPEN_PAR eval_expression CLOSE_PAR
+                   ;
+
+primary_eval : OPEN_PAR eval_expression CLOSE_PAR
+             | int_literal
+             | FLOAT_LITERAL
+             | IDENTIFIER
+             ;
+
+unary : (ADD_OPT | SUB_OPT)? primary_eval
+      ;
+
+exponent : unary (EXP_OPT unary)*
          ;
+
+multiplicative : exponent ((MUL_OPT | DIV_OPT) exponent)*
+               ;
+
+additive : multiplicative ((ADD_OPT | SUB_OPT) multiplicative)*
+         ;
+
 
 math_expression : additive
                 ;

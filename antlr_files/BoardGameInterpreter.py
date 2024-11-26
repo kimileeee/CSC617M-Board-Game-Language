@@ -564,25 +564,6 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         script = f"len({object_access})"
         return script
         # return "len(" + object_access + ")"
-    
-    # Visit a parse tree produced by BoardGameParser#conditional_expression.
-    def visitConditional_expression(self, ctx:BoardGameParser.Conditional_expressionContext):
-        # print(ctx.getText())
-        # print(len(ctx.children))
-
-        l = str(self.visit(ctx.getChild(0)))
-        # print(l)
-        r = str(self.visit(ctx.getChild(2)))
-        # print(r, type(r), "\n")
-
-        cond_opt = ctx.conditional_opt().getText()
-
-        # if type(ctx.getChild(0)) == BoardGameParser.Entity_count_expressionContext:
-        #     return f"{self.indent}return count_val {cond_opt} {r}\n"
-
-        exp = f"{self.indent}return {l} {cond_opt} {r}\n"
-        # print(exp)
-        return exp
 
     # Visit a parse tree produced by BoardGameParser#in_expression.
     def visitIn_expression(self, ctx:BoardGameParser.In_expressionContext):
@@ -656,45 +637,150 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         self.assign_symbol(variable_name, value)
         print(f"Assigned {variable_name} = {value}")
 
+    # Visit a parse tree produced by BoardGameParser#AssignEvaluate.
+    def visitAssignEvaluate(self, ctx:BoardGameParser.AssignEvaluateContext):
+        # print("in assign evaluate")
+        variable_name = ctx.IDENTIFIER().getText()
+        value = self.visit(ctx.evaluate_statement())
+        self.assign_symbol(variable_name, value)
+        print(f"Assigned {variable_name} = {value}")
+
+    # Visit a parse tree produced by BoardGameParser#primary_eval.
+    def visitPrimary_eval(self, ctx:BoardGameParser.Primary_evalContext):
+        if ctx.int_literal():
+            return float(self.visitInt_literal(ctx.int_literal()))
+        elif ctx.FLOAT_LITERAL():
+            return self.visitFloat(ctx.FLOAT_LITERAL())
+        elif ctx.IDENTIFIER():
+            # You can define a variable lookup here.
+            try:
+                return self.lookup_symbol(ctx.IDENTIFIER().getText())
+            except Exception as e:
+                raise ValueError(f"Unknown identifier: {ctx.IDENTIFIER().getText()}")
+        else:
+            return self.visit(ctx.eval_expression())
+    
+    # Visit a parse tree produced by BoardGameParser#unary.
+    def visitUnary(self, ctx:BoardGameParser.UnaryContext):
+        # print("primary_eval", self.visit(ctx.primary_eval()), type(self.visit(ctx.primary_eval())))   
+        if ctx.ADD_OPT():
+            return self.visit(ctx.primary_eval())
+        elif ctx.SUB_OPT():
+            return -self.visit(ctx.primary_eval())
+        else:
+            return self.visit(ctx.primary_eval())
 
     # Visit a parse tree produced by BoardGameParser#exponent.
     def visitExponent(self, ctx:BoardGameParser.ExponentContext):
-        l = self.visit(ctx.getChild(0))
-        r = self.visit(ctx.getChild(2))
-
-        if ctx.EXP_OPT().getText():
-            return l ** r
+        n = len(ctx.unary())
+        # Start from the rightmost operand
+        res = self.visit(ctx.unary(n - 1))
+        for i in range(n - 2, -1, -1):  # Iterate right-to-left
+            operator = ctx.getChild(2 * i + 1).getText()  # Operator is at odd indices
+            if operator == '^':
+                l = self.visit(ctx.unary(i))
+                res = l ** res  # Right-to-left exponentiation
+        return res
 
     # Visit a parse tree produced by BoardGameParser#multiplicative.
     def visitMultiplicative(self, ctx:BoardGameParser.MultiplicativeContext):
-        l = self.visit(ctx.getChild(0))
-        r = self.visit(ctx.getChild(2))
-
-        if ctx.MUL_OPT().getText():
-            return l * r
-        elif ctx.DIV_OPT.text:
-            if r == 0:
-                raise ZeroDivisionError
-            return l / r
+        l = self.visit(ctx.exponent(0))
+        for i in range(1, len(ctx.exponent())):
+            operator = ctx.getChild(2 * i - 1).getText()
+            r = self.visit(ctx.exponent(i))
+            if operator == utils.get_literal_name(BoardGameLexer.MUL_OPT):
+                l = l * r
+            elif operator == utils.get_literal_name(BoardGameLexer.DIV_OPT):
+                if r == 0:
+                    raise ZeroDivisionError()
+                l = l / r
+        # print("multiplicative", l)
+        return l
 
     # Visit a parse tree produced by BoardGameParser#additive.
     def visitAdditive(self, ctx:BoardGameParser.AdditiveContext):
-        l = self.visit(ctx.getChild(0))
-        r = self.visit(ctx.getChild(2))
+        l = self.visit(ctx.multiplicative(0))
+        for i in range(1, len(ctx.multiplicative())):
+            operator = ctx.getChild(2 * i - 1).getText()
+            r = self.visit(ctx.multiplicative(i))
 
-        if ctx.ADD_OPT().getText():
-            return l + r
-        elif ctx.SUB_OPT().getText():
-            return l - r
+            if operator == utils.get_literal_name(BoardGameLexer.ADD_OPT):
+                l = l + r
+            elif operator == utils.get_literal_name(BoardGameLexer.SUB_OPT):
+                l = l - r
+        # print("additive", l)
+        return l
 
     # Visit a parse tree produced by BoardGameParser#math_expression.
     def visitMath_expression(self, ctx:BoardGameParser.Math_expressionContext):
         return self.visitChildren(ctx)
 
+    # Visit a parse tree produced by BoardGameParser#conditional_expression.
+    def visitConditional_expression(self, ctx:BoardGameParser.Conditional_expressionContext):
+        # print(ctx.getText())
+        # print(len(ctx.children))
+        # print(type(ctx.parentCtx))
+        if type(ctx.parentCtx) in [BoardGameParser.Eval_base_expressionsContext, BoardGameParser.Not_expressionContext]:
+            l = self.visit(ctx.additive(0))
+            for i in range(1, len(ctx.additive())):
+                cond_opt = ctx.getChild(2 * i - 1).getText()
+                r = self.visit(ctx.additive(i))
+                if cond_opt == utils.get_literal_name(BoardGameLexer.EQUAL_OPT):
+                    l = l == r
+                elif cond_opt == utils.get_literal_name(BoardGameLexer.NOT_EQUAL_OPT):
+                    l = l != r
+                elif cond_opt == utils.get_literal_name(BoardGameLexer.GREATER_THAN_OPT):
+                    l = l > r
+                elif cond_opt == utils.get_literal_name(BoardGameLexer.GREATER_EQUAL_OPT):
+                    l = l >= r
+                elif cond_opt == utils.get_literal_name(BoardGameLexer.LESS_THAN_OPT):
+                    l = l < r
+                elif cond_opt == utils.get_literal_name(BoardGameLexer.LESS_EQUAL_OPT):
+                    l = l <= r
+            
+            # print("conditional_expression", l)
+            return l
+        else:
+            l = str(self.visit(ctx.getChild(0)))
+            # print(l)
+            r = str(self.visit(ctx.getChild(2)))
+            # print(r, type(r), "\n")
+            print(ctx.getText())
+            cond_opt = ctx.conditional_opt(0).getText()
 
+            # if type(ctx.getChild(0)) == BoardGameParser.Entity_count_expressionContext:
+            #     return f"{self.indent}return count_val {cond_opt} {r}\n"
+
+            exp = f"{self.indent}return {l} {cond_opt} {r}\n"
+            # print(exp)
+            return exp
+        
+    # Visit a parse tree produced by BoardGameParser#not_expression.
+    def visitNot_expression(self, ctx:BoardGameParser.Not_expressionContext):
+        val = self.visit(ctx.conditional_expression())
+        return (not val)
+        
     # Visit a parse tree produced by BoardGameParser#logical_opt.
     def visitLogical_opt(self, ctx:BoardGameParser.Logical_optContext):
         return self.visitChildren(ctx)
+    
+    # Visit a parse tree produced by BoardGameParser#eval_base_expressions.
+    def visitEval_base_expressions(self, ctx:BoardGameParser.Eval_base_expressionsContext):
+        return self.visitChildren(ctx)
+
+    # Visit a parse tree produced by BoardGameParser#eval_expression.
+    def visitEval_expression(self, ctx:BoardGameParser.Eval_expressionContext):
+        l = self.visit(ctx.eval_base_expressions())
+
+        if ctx.getChildCount() > 1:
+            r = self.visit(ctx.eval_expression())
+            operator = ctx.getChild(1).getText()
+            if operator == utils.get_literal_name(BoardGameLexer.AND_OPT):
+                l = l and r
+            elif operator == utils.get_literal_name(BoardGameLexer.OR_OPT):
+                l = l or r
+        # print("eval_expression", l)
+        return l
     
     
     ##########################
@@ -961,3 +1047,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     # Visit a parse tree produced by BoardGameParser#return_statement.
     def visitReturn_statement(self, ctx:BoardGameParser.Return_statementContext):
         return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#evaluate_statement.
+    def visitEvaluate_statement(self, ctx:BoardGameParser.Evaluate_statementContext):
+        return self.visit(ctx.eval_expression())
