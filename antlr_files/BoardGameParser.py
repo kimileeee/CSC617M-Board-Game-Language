@@ -370,8 +370,7 @@ class BoardGameParser ( Parser ):
     RULE_input_statement = 45
     RULE_print_statement = 46
     RULE_return_statement = 47
-    RULE_timer_statement = 48
-    RULE_dice_statement = 49
+    RULE_dice_statement = 48
 
     ruleNames =  [ "program", "define_block", "gameplay_block", "code_block", 
                    "statement", "game_entities", "int_literal", "literal", 
@@ -386,7 +385,7 @@ class BoardGameParser ( Parser ):
                    "board_statement", "obstacle_statement", "booster_statement", 
                    "move_statement", "turn_statement", "if_statement", "for_statement", 
                    "while_statement", "input_statement", "print_statement", 
-                   "return_statement", "timer_statement", "dice_statement" ]
+                   "return_statement", "dice_statement" ]
 
     EOF = Token.EOF
     GAME=1
@@ -527,23 +526,23 @@ class BoardGameParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 100
+            self.state = 98
             self.match(BoardGameParser.GAME)
-            self.state = 101
+            self.state = 99
             self.match(BoardGameParser.IDENTIFIER)
-            self.state = 103 
+            self.state = 101 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 102
+                self.state = 100
                 self.define_block()
-                self.state = 105 
+                self.state = 103 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not (_la==2):
                     break
 
-            self.state = 107
+            self.state = 105
             self.gameplay_block()
         except RecognitionException as re:
             localctx.exception = re
@@ -638,40 +637,40 @@ class BoardGameParser ( Parser ):
         localctx = BoardGameParser.Define_blockContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_define_block)
         try:
-            self.state = 119
+            self.state = 117
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,2,self._ctx)
             if la_ == 1:
                 localctx = BoardGameParser.DefineContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 109
+                self.state = 107
                 self.match(BoardGameParser.DEFINE)
-                self.state = 112
+                self.state = 110
                 self._errHandler.sync(self)
                 la_ = self._interp.adaptivePredict(self._input,1,self._ctx)
                 if la_ == 1:
-                    self.state = 110
+                    self.state = 108
                     self.match(BoardGameParser.IDENTIFIER)
                     pass
 
                 elif la_ == 2:
-                    self.state = 111
+                    self.state = 109
                     self.object_access()
                     pass
 
 
-                self.state = 114
+                self.state = 112
                 self.match(BoardGameParser.COLON)
-                self.state = 115
+                self.state = 113
                 self.code_block()
-                self.state = 116
+                self.state = 114
                 self.match(BoardGameParser.END)
                 pass
 
             elif la_ == 2:
                 localctx = BoardGameParser.MethodDeclarationContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 118
+                self.state = 116
                 self.method_declaration()
                 pass
 
@@ -741,13 +740,13 @@ class BoardGameParser ( Parser ):
         try:
             localctx = BoardGameParser.GameplayContext(self, localctx)
             self.enterOuterAlt(localctx, 1)
-            self.state = 121
+            self.state = 119
             self.match(BoardGameParser.START)
-            self.state = 122
+            self.state = 120
             self.match(BoardGameParser.COLON)
-            self.state = 123
+            self.state = 121
             self.code_block()
-            self.state = 124
+            self.state = 122
             self.match(BoardGameParser.END)
         except RecognitionException as re:
             localctx.exception = re
@@ -798,17 +797,17 @@ class BoardGameParser ( Parser ):
         self.enterRule(localctx, 6, self.RULE_code_block)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 127 
+            self.state = 125 
             self._errHandler.sync(self)
             _alt = 1
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt == 1:
-                    self.state = 126
+                    self.state = 124
                     self.statement()
 
                 else:
                     raise NoViableAltException(self)
-                self.state = 129 
+                self.state = 127 
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,3,self._ctx)
 
@@ -868,10 +867,6 @@ class BoardGameParser ( Parser ):
             return self.getTypedRuleContext(BoardGameParser.Move_statementContext,0)
 
 
-        def timer_statement(self):
-            return self.getTypedRuleContext(BoardGameParser.Timer_statementContext,0)
-
-
         def dice_statement(self):
             return self.getTypedRuleContext(BoardGameParser.Dice_statementContext,0)
 
@@ -929,120 +924,114 @@ class BoardGameParser ( Parser ):
         localctx = BoardGameParser.StatementContext(self, self._ctx, self.state)
         self.enterRule(localctx, 8, self.RULE_statement)
         try:
-            self.state = 150
+            self.state = 147
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 131
+                self.state = 129
                 self.game_entities_statement()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 132
+                self.state = 130
                 self.board_statement()
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 133
+                self.state = 131
                 self.player_statement()
                 pass
 
             elif la_ == 4:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 134
+                self.state = 132
                 self.condition_statement()
                 pass
 
             elif la_ == 5:
                 self.enterOuterAlt(localctx, 5)
-                self.state = 135
+                self.state = 133
                 self.rule_statement()
                 pass
 
             elif la_ == 6:
                 self.enterOuterAlt(localctx, 6)
-                self.state = 136
+                self.state = 134
                 self.piece_statement()
                 pass
 
             elif la_ == 7:
                 self.enterOuterAlt(localctx, 7)
-                self.state = 137
+                self.state = 135
                 self.obstacle_statement()
                 pass
 
             elif la_ == 8:
                 self.enterOuterAlt(localctx, 8)
-                self.state = 138
+                self.state = 136
                 self.booster_statement()
                 pass
 
             elif la_ == 9:
                 self.enterOuterAlt(localctx, 9)
-                self.state = 139
+                self.state = 137
                 self.turn_statement()
                 pass
 
             elif la_ == 10:
                 self.enterOuterAlt(localctx, 10)
-                self.state = 140
+                self.state = 138
                 self.move_statement()
                 pass
 
             elif la_ == 11:
                 self.enterOuterAlt(localctx, 11)
-                self.state = 141
-                self.timer_statement()
+                self.state = 139
+                self.dice_statement()
                 pass
 
             elif la_ == 12:
                 self.enterOuterAlt(localctx, 12)
-                self.state = 142
-                self.dice_statement()
+                self.state = 140
+                self.expression()
                 pass
 
             elif la_ == 13:
                 self.enterOuterAlt(localctx, 13)
-                self.state = 143
-                self.expression()
+                self.state = 141
+                self.if_statement()
                 pass
 
             elif la_ == 14:
                 self.enterOuterAlt(localctx, 14)
-                self.state = 144
-                self.if_statement()
+                self.state = 142
+                self.for_statement()
                 pass
 
             elif la_ == 15:
                 self.enterOuterAlt(localctx, 15)
-                self.state = 145
-                self.for_statement()
+                self.state = 143
+                self.while_statement()
                 pass
 
             elif la_ == 16:
                 self.enterOuterAlt(localctx, 16)
-                self.state = 146
-                self.while_statement()
+                self.state = 144
+                self.input_statement()
                 pass
 
             elif la_ == 17:
                 self.enterOuterAlt(localctx, 17)
-                self.state = 147
-                self.input_statement()
+                self.state = 145
+                self.print_statement()
                 pass
 
             elif la_ == 18:
                 self.enterOuterAlt(localctx, 18)
-                self.state = 148
-                self.print_statement()
-                pass
-
-            elif la_ == 19:
-                self.enterOuterAlt(localctx, 19)
-                self.state = 149
+                self.state = 146
                 self.return_statement()
                 pass
 
@@ -1093,6 +1082,9 @@ class BoardGameParser ( Parser ):
         def SCORE(self):
             return self.getToken(BoardGameParser.SCORE, 0)
 
+        def TIMER(self):
+            return self.getToken(BoardGameParser.TIMER, 0)
+
         def getRuleIndex(self):
             return BoardGameParser.RULE_game_entities
 
@@ -1120,9 +1112,9 @@ class BoardGameParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 152
+            self.state = 149
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 24250) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 24314) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -1176,7 +1168,7 @@ class BoardGameParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 154
+            self.state = 151
             _la = self._input.LA(1)
             if not(_la==69 or _la==70):
                 self._errHandler.recoverInline(self)
@@ -1312,31 +1304,31 @@ class BoardGameParser ( Parser ):
         localctx = BoardGameParser.LiteralContext(self, self._ctx, self.state)
         self.enterRule(localctx, 14, self.RULE_literal)
         try:
-            self.state = 160
+            self.state = 157
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [69, 70]:
                 localctx = BoardGameParser.IntegerContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 156
+                self.state = 153
                 self.int_literal()
                 pass
             elif token in [71]:
                 localctx = BoardGameParser.FloatContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 157
+                self.state = 154
                 self.match(BoardGameParser.FLOAT_LITERAL)
                 pass
             elif token in [72]:
                 localctx = BoardGameParser.StringContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 158
+                self.state = 155
                 self.match(BoardGameParser.STRING_LITERAL)
                 pass
             elif token in [73]:
                 localctx = BoardGameParser.BooleanContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 159
+                self.state = 156
                 self.match(BoardGameParser.BOOLEAN_LITERAL)
                 pass
             else:
@@ -1362,16 +1354,16 @@ class BoardGameParser ( Parser ):
             return self.getTypedRuleContext(BoardGameParser.LiteralContext,0)
 
 
-        def object_access(self):
-            return self.getTypedRuleContext(BoardGameParser.Object_accessContext,0)
-
-
         def list_(self):
             return self.getTypedRuleContext(BoardGameParser.ListContext,0)
 
 
         def IDENTIFIER(self):
             return self.getToken(BoardGameParser.IDENTIFIER, 0)
+
+        def object_access(self):
+            return self.getTypedRuleContext(BoardGameParser.Object_accessContext,0)
+
 
         def OPEN_PAR(self):
             return self.getToken(BoardGameParser.OPEN_PAR, 0)
@@ -1416,52 +1408,52 @@ class BoardGameParser ( Parser ):
         localctx = BoardGameParser.PrimaryContext(self, self._ctx, self.state)
         self.enterRule(localctx, 16, self.RULE_primary)
         try:
-            self.state = 172
+            self.state = 169
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 162
+                self.state = 159
                 self.literal()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 163
-                self.object_access()
+                self.state = 160
+                self.list_()
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 164
-                self.list_()
+                self.state = 161
+                self.match(BoardGameParser.IDENTIFIER)
                 pass
 
             elif la_ == 4:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 165
-                self.match(BoardGameParser.IDENTIFIER)
+                self.state = 162
+                self.object_access()
                 pass
 
             elif la_ == 5:
                 self.enterOuterAlt(localctx, 5)
-                self.state = 166
+                self.state = 163
                 self.match(BoardGameParser.OPEN_PAR)
-                self.state = 167
+                self.state = 164
                 self.expression()
-                self.state = 168
+                self.state = 165
                 self.match(BoardGameParser.CLOSE_PAR)
                 pass
 
             elif la_ == 6:
                 self.enterOuterAlt(localctx, 6)
-                self.state = 170
+                self.state = 167
                 self.method_call()
                 pass
 
             elif la_ == 7:
                 self.enterOuterAlt(localctx, 7)
-                self.state = 171
+                self.state = 168
                 self.entity_count_expression()
                 pass
 
@@ -1598,6 +1590,36 @@ class BoardGameParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class BoardPosParamContext(Param_listContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Param_listContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def board_pos(self):
+            return self.getTypedRuleContext(BoardGameParser.Board_posContext,0)
+
+        def COMMA(self):
+            return self.getToken(BoardGameParser.COMMA, 0)
+        def param_list(self):
+            return self.getTypedRuleContext(BoardGameParser.Param_listContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterBoardPosParam" ):
+                listener.enterBoardPosParam(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitBoardPosParam" ):
+                listener.exitBoardPosParam(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBoardPosParam" ):
+                return visitor.visitBoardPosParam(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class AllAnyNoneParamContext(Param_listContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Param_listContext
@@ -1661,35 +1683,6 @@ class BoardGameParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class VariableParamContext(Param_listContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Param_listContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def IDENTIFIER(self):
-            return self.getToken(BoardGameParser.IDENTIFIER, 0)
-        def COMMA(self):
-            return self.getToken(BoardGameParser.COMMA, 0)
-        def param_list(self):
-            return self.getTypedRuleContext(BoardGameParser.Param_listContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVariableParam" ):
-                listener.enterVariableParam(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVariableParam" ):
-                listener.exitVariableParam(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitVariableParam" ):
-                return visitor.visitVariableParam(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class LiteralParamContext(Param_listContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Param_listContext
@@ -1716,6 +1709,35 @@ class BoardGameParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitLiteralParam" ):
                 return visitor.visitLiteralParam(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class VariableParamContext(Param_listContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Param_listContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def IDENTIFIER(self):
+            return self.getToken(BoardGameParser.IDENTIFIER, 0)
+        def COMMA(self):
+            return self.getToken(BoardGameParser.COMMA, 0)
+        def param_list(self):
+            return self.getTypedRuleContext(BoardGameParser.Param_listContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterVariableParam" ):
+                listener.enterVariableParam(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitVariableParam" ):
+                listener.exitVariableParam(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVariableParam" ):
+                return visitor.visitVariableParam(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -1763,129 +1785,140 @@ class BoardGameParser ( Parser ):
             if la_ == 1:
                 localctx = BoardGameParser.ScoreParamContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 174
+                self.state = 171
                 self.match(BoardGameParser.SCORE)
-                self.state = 175
+                self.state = 172
                 self.match(BoardGameParser.OPEN_PAR)
-                self.state = 176
+                self.state = 173
                 self.match(BoardGameParser.IDENTIFIER)
-                self.state = 177
+                self.state = 174
                 self.match(BoardGameParser.DOT)
-                self.state = 178
+                self.state = 175
                 self.match(BoardGameParser.CONDITIONS)
-                self.state = 179
+                self.state = 176
                 self.match(BoardGameParser.CLOSE_PAR)
                 pass
 
             elif la_ == 2:
                 localctx = BoardGameParser.AllAnyNoneParamContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 180
+                self.state = 177
                 _la = self._input.LA(1)
                 if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 7696581394432) != 0)):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
-                self.state = 181
+                self.state = 178
                 self.match(BoardGameParser.COMMA)
-                self.state = 182
+                self.state = 179
                 self.param_list()
                 pass
 
             elif la_ == 3:
                 localctx = BoardGameParser.AssignmentParamContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 183
+                self.state = 180
                 self.assignment_expression()
-                self.state = 184
+                self.state = 181
                 self.match(BoardGameParser.COMMA)
-                self.state = 185
+                self.state = 182
                 self.param_list()
                 pass
 
             elif la_ == 4:
-                localctx = BoardGameParser.VariableParamContext(self, localctx)
+                localctx = BoardGameParser.LiteralParamContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 187
-                self.match(BoardGameParser.IDENTIFIER)
-                self.state = 188
+                self.state = 184
+                self.literal()
+                self.state = 185
                 self.match(BoardGameParser.COMMA)
-                self.state = 189
+                self.state = 186
                 self.param_list()
                 pass
 
             elif la_ == 5:
-                localctx = BoardGameParser.LiteralParamContext(self, localctx)
+                localctx = BoardGameParser.VariableParamContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
-                self.state = 190
-                self.literal()
-                self.state = 191
+                self.state = 188
+                self.match(BoardGameParser.IDENTIFIER)
+                self.state = 189
                 self.match(BoardGameParser.COMMA)
-                self.state = 192
+                self.state = 190
                 self.param_list()
                 pass
 
             elif la_ == 6:
-                localctx = BoardGameParser.ObjectAccessParamContext(self, localctx)
+                localctx = BoardGameParser.BoardPosParamContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
-                self.state = 194
-                self.object_access()
-                self.state = 195
+                self.state = 191
+                self.board_pos(0)
+                self.state = 192
                 self.match(BoardGameParser.COMMA)
-                self.state = 196
+                self.state = 193
                 self.param_list()
                 pass
 
             elif la_ == 7:
-                localctx = BoardGameParser.ListLiteralParamContext(self, localctx)
+                localctx = BoardGameParser.ObjectAccessParamContext(self, localctx)
                 self.enterOuterAlt(localctx, 7)
-                self.state = 198
-                self.list_()
-                self.state = 199
+                self.state = 195
+                self.object_access()
+                self.state = 196
                 self.match(BoardGameParser.COMMA)
-                self.state = 200
+                self.state = 197
                 self.param_list()
                 pass
 
             elif la_ == 8:
+                localctx = BoardGameParser.ListLiteralParamContext(self, localctx)
+                self.enterOuterAlt(localctx, 8)
+                self.state = 199
+                self.list_()
+                self.state = 200
+                self.match(BoardGameParser.COMMA)
+                self.state = 201
+                self.param_list()
+                pass
+
+            elif la_ == 9:
                 localctx = BoardGameParser.SingleParamContext(self, localctx)
                 self.enterOuterAlt(localctx, 8)
                 self.state = 210
                 self._errHandler.sync(self)
                 la_ = self._interp.adaptivePredict(self._input,7,self._ctx)
                 if la_ == 1:
-                    self.state = 202
+                    self.state = 203
                     self.match(BoardGameParser.ALL)
                     pass
 
                 elif la_ == 2:
-                    self.state = 203
+                    self.state = 204
                     self.match(BoardGameParser.ANY)
                     pass
 
                 elif la_ == 3:
-                    self.state = 204
+                    self.state = 205
                     self.match(BoardGameParser.NONE)
                     pass
 
                 elif la_ == 4:
-                    self.state = 205
+                    self.state = 206
                     self.match(BoardGameParser.IDENTIFIER)
                     pass
 
                 elif la_ == 5:
-                    self.state = 206
+                    self.state = 207
                     self.literal()
                     pass
 
                 elif la_ == 6:
-                    self.state = 207
+                    self.state = 208
                     self.object_access()
                     pass
 
                 elif la_ == 7:
-                    self.state = 208
+                    self.state = 209
                     self.list_()
                     pass
 
@@ -1972,17 +2005,21 @@ class BoardGameParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def IDENTIFIER(self, i:int=None):
-            if i is None:
-                return self.getTokens(BoardGameParser.IDENTIFIER)
-            else:
-                return self.getToken(BoardGameParser.IDENTIFIER, i)
 
-        def DOT(self, i:int=None):
-            if i is None:
-                return self.getTokens(BoardGameParser.DOT)
-            else:
-                return self.getToken(BoardGameParser.DOT, i)
+        def getRuleIndex(self):
+            return BoardGameParser.RULE_object_access
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class GameEntityAccessContext(Object_accessContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Object_accessContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
 
         def game_entities(self, i:int=None):
             if i is None:
@@ -1990,24 +2027,106 @@ class BoardGameParser ( Parser ):
             else:
                 return self.getTypedRuleContext(BoardGameParser.Game_entitiesContext,i)
 
-
-        def getRuleIndex(self):
-            return BoardGameParser.RULE_object_access
+        def DOT(self, i:int=None):
+            if i is None:
+                return self.getTokens(BoardGameParser.DOT)
+            else:
+                return self.getToken(BoardGameParser.DOT, i)
+        def IDENTIFIER(self, i:int=None):
+            if i is None:
+                return self.getTokens(BoardGameParser.IDENTIFIER)
+            else:
+                return self.getToken(BoardGameParser.IDENTIFIER, i)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterObject_access" ):
-                listener.enterObject_access(self)
+            if hasattr( listener, "enterGameEntityAccess" ):
+                listener.enterGameEntityAccess(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitObject_access" ):
-                listener.exitObject_access(self)
+            if hasattr( listener, "exitGameEntityAccess" ):
+                listener.exitGameEntityAccess(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitObject_access" ):
-                return visitor.visitObject_access(self)
+            if hasattr( visitor, "visitGameEntityAccess" ):
+                return visitor.visitGameEntityAccess(self)
             else:
                 return visitor.visitChildren(self)
 
+
+    class IdentifierAccessContext(Object_accessContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Object_accessContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def IDENTIFIER(self, i:int=None):
+            if i is None:
+                return self.getTokens(BoardGameParser.IDENTIFIER)
+            else:
+                return self.getToken(BoardGameParser.IDENTIFIER, i)
+        def DOT(self, i:int=None):
+            if i is None:
+                return self.getTokens(BoardGameParser.DOT)
+            else:
+                return self.getToken(BoardGameParser.DOT, i)
+        def game_entities(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(BoardGameParser.Game_entitiesContext)
+            else:
+                return self.getTypedRuleContext(BoardGameParser.Game_entitiesContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterIdentifierAccess" ):
+                listener.enterIdentifierAccess(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitIdentifierAccess" ):
+                listener.exitIdentifierAccess(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIdentifierAccess" ):
+                return visitor.visitIdentifierAccess(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ObjectEntityAccessContext(Object_accessContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Object_accessContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def IDENTIFIER(self, i:int=None):
+            if i is None:
+                return self.getTokens(BoardGameParser.IDENTIFIER)
+            else:
+                return self.getToken(BoardGameParser.IDENTIFIER, i)
+        def DOT(self, i:int=None):
+            if i is None:
+                return self.getTokens(BoardGameParser.DOT)
+            else:
+                return self.getToken(BoardGameParser.DOT, i)
+        def game_entities(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(BoardGameParser.Game_entitiesContext)
+            else:
+                return self.getTypedRuleContext(BoardGameParser.Game_entitiesContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterObjectEntityAccess" ):
+                listener.enterObjectEntityAccess(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitObjectEntityAccess" ):
+                listener.exitObjectEntityAccess(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitObjectEntityAccess" ):
+                return visitor.visitObjectEntityAccess(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2020,6 +2139,7 @@ class BoardGameParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,15,self._ctx)
             if la_ == 1:
+                localctx = BoardGameParser.ObjectEntityAccessContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 218
                 self.match(BoardGameParser.IDENTIFIER)
@@ -2055,6 +2175,7 @@ class BoardGameParser ( Parser ):
                 pass
 
             elif la_ == 2:
+                localctx = BoardGameParser.GameEntityAccessContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 229
                 self.game_entities()
@@ -2090,6 +2211,7 @@ class BoardGameParser ( Parser ):
                 pass
 
             elif la_ == 3:
+                localctx = BoardGameParser.IdentifierAccessContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 240
                 self.match(BoardGameParser.IDENTIFIER)
@@ -2150,6 +2272,42 @@ class BoardGameParser ( Parser ):
             super().copyFrom(ctx)
 
 
+    class BoardPosRowColContext(Board_posContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Board_posContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def BOARD(self):
+            return self.getToken(BoardGameParser.BOARD, 0)
+        def DOT(self, i:int=None):
+            if i is None:
+                return self.getTokens(BoardGameParser.DOT)
+            else:
+                return self.getToken(BoardGameParser.DOT, i)
+        def ROW(self):
+            return self.getToken(BoardGameParser.ROW, 0)
+        def COLUMN(self):
+            return self.getToken(BoardGameParser.COLUMN, 0)
+        def int_literal(self):
+            return self.getTypedRuleContext(BoardGameParser.Int_literalContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterBoardPosRowCol" ):
+                listener.enterBoardPosRowCol(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitBoardPosRowCol" ):
+                listener.exitBoardPosRowCol(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBoardPosRowCol" ):
+                return visitor.visitBoardPosRowCol(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class BoardPosIdentifierContext(Board_posContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Board_posContext
@@ -2208,42 +2366,6 @@ class BoardGameParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class BoardPosRosColContext(Board_posContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Board_posContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def BOARD(self):
-            return self.getToken(BoardGameParser.BOARD, 0)
-        def DOT(self, i:int=None):
-            if i is None:
-                return self.getTokens(BoardGameParser.DOT)
-            else:
-                return self.getToken(BoardGameParser.DOT, i)
-        def ROW(self):
-            return self.getToken(BoardGameParser.ROW, 0)
-        def COLUMN(self):
-            return self.getToken(BoardGameParser.COLUMN, 0)
-        def int_literal(self):
-            return self.getTypedRuleContext(BoardGameParser.Int_literalContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterBoardPosRosCol" ):
-                listener.enterBoardPosRosCol(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitBoardPosRosCol" ):
-                listener.exitBoardPosRosCol(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBoardPosRosCol" ):
-                return visitor.visitBoardPosRosCol(self)
-            else:
-                return visitor.visitChildren(self)
-
-
 
     def board_pos(self, _p:int=0):
         _parentctx = self._ctx
@@ -2272,7 +2394,7 @@ class BoardGameParser ( Parser ):
                 pass
 
             elif la_ == 2:
-                localctx = BoardGameParser.BoardPosRosColContext(self, localctx)
+                localctx = BoardGameParser.BoardPosRowColContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 257
@@ -2471,33 +2593,100 @@ class BoardGameParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def game_entities(self):
-            return self.getTypedRuleContext(BoardGameParser.Game_entitiesContext,0)
-
-
-        def DOT(self):
-            return self.getToken(BoardGameParser.DOT, 0)
-
-        def COUNT(self):
-            return self.getToken(BoardGameParser.COUNT, 0)
 
         def getRuleIndex(self):
             return BoardGameParser.RULE_entity_count_expression
 
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class CountObjectAccessContext(Entity_count_expressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Entity_count_expressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def object_access(self):
+            return self.getTypedRuleContext(BoardGameParser.Object_accessContext,0)
+
+        def DOT(self):
+            return self.getToken(BoardGameParser.DOT, 0)
+        def COUNT(self):
+            return self.getToken(BoardGameParser.COUNT, 0)
+
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterEntity_count_expression" ):
-                listener.enterEntity_count_expression(self)
+            if hasattr( listener, "enterCountObjectAccess" ):
+                listener.enterCountObjectAccess(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitEntity_count_expression" ):
-                listener.exitEntity_count_expression(self)
+            if hasattr( listener, "exitCountObjectAccess" ):
+                listener.exitCountObjectAccess(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitEntity_count_expression" ):
-                return visitor.visitEntity_count_expression(self)
+            if hasattr( visitor, "visitCountObjectAccess" ):
+                return visitor.visitCountObjectAccess(self)
             else:
                 return visitor.visitChildren(self)
 
+
+    class CountIdentifierContext(Entity_count_expressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Entity_count_expressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def IDENTIFIER(self):
+            return self.getToken(BoardGameParser.IDENTIFIER, 0)
+        def DOT(self):
+            return self.getToken(BoardGameParser.DOT, 0)
+        def COUNT(self):
+            return self.getToken(BoardGameParser.COUNT, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterCountIdentifier" ):
+                listener.enterCountIdentifier(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitCountIdentifier" ):
+                listener.exitCountIdentifier(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCountIdentifier" ):
+                return visitor.visitCountIdentifier(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class CountEntityContext(Entity_count_expressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Entity_count_expressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def game_entities(self):
+            return self.getTypedRuleContext(BoardGameParser.Game_entitiesContext,0)
+
+        def DOT(self):
+            return self.getToken(BoardGameParser.DOT, 0)
+        def COUNT(self):
+            return self.getToken(BoardGameParser.COUNT, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterCountEntity" ):
+                listener.enterCountEntity(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitCountEntity" ):
+                listener.exitCountEntity(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCountEntity" ):
+                return visitor.visitCountEntity(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2529,6 +2718,10 @@ class BoardGameParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def primary(self):
+            return self.getTypedRuleContext(BoardGameParser.PrimaryContext,0)
+
+
         def assignment_expression(self):
             return self.getTypedRuleContext(BoardGameParser.Assignment_expressionContext,0)
 
@@ -2559,10 +2752,6 @@ class BoardGameParser ( Parser ):
 
         def expression(self):
             return self.getTypedRuleContext(BoardGameParser.ExpressionContext,0)
-
-
-        def primary(self):
-            return self.getTypedRuleContext(BoardGameParser.PrimaryContext,0)
 
 
         def NOT_OPT(self):
@@ -2599,7 +2788,7 @@ class BoardGameParser ( Parser ):
         try:
             self.state = 298
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,19,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,20,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 285
@@ -2684,12 +2873,12 @@ class BoardGameParser ( Parser ):
         def IDENTIFIER(self):
             return self.getToken(BoardGameParser.IDENTIFIER, 0)
 
-        def object_access(self):
-            return self.getTypedRuleContext(BoardGameParser.Object_accessContext,0)
-
-
         def board_pos(self):
             return self.getTypedRuleContext(BoardGameParser.Board_posContext,0)
+
+
+        def object_access(self):
+            return self.getTypedRuleContext(BoardGameParser.Object_accessContext,0)
 
 
         def getRuleIndex(self):
@@ -2719,7 +2908,7 @@ class BoardGameParser ( Parser ):
         try:
             self.state = 303
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,20,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,21,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 300
@@ -3231,7 +3420,7 @@ class BoardGameParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 350
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,24,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,25,self._ctx)
             if la_ == 1:
                 self.state = 348
                 self.match(BoardGameParser.IDENTIFIER)
@@ -3311,7 +3500,7 @@ class BoardGameParser ( Parser ):
             self.match(BoardGameParser.ANY)
             self.state = 360
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,25,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,26,self._ctx)
             if la_ == 1:
                 self.state = 356
                 self.match(BoardGameParser.IDENTIFIER)
@@ -3376,27 +3565,48 @@ class BoardGameParser ( Parser ):
         def CLOSE_PAR(self):
             return self.getToken(BoardGameParser.CLOSE_PAR, 0)
 
-        def input_statement(self):
-            return self.getTypedRuleContext(BoardGameParser.Input_statementContext,0)
-
-
-        def getRuleIndex(self):
-            return BoardGameParser.RULE_assignment_expression
-
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAssignment_expression" ):
-                listener.enterAssignment_expression(self)
+            if hasattr( listener, "enterAssignMethodCall" ):
+                listener.enterAssignMethodCall(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAssignment_expression" ):
-                listener.exitAssignment_expression(self)
+            if hasattr( listener, "exitAssignMethodCall" ):
+                listener.exitAssignMethodCall(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAssignment_expression" ):
-                return visitor.visitAssignment_expression(self)
+            if hasattr( visitor, "visitAssignMethodCall" ):
+                return visitor.visitAssignMethodCall(self)
             else:
                 return visitor.visitChildren(self)
 
+
+    class AssignInputContext(Assignment_expressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BoardGameParser.Assignment_expressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ASSIGN_OPT(self):
+            return self.getToken(BoardGameParser.ASSIGN_OPT, 0)
+        def input_statement(self):
+            return self.getTypedRuleContext(BoardGameParser.Input_statementContext,0)
+
+        def IDENTIFIER(self):
+            return self.getToken(BoardGameParser.IDENTIFIER, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAssignInput" ):
+                listener.enterAssignInput(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAssignInput" ):
+                listener.exitAssignInput(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssignInput" ):
+                return visitor.visitAssignInput(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -3407,8 +3617,9 @@ class BoardGameParser ( Parser ):
         try:
             self.state = 386
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,28,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,27,self._ctx)
             if la_ == 1:
+                localctx = BoardGameParser.AssignExpressionContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 362
                 self.match(BoardGameParser.IDENTIFIER)
@@ -3544,7 +3755,7 @@ class BoardGameParser ( Parser ):
             self.primary()
             self.state = 393
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,29,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,28,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
                     self.state = 389
@@ -3553,7 +3764,7 @@ class BoardGameParser ( Parser ):
                     self.primary() 
                 self.state = 395
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,29,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,28,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -3619,7 +3830,7 @@ class BoardGameParser ( Parser ):
             self._ctx.stop = self._input.LT(-1)
             self.state = 404
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,30,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,29,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
                     if self._parseListeners is not None:
@@ -3642,7 +3853,7 @@ class BoardGameParser ( Parser ):
                     self.exponent() 
                 self.state = 406
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,30,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,29,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -3708,7 +3919,7 @@ class BoardGameParser ( Parser ):
             self._ctx.stop = self._input.LT(-1)
             self.state = 415
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,31,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,30,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
                     if self._parseListeners is not None:
@@ -3731,7 +3942,7 @@ class BoardGameParser ( Parser ):
                     self.multiplicative(0) 
                 self.state = 417
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,31,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,30,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -4250,14 +4461,14 @@ class BoardGameParser ( Parser ):
         try:
             self.state = 518
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,38,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,37,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 452
                 self.match(BoardGameParser.PIECE)
                 self.state = 460
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,33,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,32,self._ctx)
                 if la_ == 1:
                     self.state = 453
                     self.match(BoardGameParser.IDENTIFIER)
@@ -4295,7 +4506,7 @@ class BoardGameParser ( Parser ):
                 self.match(BoardGameParser.PIECE)
                 self.state = 472
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,34,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,33,self._ctx)
                 if la_ == 1:
                     self.state = 465
                     self.match(BoardGameParser.IDENTIFIER)
@@ -4355,7 +4566,7 @@ class BoardGameParser ( Parser ):
                 self.match(BoardGameParser.PIECE)
                 self.state = 499
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,36,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,35,self._ctx)
                 if la_ == 1:
                     self.state = 490
                     self.match(BoardGameParser.IDENTIFIER)
@@ -4517,7 +4728,7 @@ class BoardGameParser ( Parser ):
         try:
             self.state = 583
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,48,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,47,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 524
@@ -4536,7 +4747,7 @@ class BoardGameParser ( Parser ):
                 self.match(BoardGameParser.PIECE)
                 self.state = 531
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,40,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,39,self._ctx)
                 if la_ == 1:
                     self.state = 528
                     self.match(BoardGameParser.IDENTIFIER)
@@ -4559,7 +4770,7 @@ class BoardGameParser ( Parser ):
                 self.match(BoardGameParser.OPEN_PAR)
                 self.state = 537
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,41,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,40,self._ctx)
                 if la_ == 1:
                     self.state = 535
                     self.param_list()
@@ -4593,7 +4804,7 @@ class BoardGameParser ( Parser ):
                 self.match(BoardGameParser.OBSTACLE)
                 self.state = 552
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,43,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,42,self._ctx)
                 if la_ == 1:
                     self.state = 549
                     self.match(BoardGameParser.IDENTIFIER)
@@ -4616,7 +4827,7 @@ class BoardGameParser ( Parser ):
                 self.match(BoardGameParser.OPEN_PAR)
                 self.state = 558
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,44,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,43,self._ctx)
                 if la_ == 1:
                     self.state = 556
                     self.param_list()
@@ -4650,7 +4861,7 @@ class BoardGameParser ( Parser ):
                 self.match(BoardGameParser.BOOSTER)
                 self.state = 573
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,46,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,45,self._ctx)
                 if la_ == 1:
                     self.state = 570
                     self.match(BoardGameParser.IDENTIFIER)
@@ -4673,7 +4884,7 @@ class BoardGameParser ( Parser ):
                 self.match(BoardGameParser.OPEN_PAR)
                 self.state = 579
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,47,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,46,self._ctx)
                 if la_ == 1:
                     self.state = 577
                     self.param_list()
@@ -4785,14 +4996,14 @@ class BoardGameParser ( Parser ):
         try:
             self.state = 615
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,52,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,51,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 585
                 self.match(BoardGameParser.OBSTACLE)
                 self.state = 589
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,49,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,48,self._ctx)
                 if la_ == 1:
                     self.state = 586
                     self.match(BoardGameParser.IDENTIFIER)
@@ -4821,7 +5032,7 @@ class BoardGameParser ( Parser ):
                 self.match(BoardGameParser.OBSTACLE)
                 self.state = 597
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,50,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,49,self._ctx)
                 if la_ == 1:
                     self.state = 594
                     self.match(BoardGameParser.IDENTIFIER)
@@ -4964,14 +5175,14 @@ class BoardGameParser ( Parser ):
         try:
             self.state = 647
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,56,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,55,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 617
                 self.match(BoardGameParser.BOOSTER)
                 self.state = 621
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,53,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,52,self._ctx)
                 if la_ == 1:
                     self.state = 618
                     self.match(BoardGameParser.IDENTIFIER)
@@ -5000,7 +5211,7 @@ class BoardGameParser ( Parser ):
                 self.match(BoardGameParser.BOOSTER)
                 self.state = 629
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,54,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,53,self._ctx)
                 if la_ == 1:
                     self.state = 626
                     self.match(BoardGameParser.IDENTIFIER)
@@ -5114,7 +5325,7 @@ class BoardGameParser ( Parser ):
             self.match(BoardGameParser.MOVE)
             self.state = 653
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,57,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,56,self._ctx)
             if la_ == 1:
                 self.state = 650
                 self.match(BoardGameParser.IDENTIFIER)
@@ -5259,7 +5470,7 @@ class BoardGameParser ( Parser ):
         try:
             self.state = 675
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,58,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,57,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 662
@@ -5750,7 +5961,7 @@ class BoardGameParser ( Parser ):
     def dice_statement(self):
 
         localctx = BoardGameParser.Dice_statementContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 98, self.RULE_dice_statement)
+        self.enterRule(localctx, 96, self.RULE_dice_statement)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 714

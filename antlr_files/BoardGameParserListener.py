@@ -152,6 +152,15 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BoardGameParser#LiteralParam.
+    def enterLiteralParam(self, ctx:BoardGameParser.LiteralParamContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#LiteralParam.
+    def exitLiteralParam(self, ctx:BoardGameParser.LiteralParamContext):
+        pass
+
+
     # Enter a parse tree produced by BoardGameParser#VariableParam.
     def enterVariableParam(self, ctx:BoardGameParser.VariableParamContext):
         pass
@@ -161,12 +170,12 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#LiteralParam.
-    def enterLiteralParam(self, ctx:BoardGameParser.LiteralParamContext):
+    # Enter a parse tree produced by BoardGameParser#BoardPosParam.
+    def enterBoardPosParam(self, ctx:BoardGameParser.BoardPosParamContext):
         pass
 
-    # Exit a parse tree produced by BoardGameParser#LiteralParam.
-    def exitLiteralParam(self, ctx:BoardGameParser.LiteralParamContext):
+    # Exit a parse tree produced by BoardGameParser#BoardPosParam.
+    def exitBoardPosParam(self, ctx:BoardGameParser.BoardPosParamContext):
         pass
 
 
@@ -206,12 +215,39 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#object_access.
-    def enterObject_access(self, ctx:BoardGameParser.Object_accessContext):
+    # Enter a parse tree produced by BoardGameParser#ObjectEntityAccess.
+    def enterObjectEntityAccess(self, ctx:BoardGameParser.ObjectEntityAccessContext):
         pass
 
-    # Exit a parse tree produced by BoardGameParser#object_access.
-    def exitObject_access(self, ctx:BoardGameParser.Object_accessContext):
+    # Exit a parse tree produced by BoardGameParser#ObjectEntityAccess.
+    def exitObjectEntityAccess(self, ctx:BoardGameParser.ObjectEntityAccessContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#GameEntityAccess.
+    def enterGameEntityAccess(self, ctx:BoardGameParser.GameEntityAccessContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#GameEntityAccess.
+    def exitGameEntityAccess(self, ctx:BoardGameParser.GameEntityAccessContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#IdentifierAccess.
+    def enterIdentifierAccess(self, ctx:BoardGameParser.IdentifierAccessContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#IdentifierAccess.
+    def exitIdentifierAccess(self, ctx:BoardGameParser.IdentifierAccessContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#BoardPosRowCol.
+    def enterBoardPosRowCol(self, ctx:BoardGameParser.BoardPosRowColContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#BoardPosRowCol.
+    def exitBoardPosRowCol(self, ctx:BoardGameParser.BoardPosRowColContext):
         pass
 
 
@@ -233,15 +269,6 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#BoardPosRosCol.
-    def enterBoardPosRosCol(self, ctx:BoardGameParser.BoardPosRosColContext):
-        pass
-
-    # Exit a parse tree produced by BoardGameParser#BoardPosRosCol.
-    def exitBoardPosRosCol(self, ctx:BoardGameParser.BoardPosRosColContext):
-        pass
-
-
     # Enter a parse tree produced by BoardGameParser#conditional_opt.
     def enterConditional_opt(self, ctx:BoardGameParser.Conditional_optContext):
         pass
@@ -260,12 +287,30 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#entity_count_expression.
-    def enterEntity_count_expression(self, ctx:BoardGameParser.Entity_count_expressionContext):
+    # Enter a parse tree produced by BoardGameParser#CountEntity.
+    def enterCountEntity(self, ctx:BoardGameParser.CountEntityContext):
         pass
 
-    # Exit a parse tree produced by BoardGameParser#entity_count_expression.
-    def exitEntity_count_expression(self, ctx:BoardGameParser.Entity_count_expressionContext):
+    # Exit a parse tree produced by BoardGameParser#CountEntity.
+    def exitCountEntity(self, ctx:BoardGameParser.CountEntityContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#CountIdentifier.
+    def enterCountIdentifier(self, ctx:BoardGameParser.CountIdentifierContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#CountIdentifier.
+    def exitCountIdentifier(self, ctx:BoardGameParser.CountIdentifierContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#CountObjectAccess.
+    def enterCountObjectAccess(self, ctx:BoardGameParser.CountObjectAccessContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#CountObjectAccess.
+    def exitCountObjectAccess(self, ctx:BoardGameParser.CountObjectAccessContext):
         pass
 
 
@@ -359,12 +404,30 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#assignment_expression.
-    def enterAssignment_expression(self, ctx:BoardGameParser.Assignment_expressionContext):
+    # Enter a parse tree produced by BoardGameParser#AssignExpression.
+    def enterAssignExpression(self, ctx:BoardGameParser.AssignExpressionContext):
         pass
 
-    # Exit a parse tree produced by BoardGameParser#assignment_expression.
-    def exitAssignment_expression(self, ctx:BoardGameParser.Assignment_expressionContext):
+    # Exit a parse tree produced by BoardGameParser#AssignExpression.
+    def exitAssignExpression(self, ctx:BoardGameParser.AssignExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#AssignMethodCall.
+    def enterAssignMethodCall(self, ctx:BoardGameParser.AssignMethodCallContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#AssignMethodCall.
+    def exitAssignMethodCall(self, ctx:BoardGameParser.AssignMethodCallContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#AssignInput.
+    def enterAssignInput(self, ctx:BoardGameParser.AssignInputContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#AssignInput.
+    def exitAssignInput(self, ctx:BoardGameParser.AssignInputContext):
         pass
 
 
@@ -554,15 +617,6 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by BoardGameParser#return_statement.
     def exitReturn_statement(self, ctx:BoardGameParser.Return_statementContext):
-        pass
-
-
-    # Enter a parse tree produced by BoardGameParser#timer_statement.
-    def enterTimer_statement(self, ctx:BoardGameParser.Timer_statementContext):
-        pass
-
-    # Exit a parse tree produced by BoardGameParser#timer_statement.
-    def exitTimer_statement(self, ctx:BoardGameParser.Timer_statementContext):
         pass
 
 

@@ -207,7 +207,6 @@ while_statement
 input_statement
 print_statement
 return_statement
-timer_statement
 dice_statement
 
 

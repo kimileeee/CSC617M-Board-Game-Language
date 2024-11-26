@@ -27,6 +27,16 @@ class BoardGame:
         self.turn_order = []
         self.current_turn = 0
 
+        self.rule_condition = None
+        self.rules = []
+
+        self.turn_order = []
+        self.current_turn = 0
+
+        self.timer = None  # Total timer value (in seconds)
+        self.timer_running = False
+        self.start_time = 0
+
     # BOARD methods
     def set_board(self, rows, cols, type=BoardType.STANDARD.value):
         """Set up the game board."""
@@ -41,6 +51,7 @@ class BoardGame:
         """Add a player to the game."""
         player = Player(name)
         self.players.append(player)
+        return player
 
     def get_player(self, name):
         """Get a player by name."""
@@ -67,6 +78,7 @@ class BoardGame:
         """Create a piece with a name, row, column, and symbol."""
         piece = Piece(name)
         self.base_pieces.append(piece)
+        return piece
 
     def display_base_pieces(self):
         """Display all base pieces."""
@@ -87,13 +99,19 @@ class BoardGame:
         """Add a piece to a player's collection of pieces."""
         base_piece = self.get_base_pieces(piece_name)
         new_piece = base_piece.copy()
+        temp = {}
+        temp['row'] = row
+        temp['col'] = col
+        new_piece.set_pos(**temp)
 
-        player = next(p for p in self.players if p.name == player_name)
-        new_piece.set_color(player.color)
-        new_piece.set_pos(row, col)
+        # if player_name is not None
+        if player_name:
+            player = next(p for p in self.players if p.name.strip() == player_name.strip())
+            new_piece.set_color(player.color)
+            player.add_piece(new_piece)
 
         self.pieces.append(new_piece)
-        player.add_piece(new_piece)
+        return (f"{player.name}.{new_piece.name}", new_piece)
 
     def move_piece(self, player_name, piece_name, new_row, new_col):
         """Move a piece on the board."""
@@ -107,6 +125,7 @@ class BoardGame:
         """Add an obstacle to the board."""
         obstacle = Obstacle(name)
         self.obstacles.append(obstacle)
+        return obstacle
 
     def place_obstacle(self, name, row, col):
         """Place an obstacle on the board."""
@@ -124,6 +143,7 @@ class BoardGame:
         """Add a booster to the board."""
         booster = Booster(name)
         self.boosters.append(booster)
+        return booster
 
     def place_booster(self, name, row, col):
         """Place a booster on the board."""
@@ -141,18 +161,48 @@ class BoardGame:
         """Set the win condition for the game."""
         self.win_condition = condition
 
-    def add_condition(self, condition):
+    def add_condition(self, func_name, condition_func_string):
         """Add a condition to the game."""
-        self.conditions.append(condition)
+        # Parse the stringified condition function
+        namespace = {}
+        exec(condition_func_string, namespace)
+        
+        # Ensure the function is extracted and valid
+        if func_name not in namespace:
+            raise ValueError("The provided string must define a function named 'condition'.")
+        
+        parsed_condition = namespace[func_name]
+        self.conditions.append(parsed_condition)
 
     def display_win_condition(self):
         """Display the win condition."""
         print("Win Condition:", self.win_condition)
 
+    def display_conditions(self):
+        """Display all conditions."""
+        self.display_win_condition()
+        for condition in self.conditions:
+            print(condition)
+
     def check_win_condition(self):
         """Check if the win condition has been met."""
-        # TODO: Implement this method
-        pass
+        # TODO: Implement this method. check all conditions in self.conditions
+        if self.win_condition is None:
+            raise ValueError("Win condition not set.")
+        
+        elif self.win_condition == "ALL":
+            for condition in self.conditions:
+                if not condition():
+                    return False  # If any condition fails, return False
+            
+            return True  # All conditions met
+        
+        elif self.win_condition == "ANY":
+            for condition in self.conditions:
+                if condition():
+                    return True
+                
+            return False  # No conditions met
 
     # RULE methods
     def set_rule_condition(self, rule_condition):
@@ -181,6 +231,45 @@ class BoardGame:
         self.apply_rules()
         self.current_turn += 1
 
+    # TIMER methods
+    def set_timer(self, seconds: int):
+        """Set the game timer (in seconds)."""
+        if seconds < 0:
+            raise ValueError("Timer value must be non-negative.")
+        self.timer = seconds
+        print(f"Timer set to {self.timer} seconds.")
+
+    def display_timer(self):
+        """Display the game timer."""
+        print(f"Timer: {self.timer} seconds")
+
+    def start_timer(self):
+        """Start the game timer."""
+        if self.timer is None:
+            raise ValueError("Timer has not been set. Use set_timer() first.")
+        self.timer_running = True
+        self.start_time = pygame.time.get_ticks()
+        print(f"Timer started at {self.start_time} ms.")
+
+    def stop_timer(self):
+        """Stop the game timer."""
+        self.timer_running = False
+        print("Timer stopped.")
+
+    def check_timer(self):
+        """Check the remaining time on the timer."""
+        if not self.timer_running:
+            return self.timer  # Return the set timer value if not running
+
+        elapsed_time = (pygame.time.get_ticks() - self.start_time) / 1000  # Convert ms to seconds
+        remaining_time = max(self.timer - elapsed_time, 0)
+        if remaining_time <= 0:
+            self.timer_running = False
+            print("Time is up!")
+        return remaining_time
+        
+
+    # GAMEPLAY methods
     def start_game(self):
         #setup the game using pygame 
         #insert details later on
@@ -196,6 +285,9 @@ class BoardGame:
                     run = False
                 
         pygame.quit()
+
+    def __repr__(self):
+        return f"BoardGame({self.name})"
 
 
 

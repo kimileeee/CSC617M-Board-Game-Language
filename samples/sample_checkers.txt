@@ -12,8 +12,8 @@ DEFINE checkers:
 END
 
 DEFINE checkers.PLAYERS:
-     PLAYER me COLOR COLOR.white AT BOARD.ROW.0
-     PLAYER you COLOR COLOR.black AT BOARD.ROW.7 
+     PLAYER me COLOR COLOR.white AT BOARD.ROW.1
+     PLAYER you COLOR COLOR.black AT BOARD.ROW.8 
      ORDER ([me, you])
 END
 
@@ -21,12 +21,8 @@ DEFINE checkers.CONDITIONS:
      CONDITION (ANY PLAYERS PIECES.COUNT == 0)
 END
 
-DEFINE checkers.SCORE:
-     SCORE(checkers.CONDITIONS)
-END
-
 DEFINE checkers.RULES :
-     RULE promote_rule (white AT BOARD.ROW.7 OR black AT BOARD.ROW.0)
+     RULE promote_rule (white AT BOARD.ROW.8 OR black AT BOARD.ROW.1)
 END
 
 DEFINE checkers.PIECES:
@@ -38,7 +34,8 @@ DEFINE checkers.PIECES:
 END
 
 DEFINE checkers.BOARD:
-     PIECE regular SETUP (BOARD.C1, BOARD.C3) 
+     PLAYER me PIECE regular SETUP (BOARD.C1, BOARD.C3)
+     PIECE regular SETUP (BOARD.C1, BOARD.C4) 
 END
 
 START:

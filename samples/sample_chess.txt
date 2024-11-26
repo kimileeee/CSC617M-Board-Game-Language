@@ -12,23 +12,21 @@ DEFINE chess:
 END
 
 DEFINE chess.PLAYERS:
-    PLAYER white COLOR COLOR.white AT BOARD.ROW.0
-    PLAYER black COLOR COLOR.black AT BOARD.ROW.7
+    PLAYER white COLOR COLOR.white AT BOARD.ROW.1
+    PLAYER black COLOR COLOR.black AT BOARD.ROW.8
     ORDER ([white, black])
 END
 
 DEFINE chess.CONDITIONS:
-    CONDITION (white.king.count() == 0 OR black.king.count() == 0)
-END
-
-DEFINE checkers.SCORE:
-     SCORE(chess.CONDITIONS)
+    CONDITION (white.king.COUNT == 0)
+    CONDITION (black.king.COUNT == 0)
+    CONDITION (TIMER.timer_running == True)
 END
 
 DEFINE chess.RULES:
-    RULE promote_rule (white AT BOARD.ROW.7 OR black AT BOARD.ROW.0)
-    RULE white_castling ((white.king AT BOARD.E0) AND (white.rook AT BOARD.H0) AND (BOARD.F0.empty()) AND (BOARD.G0.empty()))
-    RULE black_castling (black.king AT BOARD.E7 AND black.rook AT BOARD.H7 AND BOARD.F7.empty() AND BOARD.G7.empty())
+    RULE promote_rule (white AT BOARD.ROW.8 OR black AT BOARD.ROW.1)
+    RULE white_castling ((white.king AT BOARD.E1) AND (white.rook AT BOARD.H1) AND (BOARD.F1.empty()) AND (BOARD.G1.empty()))
+    RULE black_castling (black.king AT BOARD.E8 AND black.rook AT BOARD.H8 AND BOARD.F8.empty() AND BOARD.G8.empty())
 END
 
 DEFINE chess.PIECES:
@@ -61,15 +59,15 @@ DEFINE chess.PIECES:
 
     // define castling as a special move
     PIECE NONE ACTION castling((
-        GAME.current_player.color() == COLOR.white AND
+        GAME.current_player.get_color() == COLOR.white AND
         white_castling AND
-        MOVE king TO BOARD.G0 AND
-        MOVE rook TO BOARD.F0
+        MOVE king TO BOARD.G1 AND
+        MOVE rook TO BOARD.F1
     ) OR (
-        GAME.current_player.color() == COLOR.black AND
+        GAME.current_player.get_color() == COLOR.black AND
         black_castling AND
-        MOVE king TO BOARD.G7 AND
-        MOVE rook TO BOARD.F7
+        MOVE king TO BOARD.G8 AND
+        MOVE rook TO BOARD.F8
     ))
 
 END
@@ -93,7 +91,4 @@ END
 START:
     TURN white
     MOVE pawn TO BOARD.E3
-
-    a = 6 * 5 + 3 ^ 2
-    a = 6 * (5 + 3) ^ 2
 END

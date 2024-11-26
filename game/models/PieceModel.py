@@ -12,17 +12,17 @@ class Piece:
         """Set the color of the piece."""
         self.color = color
 
-    def set_pos(self, row, col):
-        """Set the position of the piece on the board."""
-        self.pos = (row, col)
-    
-    def set_count(self, count):
-        """Set the total count of the piece"""
-        self.count = count
+    def get_color(self):
+        """Get the color of the piece."""
+        return self.color
 
-    def set_pos(self, pos):
+    def set_pos(self, **kwargs):
         """Set the position of the piece on the board."""
-        self.pos = pos
+
+        if kwargs.get("col"):
+            self.pos = (kwargs.get("row"), kwargs.get("col"))
+        else:
+            self.pos = kwargs.get("row")
 
     def get_moves(self):
         """Get the possible moves for the piece."""
@@ -48,6 +48,9 @@ class Piece:
             self.move = {"direction": direction, "min_count" : min_count, "max_count" : max_count, "skip" : skip, "backtrack" : backtrack, "consume" : consume}
         else:
             self.move = {"direction" : direction, "min_count": min_count, "max_count": max_count, "skip": skip, "backtrack": backtrack, "consume": consume}
+    
+    def copy(self):
+        return Piece(self.name)
 
     def __repr__(self):
         """String representation of the piece."""
