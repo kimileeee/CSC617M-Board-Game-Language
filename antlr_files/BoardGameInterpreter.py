@@ -648,9 +648,11 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     # Visit a parse tree produced by BoardGameParser#primary_eval.
     def visitPrimary_eval(self, ctx:BoardGameParser.Primary_evalContext):
         if ctx.int_literal():
-            return float(self.visitInt_literal(ctx.int_literal()))
+            return self.visitInt_literal(ctx.int_literal())
         elif ctx.FLOAT_LITERAL():
             return self.visitFloat(ctx.FLOAT_LITERAL())
+        elif ctx.BOOLEAN_LITERAL():
+            return self.visitBoolean(ctx.BOOLEAN_LITERAL())
         elif ctx.IDENTIFIER():
             # You can define a variable lookup here.
             try:

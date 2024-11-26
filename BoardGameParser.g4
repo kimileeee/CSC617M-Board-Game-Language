@@ -178,6 +178,7 @@ evaluate_statement : EVALUATE OPEN_PAR eval_expression CLOSE_PAR
 primary_eval : OPEN_PAR eval_expression CLOSE_PAR
              | int_literal
              | FLOAT_LITERAL
+             | BOOLEAN_LITERAL
              | IDENTIFIER
              ;
 
