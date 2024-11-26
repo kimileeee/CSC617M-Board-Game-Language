@@ -416,8 +416,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     # Visit a parse tree produced by BoardGameParser#BoardPosRange.
     def visitBoardPosRange(self, ctx:BoardGameParser.BoardPosRangeContext):
         # board_pos ELIPSIS board_pos
-        pos1 = self.visit(ctx.getChild(0))[0].name  # First position, e.g., "A1"
-        pos2 = self.visit(ctx.getChild(2))[0].name  # Second position, e.g., "A5"
+        pos1 = self.visit(ctx.getChild(0)).name  # First position, e.g., "A1"
+        pos2 = self.visit(ctx.getChild(2)).name  # Second position, e.g., "A5"
 
         # Extract row and column from positions
         start_row, start_col = ord(pos1[0]), int(pos1[1:])  # e.g., 'A' -> 65, '1' -> 1
@@ -838,14 +838,25 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         print("\nDefining BOARD")
         
         cells = self.visit(ctx.param_list())
-        
+        temp = []
+
         for c in cells:
-            if type(c) is not Cell:
+            if isinstance(c, str):
                 value = c.split('BOARD.')[-1]
                 cell = self.game.board.get_cell_by_name(value)
+                temp.append(cell)
+            elif isinstance(c, list):
+                for t in c:
+                    if isinstance(t, str):
+                        value = t.split('BOARD.')[-1]
+                        cell = self.game.board.get_cell_by_name(value)
+                        temp.append(cell)
+                    else:
+                        temp.append(t)
             else:
-                cell = c
-
+                temp.append(c)
+        
+        for cell in temp:
             if cell.name[0].isalpha():
                 row = (ord(cell.name[0].upper()) % 65)
                 col = int(cell.name[1]) - 1
