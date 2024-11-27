@@ -26,7 +26,7 @@ antlr4 -Dlanguage=Python3 BoardGameParser.g4 -o ./antlr_files -visitor
 To generate tokens from a sample code input, run:
 
 ```bash
-python test_tokenizer.py
+python tokenizer.py
 ```
 
 This will output a sequence of tokens for the chosen sample file. Sample code files are located in the `samples/` directory. You can specify any file in this directory as input.
