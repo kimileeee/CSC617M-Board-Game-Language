@@ -21,18 +21,14 @@ DEFINE checkers.CONDITIONS:
      CONDITION (ANY PLAYERS PIECES.COUNT == 0)
 END
 
-DEFINE checkers.RULES :
-     RULE promote_rule_white (IF ANY regular AT BOARD.ROW.8 AND regular.color == white 
-                              THEN regular CONVERT king 
-                              END)
-     RULE promote_rule_black (IF ANY regular AT BOARD.ROW.1 AND regular.color == black 
-                              THEN regular CONVERT king 
-                              END)
+DEFINE checkers.RULES:
+     RULE (name = promote_rule_white, pos_check = True, row = 8, piece = regular, color = COLOR.white, action = convert, convert_to = king)
+     RULE (name = promote_rule_black, pos_check = True, row = 1, piece = regular, color = COLOR.black, action = convert, convert_to = king)
 END
 
 DEFINE checkers.PIECES:
      PIECE regular COUNT 12
-     PIECE king COUNT 0
+     PIECE king COUNT 2
 
      PIECE regular ACTION (name = move, direction = diagonal, min_count = 1, max_count = 1, skip = True, across = False, backtrack = False, consume = False)
      PIECE regular ACTION (name = consume, direction = diagonal, min_count = 1, max_count = 1, skip = True, across = False, backtrack = False, consume = True)
@@ -84,8 +80,12 @@ START:
      PRINT("Moved regular_1 to F7")
      // PRINT(player_move)
 
-     IF EVALUATE(False) 
-     THEN a = True
-     ELSE a = False
+     IF EVALUATE(True) 
+     THEN 
+          IF EVALUATE(True) 
+          THEN a = "inner if then"
+          ELSE a = "inner if else"
+          END
+     ELSE a = "outer if else"
      END
 END
