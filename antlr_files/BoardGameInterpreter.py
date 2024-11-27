@@ -1133,10 +1133,29 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         return self.visit(ctx.eval_expression())
 
     # Visit a parse tree produced by BoardGameParser#for_statement.
-    def visitFor_statement(self, ctx:BoardGameParser.For_statementContext):
+    def visitForList(self, ctx:BoardGameParser.ForListContext):
         loop_var = ctx.IDENTIFIER().getText()
 
         loop_list = self.visit(ctx.list_())
+        if not isinstance(loop_list, list):
+            raise ValueError(f"Expected a list in 'FOR' statement, but got {type(loop_list)}")
+
+        self.enter_scope()
+        try:
+            for value in loop_list:
+                self.assign_symbol(loop_var, value)
+                self.visit(ctx.code_block())
+        except exceptions.BreakException:
+            pass
+        finally:
+            self.exit_scope()
+
+    # Visit a parse tree produced by BoardGameParser#ForIdentifier.
+    def visitForIdentifier(self, ctx:BoardGameParser.ForIdentifierContext):
+        loop_var = ctx.IDENTIFIER(0).getText()
+
+        var_loop_list = ctx.IDENTIFIER(1).getText()
+        loop_list = self.lookup_symbol(var_loop_list)
         if not isinstance(loop_list, list):
             raise ValueError(f"Expected a list in 'FOR' statement, but got {type(loop_list)}")
 

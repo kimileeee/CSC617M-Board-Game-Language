@@ -80,16 +80,26 @@ START:
      PRINT("Moved regular_1 to F7")
      // PRINT(player_move)
 
+     IF EVALUATE(10 > 9)
+     THEN 
+          a = True
+     ELSE 
+          a = False
+     END
+
      IF EVALUATE(True) 
      THEN 
           IF EVALUATE(True) 
-          THEN a = "inner if then"
-          b = "inner if then 2"
-          ELSE a = "inner if else"
-          b = "inner if else 2"
+          THEN 
+               a = "inner if then"
+               b = "inner if then 2"
+          ELSE 
+               a = "inner if else"
+               b = "inner if else 2"
           END
-     ELSE a = "outer if else"
-     b = "outer if else 2"
+     ELSE 
+          a = "outer if else"
+          b = "outer if else 2"
      END
 
      FOR i IN [1, 2] :
@@ -100,11 +110,14 @@ START:
           END
      END
 
-     FOR i IN [1, 2, 3, 4, 5] :
+     my_list = [1, 2, 3, 4, 5]
+     FOR i IN my_list:
           IF EVALUATE(i == 3) THEN
+               i = EVALUATE(i + 10)
                BREAK
           ELSE
                PRINT(i)
           END
      END
+     PRINT(my_list)
 END

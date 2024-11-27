@@ -254,7 +254,8 @@ if_statement : IF expression THEN code_block ELSE code_block END                
              | IF evaluate_statement THEN code_block END                        # IfEvaluate
              ;
 
-for_statement : FOR IDENTIFIER IN list COLON code_block END
+for_statement : FOR IDENTIFIER IN list COLON code_block END             # ForList
+              | FOR IDENTIFIER IN IDENTIFIER COLON code_block END       # ForIdentifier
               ;
 
 while_statement : WHILE expression COLON code_block END

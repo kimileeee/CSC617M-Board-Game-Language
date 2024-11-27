@@ -389,8 +389,13 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#for_statement.
-    def visitFor_statement(self, ctx:BoardGameParser.For_statementContext):
+    # Visit a parse tree produced by BoardGameParser#ForList.
+    def visitForList(self, ctx:BoardGameParser.ForListContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#ForIdentifier.
+    def visitForIdentifier(self, ctx:BoardGameParser.ForIdentifierContext):
         return self.visitChildren(ctx)
 
 
