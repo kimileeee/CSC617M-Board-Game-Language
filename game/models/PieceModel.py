@@ -38,12 +38,9 @@ class Piece:
     def get_first_two_letters(self):
         return self.name[:2]
 
-    def get_pos(self):
-        return self.pos
-
     def get_moves(self):
         """Get the possible moves for the piece."""
-        pass
+        return self.actions
 
     def set_move(self, **kwargs):
         """Move the piece to a new position on the board."""
