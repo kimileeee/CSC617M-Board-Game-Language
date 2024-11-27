@@ -336,7 +336,10 @@ class BoardGame:
     def add_rule(self, rule):
         """Add a rule to the game."""
         self.rules.append(rule)
-
+        
+    def get_rules(self):
+        return self.rules
+    
     def apply_rules(self):
         """Apply all rules to the current game state."""
         for rule in self.rules:
