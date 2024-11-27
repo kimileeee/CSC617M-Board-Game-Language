@@ -37,7 +37,6 @@ START : 'START';
 END : 'END';
 MOVE : 'MOVE';
 TO : 'TO';
-CONVERT : 'CONVERT';
 TURN : 'TURN';
 ROW : 'ROW';
 COLUMN : 'COLUMN';

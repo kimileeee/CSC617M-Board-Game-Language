@@ -21,13 +21,9 @@ DEFINE checkers.CONDITIONS:
      CONDITION (ANY PLAYERS PIECES.COUNT == 0)
 END
 
-DEFINE checkers.RULES :
-     RULE promote_rule_white (IF ANY regular AT BOARD.ROW.8 AND regular.color == white 
-                              THEN regular CONVERT king 
-                              END)
-     RULE promote_rule_black (IF ANY regular AT BOARD.ROW.1 AND regular.color == black 
-                              THEN regular CONVERT king 
-                              END)
+DEFINE checkers.RULES:
+     RULE (name = promote_rule_white, pos_check = True, row = 8, piece = regular, color = COLOR.white, action = convert, convert_to = king)
+     RULE (name = promote_rule_black, pos_check = True, row = 1, piece = regular, color = COLOR.black, action = convert, convert_to = king)
 END
 
 DEFINE checkers.PIECES:
