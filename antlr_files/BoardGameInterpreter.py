@@ -118,7 +118,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             self.game.print_board()
 
         self.enter_scope()  # Enter a new scope for gameplay logic
-        # self.game.start_game()
+        self.game.start_game()
         self.visitChildren(ctx)
         self.exit_scope()
 

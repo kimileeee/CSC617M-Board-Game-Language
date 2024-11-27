@@ -65,11 +65,13 @@ class BoardGame:
 
         for rows in range(row):
             for cols in range(col):
-                #check piece at current position and then get the values then draw it
-                #go through the player and check the pieces of player to set color of circle and to check piece
+                # check piece at current position and then get the values then draw it
+                # go through the player and check the pieces of player to set color of circle and to check piece
                 for player in self.players:
                     #goes through each player in the player list
                     pieces = player.get_all_pieces()
+                    # print("PIECES OF PLAYER")
+                    # print(pieces)
                     #check each piece and see if the position is same as value of rows and cols
                     for piece in pieces:
                         #checks if piece has positions already
@@ -78,16 +80,36 @@ class BoardGame:
                             print(f"Row: {row}, Col: {col}")
                             #checks if the row and col stored is same as row and col
                             #this is easy if board is defined as 11 but if not conversion from letter to number should be done
-                            if row >= 'A' or row <= 'Z':
-                                row2 = ord(row)
-                            elif col >= 'A' or col <= 'Z':
-                                col2 = ord(col)
-                            if rows == row2 and cols == col2:
-                                pygame.draw.circle(screen, piece.get_color(), (rows*square_size + square_size//2, cols*square_size + square_size//2), square_size//4)
-                                text = font.render(piece.get_first_two_letters(), True, (255, 255, 255))  # Create a text surface
-                                text_rect = text.get_rect(center=(rows*square_size + square_size//2, cols*square_size + square_size//2))
-                                screen.blit(text, text_rect)
 
+                            if isinstance(row, str) and len(row) == 1:
+                                row2 = ord(row)
+                            else:
+                                row2 = row
+
+                            if isinstance(col, str) and len(col) == 1:
+                                col2 = ord(col)
+                            else:
+                                col2 = col
+                            color = piece.get_color()
+                            final_color = Colors.get_hex_code_by_name(str(color))
+                            if rows == row2 and cols == col2:
+                                try:
+                                    pygame.draw.circle(screen, final_color, (rows*square_size + square_size//2, cols*square_size + square_size//2), square_size//4)
+                                    text = font.render(piece.get_first_two_letters(), True, (255, 255, 255))  # Create a text surface
+                                    text_rect = text.get_rect(center=(rows*square_size + square_size//2, cols*square_size + square_size//2))
+                                    screen.blit(text, text_rect)
+                                except:
+                                    print("ERROR")
+                            
+                # if rows == 5 and cols == 5:
+                #     try:
+                #         pygame.draw.circle(screen, Colors.RED.hex_code(), (rows*square_size + square_size//2, cols*square_size + square_size//2), square_size//4)
+                #         text = font.render("HI", True, (255, 255, 255))  # Create a text surface
+                #         text_rect = text.get_rect(center=(rows*square_size + square_size//2, cols*square_size + square_size//2))
+                #         screen.blit(text, text_rect)
+                #     except:
+                #         print("ERROR")
+                pygame.display.update() 
 
 
 
