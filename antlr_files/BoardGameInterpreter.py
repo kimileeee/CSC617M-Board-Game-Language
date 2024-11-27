@@ -9,6 +9,7 @@ from game.models.BoardCellModel import Cell
 from game.models.Colors import Colors
 from antlr_files.utils import utils
 import copy
+import re
 
 class BoardGameInterpreter(BoardGameParserVisitor):
 
@@ -257,8 +258,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         #depending on how it was processed in node, that is the order
         #since DFS, left to right is the order of players
         if self.temp_command == "ORDER":
-            print("IN TURN ORDER")
-            print(params_list + others)
+            # print("IN TURN ORDER")
+            # print(params_list + others)
             self.game.set_turn_order(params_list + others)
             self.temp_command = None
         
@@ -336,9 +337,10 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         # print("parent", type(ctx.parentCtx))
 
         if type(parent) is BoardGameParser.Primary_evalContext:
-            print("in primary eval, object entity access")
-            for i in ctx.children:
-                print(i.getText())
+            # print("in primary eval, object entity access")
+            # for i in ctx.children:
+            #     print(i.getText())
+            pass
 
         elif type(parent) not in [BoardGameParser.DefineContext, BoardGameParser.Player_statementContext]:
 
@@ -367,9 +369,10 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         # print("parent", type(ctx.parentCtx))
 
         if type(parent) is BoardGameParser.Primary_evalContext:
-            print("in primary eval, game entity access")
-            for i in ctx.children:
-                print(i.getText())
+            # print("in primary eval, game entity access")
+            # for i in ctx.children:
+            #     print(i.getText())
+            pass
 
         elif type(parent) not in [BoardGameParser.DefineContext, BoardGameParser.Player_statementContext]:
 
@@ -428,10 +431,10 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         parent = ctx.parentCtx
         # print("parent", type(ctx.parentCtx))
 
-        if type(parent) is BoardGameParser.Primary_evalContext:
-            print("in primary eval, identifier access")
-            for i in ctx.children:
-                print(i.getText())
+        # if type(parent) is BoardGameParser.Primary_evalContext:
+        #     print("in primary eval, identifier access")
+        #     for i in ctx.children:
+        #         print(i.getText())
         return self.visitObjectEntityAccess(ctx)
 
 
@@ -603,7 +606,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         object = self.visit(ctx.getChild(0))
         board_pos = self.visit(ctx.getChild(2))
 
-        print(f"Object: {object}, Position: {board_pos}")
+        # print(f"Object: {object}, Position: {board_pos}")
         
         return self.visitChildren(ctx)
 
@@ -640,7 +643,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         variable_name = ctx.IDENTIFIER().getText()
         value = self.visit(ctx.expression())
         self.assign_symbol(variable_name, value)
-        print(f"Assigned {variable_name} = {value}")
+        # print(f"Assigned {variable_name} = {value}")
 
 
     # Visit a parse tree produced by BoardGameParser#AssignMethodCall.
@@ -648,7 +651,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         variable_name = ctx.IDENTIFIER().getText()
         value = self.visit(ctx.method_call())
         self.assign_symbol(variable_name, value)
-        print(f"Assigned {variable_name} = {value}")
+        # print(f"Assigned {variable_name} = {value}")
 
 
     # Visit a parse tree produced by BoardGameParser#AssignInput.
@@ -656,7 +659,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         variable_name = ctx.IDENTIFIER().getText()
         value = self.visit(ctx.input_statement())
         self.assign_symbol(variable_name, value)
-        print(f"Assigned {variable_name} = {value}")
+        # print(f"Assigned {variable_name} = {value}")
 
     # Visit a parse tree produced by BoardGameParser#AssignEvaluate.
     def visitAssignEvaluate(self, ctx:BoardGameParser.AssignEvaluateContext):
@@ -664,7 +667,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         variable_name = ctx.IDENTIFIER().getText()
         value = self.visit(ctx.evaluate_statement())
         self.assign_symbol(variable_name, value)
-        print(f"Assigned {variable_name} = {value}")
+        # print(f"Assigned {variable_name} = {value}")
 
     # Visit a parse tree produced by BoardGameParser#primary_eval.
     def visitPrimary_eval(self, ctx:BoardGameParser.Primary_evalContext):
@@ -750,7 +753,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             # print(l)
             r = str(self.visit(ctx.getChild(2)))
             # print(r, type(r), "\n")
-            print(ctx.getText())
+            # print(ctx.getText())
             cond_opt = ctx.conditional_opt().getText()
 
             # if type(ctx.getChild(0)) == BoardGameParser.Entity_count_expressionContext:
@@ -950,8 +953,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         # print("--Symbol Table--")
         # self.print_symbol_table()
 
-        print("\n--Final Script--")
-        print(func_script)
+        # print("\n--Final Script--")
+        # print(func_script)
 
         try:
             self.game.add_condition(func_name, func_script)
@@ -964,7 +967,29 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     # Visit a parse tree produced by BoardGameParser#rule_statement.
     def visitRule_statement(self, ctx:BoardGameParser.Rule_statementContext):
         print("\nDefining RULEs")
-        print(self.print_symbol_table())
+        param_list = ctx.param_list()
+
+        params = param_list.getText()
+        params = re.split(r',(?!(?:[^\[\]]*\]))', params)
+
+        param_dict = {}
+
+        for param in params:
+            key, value = param.split("=")
+
+            if value.lower() == 'true':
+                value = True
+            elif value.lower() == 'false':
+                value = False
+            elif value.isdigit():
+                value = int(value)
+            else:
+                value = value.strip()
+
+            param_dict[key.strip()] = value
+
+        self.game.add_rule(param_dict)
+        print(self.game.get_rules())
         # return self.visitChildren(ctx)
 
     # Visit a parse tree produced by BoardGameParser#piece_statement.
@@ -1014,14 +1039,11 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             for node in identifier_nodes:
                 name = node.getText()
 
-                print(name)
-
                 for player in self.game.get_players():
                     pieces = player.get_pieces_by_name(name)
 
                     if pieces:
                         for piece in pieces:
-                            print("ENTER HERE")
                             piece.set_move(**param_dict)
                     else:
                         piece = self.game.get_base_pieces(name)
