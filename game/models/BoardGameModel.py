@@ -107,11 +107,8 @@ class BoardGame:
     def get_base_pieces(self, name):
         return next(p for p in self.base_pieces if p.name == name)
     
-    ## called in DEFINE checkers.PIECES
-    def define_piece_moves(self, piece_name, moves):
-        """Define the moves for a piece."""
-        piece = next(p for p in self.base_pieces if p.name == piece_name)
-        # TODO: Implement how the piece moves and if it consumes
+    # Get movement parameters from self.base_pieces if p.name == name
+    def evaulaute_movement(self, name):
         pass
 
     ## called in DEFINE checkers.BOARD

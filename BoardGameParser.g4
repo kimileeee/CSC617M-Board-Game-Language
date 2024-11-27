@@ -76,7 +76,7 @@ param_list : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR                 
            | board_pos COMMA param_list                                                         # BoardPosParam
            | object_access COMMA param_list                                                     # ObjectAccessParam
            | list COMMA param_list                                                              # ListLiteralParam
-           | (ALL | ANY | NONE | IDENTIFIER | literal | object_access | list | board_pos)       # SingleParam
+           | (ALL | ANY | NONE | IDENTIFIER | literal | object_access | list | assignment_expression | board_pos)       # SingleParam
            ;
 
 list : OPEN_BRACKET param_list CLOSE_BRACKET
@@ -150,6 +150,7 @@ in_expression : primary IN primary
               ;
 
 at_expression : (IDENTIFIER | object_access) AT board_pos
+              | ANY (IDENTIFIER | object_access) AT board_pos
               ;
 
 any_expression : ANY (IDENTIFIER | object_access | list | game_entities)
@@ -217,8 +218,8 @@ rule_statement : RULE IDENTIFIER OPEN_PAR expression CLOSE_PAR
                ;
 
 piece_statement : PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) COUNT int_literal 
-                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) ACTION IDENTIFIER OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
-                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR | ANY | NONE) ACTION IDENTIFIER OPEN_PAR expression CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR expression CLOSE_PAR)*
+                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) ACTION OPEN_PAR param_list CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR param_list CLOSE_PAR)*
+                | PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR | ANY | NONE) ACTION OPEN_PAR expression CLOSE_PAR (COMMA IDENTIFIER OPEN_PAR expression CLOSE_PAR)*
                 | PIECE assignment_expression
                 ;
 
@@ -241,8 +242,8 @@ move_statement : MOVE (IDENTIFIER | object_access | ALL) TO board_pos
 turn_statement : TURN IDENTIFIER move_statement
                ;
 
-if_statement : IF expression COLON code_block  ELSE COLON code_block
-             | IF expression COLON code_block
+if_statement : IF expression THEN code_block ELSE code_block END
+             | IF expression THEN code_block END
              ;
 
 for_statement : FOR IDENTIFIER IN list COLON code_block END

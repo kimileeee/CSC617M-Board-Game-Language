@@ -10,6 +10,10 @@ class Player:
         """Add a piece to the player's list of pieces."""
         self.pieces.append(piece)
 
+    def get_pieces(self):
+        """Get all pieces."""
+        return self.pieces
+
     def get_piece(self, name):
         """Get a piece by name."""
         return next(p for p in self.pieces if p.name == name)
@@ -17,6 +21,18 @@ class Player:
     def get_pieces_by_name(self, name):
         """Get all pieces by name."""
         return [p for p in self.pieces if p.name == name]
+    
+    def get_unique_pieces(self):
+        seen_names = set()
+        unique_pieces = []
+
+        for piece in self.pieces:
+            if piece.name not in seen_names:
+                unique_pieces.append(piece)
+                seen_names.add(piece.name)
+
+        return unique_pieces
+
 
     def move_piece(self, piece, new_row, new_col):
         """Move a piece owned by the player."""

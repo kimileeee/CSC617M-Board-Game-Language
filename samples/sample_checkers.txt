@@ -22,18 +22,23 @@ DEFINE checkers.CONDITIONS:
 END
 
 DEFINE checkers.RULES :
-     RULE promote_rule (white AT BOARD.ROW.8 OR black AT BOARD.ROW.1)
+     RULE promote_rule_white (IF ANY regular AT BOARD.ROW.8 AND regular.color == white 
+                              THEN regular CONVERT king 
+                              END)
+     RULE promote_rule_black (IF ANY regular AT BOARD.ROW.1 AND regular.color == black 
+                              THEN regular CONVERT king 
+                              END)
 END
 
 DEFINE checkers.PIECES:
      PIECE regular COUNT 12
      PIECE king COUNT 0
 
-     PIECE regular ACTION move(diagonal, 1, 1)
-     PIECE regular ACTION consume(diagonal, 2, 2)
+     PIECE regular ACTION (name = move, direction = diagonal, min_count = 1, max_count = 1, skip = True, across = False, backtrack = False, consume = False)
+     PIECE regular ACTION (name = consume, direction = diagonal, min_count = 1, max_count = 1, skip = True, across = False, backtrack = False, consume = True)
 
-     PIECE king ACTION consume(diagonal, across, skip)
-     PIECE king ACTION move(diagonal, uni_direction, across)
+     PIECE king ACTION (name = move, direction = diagonal, min_count = 1, skip = True, across = True, backtrack = True, consume = False)
+     PIECE king ACTION (name = consume, direction = diagonal, min_count = 1, skip = True, across = True, backtrack = True, consume = True)
 END
 
 DEFINE checkers.BOARD:
