@@ -165,6 +165,7 @@ assignment_expression : IDENTIFIER ASSIGN_OPT expression              # AssignEx
                       | IDENTIFIER ASSIGN_OPT method_call               # AssignMethodCall
                       | IDENTIFIER ASSIGN_OPT input_statement         # AssignInput
                       | IDENTIFIER ASSIGN_OPT object_access         # AssignObjectAccess
+                      | IDENTIFIER ASSIGN_OPT list         # AssignObjectAccess
                      ;
 
 eval_base_expressions   : relational_expression
