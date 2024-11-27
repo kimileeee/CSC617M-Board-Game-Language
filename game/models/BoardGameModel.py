@@ -192,23 +192,25 @@ class BoardGame:
         pass
 
     ## called in DEFINE checkers.BOARD
-    def add_piece(self, player_name, piece_name, row, col, symbol):
+    def add_piece(self, player_name, piece_name, row, col, symbol, ID):
         """Add a piece to a player's collection of pieces."""
-        base_piece = self.get_base_pieces(piece_name)
-        new_piece = copy.deepcopy(base_piece)
+
         temp = {}
         temp['row'] = row
         temp['col'] = col
-        new_piece.set_pos(**temp)
 
+        # get from player first, set position
         player = next(p for p in self.players if p.name.strip() == player_name.strip())
-        new_piece.set_color(player.color)
-        player.add_piece(new_piece)
+        pieces = player.get_all_pieces()
+        
+        for piece in pieces:
+            if piece.name.strip() == piece_name.strip() and int(piece.ID) == int(ID):
+                piece.set_pos(**temp)
+                piece.set_color(player.color)
+                self.pieces.append(piece)
+                self.board.set_cell_piece(temp['row'], temp['col'], piece)
 
-        self.pieces.append(new_piece)
-        self.board.set_cell_piece(temp['row'], temp['col'], new_piece)
-
-        return (f"{player.name}.{new_piece.name}", new_piece)
+        #return (f"{player.name}.{new_piece.name}", new_piece)
 
     def move_piece(self, player_name, piece_name, new_row, new_col):
         """Move a piece on the board."""
