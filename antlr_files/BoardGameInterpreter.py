@@ -118,7 +118,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             self.game.print_board()
 
         self.enter_scope()  # Enter a new scope for gameplay logic
-        self.game.start_game()
+        # self.game.start_game()
         self.visitChildren(ctx)
         self.exit_scope()
 
@@ -208,7 +208,10 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#Boolean.
     def visitBoolean(self, ctx:BoardGameParser.BooleanContext):
-        return bool(ctx.getText())
+        if ctx.getText() == "True":
+            return True
+        else:
+            return False
 
     # Visit a parse tree produced by BoardGameParser#primary.
     def visitPrimary(self, ctx:BoardGameParser.PrimaryContext):
@@ -764,8 +767,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             # print(exp)
             return exp
         
-    # Visit a parse tree produced by BoardGameParser#relational_expression.
-    def visitRelational_expression(self, ctx:BoardGameParser.Relational_expressionContext):
+    # Visit a parse tree produced by BoardGameParser#RelationalExpression.
+    def visitRelationalExpression(self, ctx:BoardGameParser.RelationalExpressionContext):
         l = self.visit(ctx.additive(0))
         for i in range(1, len(ctx.additive())):
             cond_opt = ctx.getChild(2 * i - 1).getText()
@@ -785,6 +788,17 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         
         # print("conditional_expression", l)
         return l
+
+
+    # Visit a parse tree produced by BoardGameParser#StringRelationalExpression.
+    def visitStringRelationalExpression(self, ctx:BoardGameParser.StringRelationalExpressionContext):
+        l = self.visitString(ctx.STRING_LITERAL(0))
+        r = self.visitString(ctx.STRING_LITERAL(1))
+
+        if ctx.EQUAL_OPT():
+            return l == r
+        elif ctx.NOT_EQUAL_OPT():
+            return l != r
         
     # Visit a parse tree produced by BoardGameParser#not_expression.
     def visitNot_expression(self, ctx:BoardGameParser.Not_expressionContext):
@@ -1111,8 +1125,28 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
 
     # Visit a parse tree produced by BoardGameParser#if_statement.
-    def visitIf_statement(self, ctx:BoardGameParser.If_statementContext):
+    # Visit a parse tree produced by BoardGameParser#IfElseExpression.
+    def visitIfElseExpression(self, ctx:BoardGameParser.IfElseExpressionContext):
         return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#IfExpression.
+    def visitIfExpression(self, ctx:BoardGameParser.IfExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#IfElseEvaluate.
+    def visitIfElseEvaluate(self, ctx:BoardGameParser.IfElseEvaluateContext):
+        if self.visit(ctx.evaluate_statement()):
+            self.visit(ctx.code_block(0))
+        else:
+            self.visit(ctx.code_block(1))
+
+
+    # Visit a parse tree produced by BoardGameParser#IfEvaluate.
+    def visitIfEvaluate(self, ctx:BoardGameParser.IfEvaluateContext):
+        if self.visit(ctx.evaluate_statement()):
+            self.visit(ctx.code_block(0))
 
 
     # Visit a parse tree produced by BoardGameParser#for_statement.

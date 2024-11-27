@@ -84,5 +84,8 @@ START:
      PRINT("Moved regular_1 to F7")
      // PRINT(player_move)
 
-     
+     IF EVALUATE(False) 
+     THEN a = True
+     ELSE a = False
+     END
 END

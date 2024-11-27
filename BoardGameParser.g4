@@ -146,7 +146,8 @@ class_statement : assignment_expression
 conditional_expression : primary conditional_opt primary
                        ;
 
-relational_expression : additive (conditional_opt additive)*
+relational_expression : additive (conditional_opt additive)*                            # RelationalExpression
+                      | STRING_LITERAL (EQUAL_OPT | NOT_EQUAL_OPT) STRING_LITERAL       # StringRelationalExpression
                       ;
 
 in_expression : primary IN primary
@@ -167,6 +168,7 @@ assignment_expression : IDENTIFIER ASSIGN_OPT expression              # AssignEx
 
 eval_base_expressions   : relational_expression
                         | not_expression
+                        | BOOLEAN_LITERAL
                         ;
 
 eval_expression : eval_base_expressions logical_opt eval_expression
@@ -245,8 +247,10 @@ move_statement : MOVE (IDENTIFIER | object_access | ALL) TO board_pos
 turn_statement : TURN IDENTIFIER move_statement
                ;
 
-if_statement : IF expression THEN code_block ELSE code_block END
-             | IF expression THEN code_block END
+if_statement : IF expression THEN code_block ELSE code_block END                # IfElseExpression
+             | IF expression THEN code_block END                                # IfExpression
+             | IF evaluate_statement THEN code_block ELSE code_block END        # IfElseEvaluate
+             | IF evaluate_statement THEN code_block END                        # IfEvaluate
              ;
 
 for_statement : FOR IDENTIFIER IN list COLON code_block END
