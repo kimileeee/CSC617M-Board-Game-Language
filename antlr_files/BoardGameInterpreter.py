@@ -118,7 +118,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             self.game.print_board()
 
         self.enter_scope()  # Enter a new scope for gameplay logic
-        # self.game.start_game()
+        self.game.start_game()
         self.visitChildren(ctx)
         self.exit_scope()
 
@@ -257,6 +257,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         #depending on how it was processed in node, that is the order
         #since DFS, left to right is the order of players
         if self.temp_command == "ORDER":
+            print("IN TURN ORDER")
+            print(params_list + others)
             self.game.set_turn_order(params_list + others)
             self.temp_command = None
         

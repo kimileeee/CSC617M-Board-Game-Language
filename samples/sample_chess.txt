@@ -1,7 +1,7 @@
 GAME chess
 
 DEFINE chess:
-    BOARD (8,8)
+    BOARD (8,8, "checker")
     PLAYERS (white, black)
     PIECES (pawn, rook, knight, bishop, queen, king)
     OBSTACLES (NONE)
@@ -23,11 +23,11 @@ DEFINE chess.CONDITIONS:
     CONDITION (TIMER.timer_running == True)
 END
 
-DEFINE chess.RULES:
-    RULE promote_rule (white AT BOARD.ROW.8 OR black AT BOARD.ROW.1)
-    RULE white_castling ((white.king AT BOARD.E1) AND (white.rook AT BOARD.H1) AND (BOARD.F1.empty()) AND (BOARD.G1.empty()))
-    RULE black_castling (black.king AT BOARD.E8 AND black.rook AT BOARD.H8 AND BOARD.F8.empty() AND BOARD.G8.empty())
-END
+//DEFINE chess.RULES:
+//    RULE promote_rule (white AT BOARD.ROW.8 OR black AT BOARD.ROW.1)
+//    RULE white_castling ((white.king AT BOARD.E1) AND (white.rook AT BOARD.H1) AND (BOARD.F1.empty()) AND (BOARD.G1.empty()))
+//    RULE black_castling (black.king AT BOARD.E8 AND black.rook AT BOARD.H8 AND BOARD.F8.empty() AND BOARD.G8.empty())
+//END
 
 DEFINE chess.PIECES:
     PIECE pawn COUNT 8
@@ -37,55 +37,55 @@ DEFINE chess.PIECES:
     PIECE queen COUNT 1
     PIECE king COUNT 1
 
-    PIECE pawn ACTION move(forward, 1, 1)
-    PIECE pawn ACTION consume(diagonal, 1, 1)
-    PIECE pawn ACTION promote(promote_rule, [queen, rook, bishop, knight])
+    //PIECE pawn ACTION move(forward, 1, 1)
+    //PIECE pawn ACTION consume(diagonal, 1, 1)
+    //PIECE pawn ACTION promote(promote_rule, [queen, rook, bishop, knight])
 
-    PIECE rook ACTION move(orthogonal, 8, 8)
-    PIECE rook ACTION consume(orthogonal, 8, 8)
+    //PIECE rook ACTION move(orthogonal, 8, 8)
+    //PIECE rook ACTION consume(orthogonal, 8, 8)
 
-    PIECE knight ACTION move(["NNW", "NNE", "SSW", "SSE", "EEN", "EES", "WWN", "WWS"])
-    PIECE knight ACTION consume(["NNW", "NNE", "SSW", "SSE", "EEN", "EES", "WWN", "WWS"])
+    //PIECE knight ACTION move(["NNW", "NNE", "SSW", "SSE", "EEN", "EES", "WWN", "WWS"])
+    //PIECE knight ACTION consume(["NNW", "NNE", "SSW", "SSE", "EEN", "EES", "WWN", "WWS"])
 
-    PIECE bishop ACTION move(diagonal, 8, 8)
-    PIECE bishop ACTION consume(diagonal, 8, 8)
+    //PIECE bishop ACTION move(diagonal, 8, 8)
+    //PIECE bishop ACTION consume(diagonal, 8, 8)
 
-    PIECE queen ACTION move(orthogonal, 8, 8), move(diagonal, 8, 8)
-    PIECE queen ACTION consume(orthogonal, 8, 8), move(diagonal, 8, 8)
+    //PIECE queen ACTION move(orthogonal, 8, 8), move(diagonal, 8, 8)
+    //PIECE queen ACTION consume(orthogonal, 8, 8), move(diagonal, 8, 8)
 
-    PIECE king ACTION move(orthogonal, 1, 1), move(diagonal, 1, 1)
-    PIECE king ACTION consume(orthogonal, 1, 1), move(diagonal, 1, 1)
+    //PIECE king ACTION move(orthogonal, 1, 1), move(diagonal, 1, 1)
+    //PIECE king ACTION consume(orthogonal, 1, 1), move(diagonal, 1, 1)
 
 
     // define castling as a special move
-    PIECE NONE ACTION castling((
-        GAME.current_player.get_color() == COLOR.white AND
-        white_castling AND
-        MOVE king TO BOARD.G1 AND
-        MOVE rook TO BOARD.F1
-    ) OR (
-        GAME.current_player.get_color() == COLOR.black AND
-        black_castling AND
-        MOVE king TO BOARD.G8 AND
-        MOVE rook TO BOARD.F8
-    ))
+    //PIECE NONE ACTION castling((
+    //    GAME.current_player.get_color() == COLOR.white AND
+    //    white_castling AND
+    //    MOVE king TO BOARD.G1 AND
+    //   MOVE rook TO BOARD.F1
+    //) OR (
+    //    GAME.current_player.get_color() == COLOR.black AND
+    //    black_castling AND
+    //    MOVE king TO BOARD.G8 AND
+    //    MOVE rook TO BOARD.F8
+    //))
 
 END
 
 DEFINE chess.BOARD:
-    PLAYER white PIECE pawn SETUP (BOARD.A2 ... BOARD.H2)
-    PLAYER white PIECE king SETUP (BOARD.A1, BOARD.H1)
-    PLAYER white PIECE knight SETUP (BOARD.B1, BOARD.G1)
-    PLAYER white PIECE bishop SETUP (BOARD.C1, BOARD.F1)
-    PLAYER white PIECE queen SETUP (BOARD.D1)
-    PLAYER white PIECE king SETUP (BOARD.E1)
+    PLAYER black PIECE pawn SETUP (BOARD.B1 ... BOARD.B8)
+    PLAYER black PIECE rook SETUP (BOARD.A1, BOARD.A8)
+    PLAYER black PIECE knight SETUP (BOARD.A2, BOARD.A7)
+    PLAYER black PIECE bishop SETUP (BOARD.A3, BOARD.A6)
+    PLAYER black PIECE queen SETUP (BOARD.A5)
+    PLAYER black PIECE king SETUP (BOARD.A4)
 
-    PLAYER black PIECE pawn SETUP (BOARD.A7 ... BOARD.H7)
-    PLAYER black PIECE rook SETUP (BOARD.A8, BOARD.H8)
-    PLAYER black PIECE knight SETUP (BOARD.B8, BOARD.G8)
-    PLAYER black PIECE bishop SETUP (BOARD.C8, BOARD.F8)
-    PLAYER black PIECE queen SETUP (BOARD.D8)
-    PLAYER black PIECE king SETUP (BOARD.E8)
+    PLAYER white PIECE pawn SETUP (BOARD.G1 ... BOARD.G8)
+    PLAYER white PIECE rook SETUP (BOARD.H1, BOARD.H8)
+    PLAYER white PIECE knight SETUP (BOARD.H2, BOARD.H7)
+    PLAYER white PIECE bishop SETUP (BOARD.H3, BOARD.H6)
+    PLAYER white PIECE queen SETUP (BOARD.H4)
+    PLAYER white PIECE king SETUP (BOARD.H5)
 END
 
 START:

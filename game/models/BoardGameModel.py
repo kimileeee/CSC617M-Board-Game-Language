@@ -71,7 +71,8 @@ class BoardGame:
                     print(cell.piece.get_first_two_letters())
                     color = cell.piece.get_color()
                     final_color = Colors.get_hex_code_by_name(str(color))
-                    row_output.append(f"[{cell.piece.name}]") 
+                    row_output.append(f"[{cell.piece.name}]")
+                    pygame.draw.circle(screen, Colors.BLACK.hex_code(), (col_index * square_size + square_size // 2, row_index * square_size + square_size // 2), square_size // 4 + 2) 
                     pygame.draw.circle(screen, final_color, (col_index*square_size + square_size//2, row_index*square_size + square_size//2), square_size//4)
                     text = font.render(cell.piece.get_first_two_letters(), True, Colors.get_hex_code_by_name("red"))  # Create a text surface
                     text_rect = text.get_rect(center=(col_index*square_size + square_size//2, row_index*square_size + square_size//2))
@@ -342,6 +343,8 @@ class BoardGame:
     # ORDER methods
     def set_turn_order(self, order):
         """Define the turn order for players."""
+        print("TURN ORDER FINAL")
+        print(order)
         self.turn_order = order
 
     # TURN methods

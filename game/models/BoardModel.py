@@ -40,7 +40,7 @@ class Board:
                 row_cells = []
                 for col in range(self.cols):
                     # Determine cell color based on row and column
-                    color = Colors.BLACK.normal_name() if (row + col) % 2 == 0 else Colors.WHITE.normal_name()
+                    color = Colors.BROWN.normal_name() if (row + col) % 2 == 0 else Colors.WHITE.normal_name()
                     row_cells.append(Cell(name=f"{chr(65 + row)}{col + 1}", color=color))
                 grid.append(row_cells)
             return grid
@@ -143,7 +143,7 @@ class Board:
                 x = col * CELL_SIZE
                 y = row * CELL_SIZE
                 if self.board_type == BoardType.CHECKER.value:
-                    color = Colors.BLACK.hex_code() if cell.color == Colors.BLACK.normal_name() else Colors.WHITE.hex_code()
+                    color = Colors.BROWN.hex_code() if cell.color == Colors.BROWN.normal_name() else Colors.WHITE.hex_code()
                 else:
                     color = Colors.WHITE.hex_code()
                 pygame.draw.rect(screen, color, (x, y, CELL_SIZE, CELL_SIZE))
