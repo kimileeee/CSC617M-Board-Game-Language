@@ -10,6 +10,10 @@ class Player:
         """Add a piece to the player's list of pieces."""
         self.pieces.append(piece)
 
+    def remove_piece(self, piece):
+        """Remove a piece to the player's list of pieces."""
+        self.pieces = [curr_piece for curr_piece in self.pieces if piece != piece]
+
     def get_pieces(self):
         """Get all pieces."""
         return self.pieces
@@ -44,6 +48,9 @@ class Player:
     def set_color(self, color):
         #sets player color
         self.color = color
+
+    def get_color(self):
+        return self.color
 
     def __repr__(self):
         """String representation of the player."""

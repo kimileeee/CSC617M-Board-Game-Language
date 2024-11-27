@@ -22,8 +22,8 @@ DEFINE checkers.CONDITIONS:
 END
 
 DEFINE checkers.RULES:
-     RULE (name = promote_rule_white, pos_check = True, row = 8, piece = regular, color = COLOR.white, action = convert, convert_to = king)
-     RULE (name = promote_rule_black, pos_check = True, row = 1, piece = regular, color = COLOR.black, action = convert, convert_to = king)
+     RULE (name = promote_rule_white, pos_check = True, row = 8, piece = regular, color = white, action = convert, convert_to = king)
+     RULE (name = promote_rule_black, pos_check = True, row = 1, piece = regular, color = black, action = convert, convert_to = king)
 END
 
 DEFINE checkers.PIECES:
