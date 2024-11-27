@@ -1176,7 +1176,3 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     # Visit a parse tree produced by BoardGameParser#evaluate_statement.
     def visitEvaluate_statement(self, ctx:BoardGameParser.Evaluate_statementContext):
         return self.visit(ctx.eval_expression())
-    
-    # Visit a parse tree produced by BoardGameParser#convert_statement.
-    def visitConvert_statement(self, ctx:BoardGameParser.Convert_statementContext):
-        return self.visitChildren(ctx)

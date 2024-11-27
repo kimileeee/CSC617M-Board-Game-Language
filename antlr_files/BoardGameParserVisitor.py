@@ -259,6 +259,11 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BoardGameParser#AssignObjectAccess.
+    def visitAssignObjectAccess(self, ctx:BoardGameParser.AssignObjectAccessContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BoardGameParser#eval_base_expressions.
     def visitEval_base_expressions(self, ctx:BoardGameParser.Eval_base_expressionsContext):
         return self.visitChildren(ctx)
@@ -411,11 +416,6 @@ class BoardGameParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#dice_statement.
     def visitDice_statement(self, ctx:BoardGameParser.Dice_statementContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#convert_statement.
-    def visitConvert_statement(self, ctx:BoardGameParser.Convert_statementContext):
         return self.visitChildren(ctx)
 
 
