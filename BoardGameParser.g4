@@ -91,6 +91,7 @@ object_access : IDENTIFIER DOT game_entities (DOT game_entities | IDENTIFIER)*  
 //solution is to either remove BOARD from game entities and let it purely be handled by board_pos?
 board_pos : BOARD DOT IDENTIFIER                                # BoardPosIdentifier
           | BOARD DOT (ROW | COLUMN) DOT (int_literal)          # BoardPosRowCol
+          | BOARD DOT (int_literal)                             # BoardPosInt
           | board_pos ELIPSIS board_pos                         # BoardPosRange
           ;
 
@@ -206,7 +207,7 @@ logical_opt : AND_OPT
 game_entities_statement : game_entities OPEN_PAR param_list CLOSE_PAR
                         ;
 
-player_statement : PLAYER IDENTIFIER COLOR object_access AT board_pos
+player_statement : PLAYER IDENTIFIER COLOR object_access (AT board_pos)*
                  | ORDER OPEN_PAR list CLOSE_PAR
                  ;
 

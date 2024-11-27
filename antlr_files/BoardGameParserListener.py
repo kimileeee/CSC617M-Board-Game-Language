@@ -260,6 +260,15 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BoardGameParser#BoardPosInt.
+    def enterBoardPosInt(self, ctx:BoardGameParser.BoardPosIntContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#BoardPosInt.
+    def exitBoardPosInt(self, ctx:BoardGameParser.BoardPosIntContext):
+        pass
+
+
     # Enter a parse tree produced by BoardGameParser#BoardPosRange.
     def enterBoardPosRange(self, ctx:BoardGameParser.BoardPosRangeContext):
         pass

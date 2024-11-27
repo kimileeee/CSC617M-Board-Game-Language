@@ -20,11 +20,9 @@ DEFINE snakes_and_ladders.PLAYERS:
 END
 
 DEFINE snakes_and_ladders.CONDITIONS:
-    CONDITION (ANY PIECE AT BOARD.100)
-END
-
-DEFINE snakes_and_ladders.SCORE:
-    SCORE(snakes_and_ladders.CONDITIONS)
+    CONDITION (me.regular AT BOARD.100)
+    CONDITION (you.regular AT BOARD.100)
+    CONDITION (them.regular AT BOARD.100)
 END
 
 DEFINE snakes_and_ladders.RULES:
