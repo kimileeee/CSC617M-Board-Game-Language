@@ -451,6 +451,16 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         board_cell = self.game.board.get_cell_by_name(pos)
 
         return board_cell
+    
+    
+    # Visit a parse tree produced by BoardGameParser#BoardPosInt.
+    def visitBoardPosInt(self, ctx:BoardGameParser.BoardPosIntContext):
+
+        pos = ctx.int_literal().getText()  # Example: "A3"
+        board_cell = self.game.board.get_cell_by_name(pos)
+
+        return board_cell
+    
 
     # Visit a parse tree produced by BoardGameParser#BoardPosRange.
     def visitBoardPosRange(self, ctx:BoardGameParser.BoardPosRangeContext):

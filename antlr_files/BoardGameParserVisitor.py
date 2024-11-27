@@ -149,6 +149,11 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BoardGameParser#BoardPosInt.
+    def visitBoardPosInt(self, ctx:BoardGameParser.BoardPosIntContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BoardGameParser#BoardPosRange.
     def visitBoardPosRange(self, ctx:BoardGameParser.BoardPosRangeContext):
         return self.visitChildren(ctx)

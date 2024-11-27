@@ -32,7 +32,7 @@ def check_parser(errors):
 
 def main():
     argparser = argparse.ArgumentParser()
-    argparser.add_argument('-F', type=str, help='Your board game source code file', default='./samples/sample_checkers.txt')
+    argparser.add_argument('-F', type=str, help='Your board game source code file', default='./samples/sample_s&l.txt')
     args = argparser.parse_args()
 
     with open(args.F, 'r') as file:

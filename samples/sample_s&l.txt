@@ -20,20 +20,14 @@ DEFINE snakes_and_ladders.PLAYERS:
 END
 
 DEFINE snakes_and_ladders.CONDITIONS:
-    CONDITION (ANY PIECE AT BOARD.100)
-END
-
-DEFINE snakes_and_ladders.SCORE:
-    SCORE(snakes_and_ladders.CONDITIONS)
-END
-
-DEFINE snakes_and_ladders.RULES:
-   RULE bounce_back(regular.position + DICE > 100)
+    CONDITION (me.regular AT BOARD.100)
+    CONDITION (you.regular AT BOARD.100)
+    CONDITION (them.regular AT BOARD.100)
 END
 
 DEFINE snakes_and_ladders.PIECES:
     PIECE regular COUNT 1
-    PIECE regular ACTION move(dice, 1)
+    PIECE regular ACTION move(name=move, direction=None, count=dice, skip=False, backtrack=False, consume=False)
 END
 
 DEFINE snakes_and_ladders.OBSTACLES:
@@ -51,13 +45,4 @@ END
 DEFINE snakes_and_ladders.BOARD:    
     OBSTACLE pit SETUP (BOARD.56, BOARD.59)
     BOOSTER teleport SETUP (BOARD.19, BOARD.35)
-END
-
-START:
-    TURN me
-    MOVE regular_1
-    PRINT("You rolled a 5, regular_1 TO BOARD.6")
-    TURN you
-    MOVE regular_1
-    PRINT("You rolled a 1, regular_1 TO BOARD.87")
 END

@@ -57,11 +57,14 @@ class Piece:
         backtrack = kwargs.get("backtrack", False)
         custom_movement = kwargs.get("custom_movement", None)
         consume = kwargs.get("consume", True)
+        count = kwargs.get("count", None)
 
         if name is None:
             raise TypeError("A set action is missing a name. Check the action defintions and make sure that a name is set for each one.")
         elif custom_movement is not None:
             move = {"name": name, "moveset": custom_movement}
+        #elif count is "dice":
+
         elif across is not False:
             max_count = None
             move = {"name": name, "direction": direction, "min_count" : min_count, "max_count" : max_count, "skip" : skip, "backtrack" : backtrack, "consume" : consume}
