@@ -143,9 +143,11 @@ class_statement : assignment_expression
                 | method_declaration
                 ;
 
-conditional_expression : additive (conditional_opt additive)*
-                       | primary conditional_opt primary
+conditional_expression : primary conditional_opt primary
                        ;
+
+relational_expression : additive (conditional_opt additive)*
+                      ;
 
 in_expression : primary IN primary
               ;
@@ -163,7 +165,7 @@ assignment_expression : IDENTIFIER ASSIGN_OPT expression              # AssignEx
                       | IDENTIFIER ASSIGN_OPT input_statement         # AssignInput
                      ;
 
-eval_base_expressions   : conditional_expression
+eval_base_expressions   : relational_expression
                         | not_expression
                         ;
 
@@ -171,7 +173,7 @@ eval_expression : eval_base_expressions logical_opt eval_expression
                 | eval_base_expressions
                 ;
 
-not_expression : NOT_OPT conditional_expression
+not_expression : NOT_OPT relational_expression
                ;
 
 evaluate_statement : EVALUATE OPEN_PAR eval_expression CLOSE_PAR
