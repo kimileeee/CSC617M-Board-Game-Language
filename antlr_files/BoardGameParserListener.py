@@ -458,6 +458,15 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BoardGameParser#AssignObjectAccess.
+    def enterAssignObjectAccess(self, ctx:BoardGameParser.AssignObjectAccessContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#AssignObjectAccess.
+    def exitAssignObjectAccess(self, ctx:BoardGameParser.AssignObjectAccessContext):
+        pass
+
+
     # Enter a parse tree produced by BoardGameParser#eval_base_expressions.
     def enterEval_base_expressions(self, ctx:BoardGameParser.Eval_base_expressionsContext):
         pass
@@ -734,15 +743,6 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by BoardGameParser#dice_statement.
     def exitDice_statement(self, ctx:BoardGameParser.Dice_statementContext):
-        pass
-
-
-    # Enter a parse tree produced by BoardGameParser#convert_statement.
-    def enterConvert_statement(self, ctx:BoardGameParser.Convert_statementContext):
-        pass
-
-    # Exit a parse tree produced by BoardGameParser#convert_statement.
-    def exitConvert_statement(self, ctx:BoardGameParser.Convert_statementContext):
         pass
 
 

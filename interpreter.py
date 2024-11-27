@@ -22,14 +22,6 @@ def check_lexer(tokens):
 
     return lexer_bool
 
-def check_parser(errors):
-    parser_bool = True
-    for error in errors:
-        print(error)
-        parser_bool = False
-
-    return parser_bool
-
 def main():
     argparser = argparse.ArgumentParser()
     argparser.add_argument('-F', type=str, help='Your board game source code file', default='./samples/sample_checkers.txt')
@@ -59,15 +51,15 @@ def main():
             try:
                 tree = parser.program()  # Replace `startRule` with your entry point rule
             except Exception as e:
-                print(f"Parsing failed with exception: {e}")
+                print(e)
 
             if len(error_listener.errors) == 0:
                 run_visitor(tree)
             else:
-                print("Syntax errors found. Please check your source code.")
+                print("\nSyntax errors found. Please check your source code.")
 
         else:
-            print("Lexer errors found. Please check your source code.")
+            print("\nLexer errors found. Please check your source code.")
 
 
 if __name__ == '__main__':

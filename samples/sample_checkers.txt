@@ -84,8 +84,19 @@ START:
      THEN 
           IF EVALUATE(True) 
           THEN a = "inner if then"
+          b = "inner if then 2"
           ELSE a = "inner if else"
+          b = "inner if else 2"
           END
      ELSE a = "outer if else"
+     b = "outer if else 2"
+     END
+
+     FOR i IN [1, 2] :
+          x = EVALUATE(i * 2)
+          FOR j IN [3, 4] :
+               y = EVALUATE(x + j)
+               PRINT(y)
+          END
      END
 END
