@@ -37,14 +37,45 @@ DEFINE checkers.PIECES:
 END
 
 DEFINE checkers.BOARD:
-     PLAYER me PIECE regular SETUP (BOARD.C1, BOARD.C3)
-     PIECE regular SETUP (BOARD.C1, BOARD.C4) 
+     PLAYER me PIECE regular SETUP (BOARD.A1, BOARD.A3, BOARD.A5)
+     PLAYER you PIECE king SETUP (BOARD.B1, BOARD.B3)
 END
 
 START:
+
+     eval_output = EVALUATE(1 + 2)
+     PRINT(eval_output)
+
+     eval_output = EVALUATE(3 + 5 - 2)
+     eval_output = EVALUATE(10 * 2 / 5)
+     eval_output = EVALUATE(10 * 2 / 3)
+     // eval_output = EVALUATE(10 * 2 / 0)
+     eval_output = EVALUATE(2 ^ 3 ^ 2)
+     eval_output = EVALUATE((2 ^ 3) ^ 2)
+     eval_output = EVALUATE(3 + 5 * 2 ^ 2)
+     eval_output = EVALUATE((3 + 5) * 2)
+     eval_output = EVALUATE(10 >= 10)
+     eval_output = EVALUATE(5 == 5 AND 5 == 3)
+     eval_output = EVALUATE(5 > 10 OR 8 < 10)
+     eval_output = EVALUATE(10 > 11 AND 7 - 7)
+     eval_output = EVALUATE(3 > 5)
+     eval_output = EVALUATE(NOT 3 > 5)
+     eval_output = EVALUATE(NOT 10 > 11 AND 7 - 7)
+     eval_output = EVALUATE((NOT 10 > 11) AND 7 - 7)
+     eval_output = EVALUATE(NOT (10 > 11 AND 7 - 7))
+     eval_output = EVALUATE((NOT 10 > 11 AND 7) - 7.0)
+     eval_output = EVALUATE(eval_output + 1)
+     // eval_output = EVALUATE(me.king + 1)
+
      TURN white
      MOVE regular_1 TO BOARD.E4
+     // player_move = INPUT("Enter move: ")
+     PRINT("Moved regular_1 to E4")
+     // PRINT(player_move)
 
      TURN black
      MOVE regular_1 TO BOARD.F7
+     // player_move = INPUT("Enter move: ")
+     PRINT("Moved regular_1 to F7")
+     // PRINT(player_move)
 END

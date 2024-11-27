@@ -41,6 +41,7 @@ TURN : 'TURN';
 ROW : 'ROW';
 COLUMN : 'COLUMN';
 
+EVALUATE : 'EVALUATE';
 IF : 'IF';
 ELSE : 'ELSE';
 FOR : 'FOR';
@@ -63,6 +64,7 @@ AND_OPT : 'AND';
 OR_OPT : 'OR';
 NOT_OPT : 'NOT';
 EQUAL_OPT : '==';
+NOT_EQUAL_OPT : '!=';
 ASSIGN_OPT : '=';
 LESS_THAN_OPT : '<';
 LESS_EQUAL_OPT : '<=';

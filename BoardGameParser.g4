@@ -71,12 +71,12 @@ primary : literal
 param_list : SCORE OPEN_PAR IDENTIFIER DOT CONDITIONS CLOSE_PAR                                 # ScoreParam
            | (ALL | ANY | NONE) COMMA param_list                                                # AllAnyNoneParam      
            | assignment_expression COMMA param_list                                             # AssignmentParam
-        //    | IDENTIFIER ASSIGN_OPT (literal | objects | method_call) COMMA param_list
-           | IDENTIFIER COMMA param_list                                                        # VariableParam
            | literal COMMA param_list                                                           # LiteralParam
+           | IDENTIFIER COMMA param_list                                                        # VariableParam
+           | board_pos COMMA param_list                                                         # BoardPosParam
            | object_access COMMA param_list                                                     # ObjectAccessParam
            | list COMMA param_list                                                              # ListLiteralParam
-           | (ALL | ANY | NONE | IDENTIFIER | literal | object_access | list)                   # SingleParam
+           | (ALL | ANY | NONE | IDENTIFIER | literal | object_access | list | board_pos)       # SingleParam
            ;
 
 list : OPEN_BRACKET param_list CLOSE_BRACKET
@@ -95,11 +95,12 @@ board_pos : BOARD DOT IDENTIFIER                                # BoardPosIdenti
           ;
 
 conditional_opt : EQUAL_OPT 
-             | LESS_THAN_OPT 
-             | LESS_EQUAL_OPT 
-             | GREATER_THAN_OPT 
-             | GREATER_EQUAL_OPT
-             ;
+                | NOT_EQUAL_OPT
+                | LESS_THAN_OPT 
+                | LESS_EQUAL_OPT 
+                | GREATER_THAN_OPT 
+                | GREATER_EQUAL_OPT
+                ;
 
 expression : base_expression logical_opt expression
            | base_expression
@@ -141,7 +142,8 @@ class_statement : assignment_expression
                 | method_declaration
                 ;
 
-conditional_expression : primary conditional_opt primary
+conditional_expression : additive (conditional_opt additive)*
+                       | primary conditional_opt primary
                        ;
 
 in_expression : primary IN primary
@@ -153,21 +155,46 @@ at_expression : (IDENTIFIER | object_access) AT board_pos
 any_expression : ANY (IDENTIFIER | object_access | list | game_entities)
                ;
 
-assignment_expression : (IDENTIFIER) ASSIGN_OPT expression              # AssignExpression
+assignment_expression : IDENTIFIER ASSIGN_OPT expression              # AssignExpression
+                      | IDENTIFIER ASSIGN_OPT evaluate_statement        # AssignEvaluate
                       | IDENTIFIER ASSIGN_OPT method_call               # AssignMethodCall
-                      | (IDENTIFIER) ASSIGN_OPT input_statement         # AssignInput
+                      | IDENTIFIER ASSIGN_OPT input_statement         # AssignInput
                      ;
 
-exponent : primary (EXP_OPT primary)*
-         ;
+eval_base_expressions   : conditional_expression
+                        | not_expression
+                        ;
 
-multiplicative : multiplicative (MUL_OPT | DIV_OPT) exponent
-               | exponent
+eval_expression : eval_base_expressions logical_opt eval_expression
+                | eval_base_expressions
+                ;
+
+not_expression : NOT_OPT conditional_expression
                ;
 
-additive : additive (ADD_OPT | SUB_OPT) multiplicative
-         | multiplicative
+evaluate_statement : EVALUATE OPEN_PAR eval_expression CLOSE_PAR
+                   ;
+
+primary_eval : OPEN_PAR eval_expression CLOSE_PAR
+             | int_literal
+             | FLOAT_LITERAL
+             | BOOLEAN_LITERAL
+             | IDENTIFIER
+             | object_access
+             ;
+
+unary : (ADD_OPT | SUB_OPT)? primary_eval
+      ;
+
+exponent : unary (EXP_OPT unary)*
          ;
+
+multiplicative : exponent ((MUL_OPT | DIV_OPT) exponent)*
+               ;
+
+additive : multiplicative ((ADD_OPT | SUB_OPT) multiplicative)*
+         ;
+
 
 math_expression : additive
                 ;
@@ -195,9 +222,9 @@ piece_statement : PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list 
                 | PIECE assignment_expression
                 ;
 
-board_statement : (PLAYER IDENTIFIER)* PIECE (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
-                | (PLAYER IDENTIFIER)* OBSTACLE (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
-                | (PLAYER IDENTIFIER)* BOOSTER (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
+board_statement : PLAYER IDENTIFIER PIECE (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
+                | PLAYER IDENTIFIER OBSTACLE (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
+                | PLAYER IDENTIFIER BOOSTER (IDENTIFIER | object_access | ALL) SETUP OPEN_PAR (param_list | board_pos) CLOSE_PAR
                 ;
 
 obstacle_statement : OBSTACLE (IDENTIFIER | object_access | ALL) COUNT int_literal
@@ -224,7 +251,7 @@ for_statement : FOR IDENTIFIER IN list COLON code_block END
 while_statement : WHILE expression COLON code_block END
                 ;
 
-input_statement : INPUT OPEN_PAR STRING_LITERAL* CLOSE_PAR
+input_statement : IDENTIFIER ASSIGN_OPT INPUT OPEN_PAR STRING_LITERAL* CLOSE_PAR
                 ;
 
 print_statement : PRINT OPEN_PAR (param_list) CLOSE_PAR

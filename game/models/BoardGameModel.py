@@ -6,6 +6,7 @@ from game.models.BoosterModel import Booster
 from game.models.ConditionModel import Condition
 from game.models.Colors import Colors
 import pygame
+import copy
 
 class BoardGame:
     def __init__(self, name: str):
@@ -125,6 +126,22 @@ class BoardGame:
     def display_board(self):
         """Display the game board."""
         self.board.display()
+        
+    def print_board(self):
+        for row_index in range(self.board.rows):
+            row_output = []
+
+            for col_index in range(self.board.cols):
+                cell_name = f"{chr(65 + row_index)}{col_index + 1}"  # E.g., A1, B2
+                cell = self.board.get_cell_by_name(cell_name)
+
+                if cell.piece:
+                    row_output.append(f"[{cell.piece.name}]") 
+                else:
+                    row_output.append(f"[{cell.name}]") 
+
+            # Print the row
+            print(" ".join(row_output))
 
     # PLAYER methods
     def add_player(self, name):
@@ -181,19 +198,19 @@ class BoardGame:
     def add_piece(self, player_name, piece_name, row, col, symbol):
         """Add a piece to a player's collection of pieces."""
         base_piece = self.get_base_pieces(piece_name)
-        new_piece = base_piece.copy()
+        new_piece = copy.deepcopy(base_piece)
         temp = {}
         temp['row'] = row
         temp['col'] = col
         new_piece.set_pos(**temp)
 
-        # if player_name is not None
-        if player_name:
-            player = next(p for p in self.players if p.name.strip() == player_name.strip())
-            new_piece.set_color(player.color)
-            player.add_piece(new_piece)
+        player = next(p for p in self.players if p.name.strip() == player_name.strip())
+        new_piece.set_color(player.color)
+        player.add_piece(new_piece)
 
         self.pieces.append(new_piece)
+        self.board.set_cell_piece(temp['row'], temp['col'], new_piece)
+
         return (f"{player.name}.{new_piece.name}", new_piece)
 
     def move_piece(self, player_name, piece_name, new_row, new_col):
@@ -269,7 +286,6 @@ class BoardGame:
 
     def check_win_condition(self):
         """Check if the win condition has been met."""
-        # TODO: Implement this method. check all conditions in self.conditions
         if self.win_condition is None:
             raise ValueError("Win condition not set.")
         
@@ -353,58 +369,3 @@ class BoardGame:
 
     def __repr__(self):
         return f"BoardGame({self.name})"
-
-
-
-# Example: Define a Game of Tic-Tac-Toe
-def tic_tac_toe_example():
-    game = BoardGame("Tic-Tac-Toe")
-
-    # Set up the board (3x3 grid)
-    game.set_board(3, 3)
-
-    # Add players
-    game.add_player("Player 1", "X")
-    game.add_player("Player 2", "O")
-
-    # Set turn order
-    game.set_turn_order(["Player 1", "Player 2"])
-
-    # Define a rule for winning
-    def win_condition(game):
-        board = game.board.board
-        symbols = [p.symbol for p in game.players]
-
-        # Check rows, columns, and diagonals
-        for symbol in symbols:
-            for row in board:
-                if all(cell == symbol for cell in row):
-                    print(f"{symbol} wins!")
-                    exit()
-            for col in range(len(board[0])):
-                if all(row[col] == symbol for row in board):
-                    print(f"{symbol} wins!")
-                    exit()
-            if all(board[i][i] == symbol for i in range(len(board))) or \
-               all(board[i][len(board) - 1 - i] == symbol for i in range(len(board))):
-                print(f"{symbol} wins!")
-                exit()
-
-    # Add the rule
-    game.add_rule(win_condition)
-
-    # Simulate a few moves
-    game.display_board()
-    game.move_piece("Player 1", "Piece 1", 0, 0)  # Player 1 moves
-    game.display_board()
-    game.move_piece("Player 2", "Piece 1", 1, 1)  # Player 2 moves
-    game.display_board()
-    game.move_piece("Player 1", "Piece 1", 0, 1)  # Player 1 moves
-    game.display_board()
-    game.move_piece("Player 2", "Piece 1", 2, 2)  # Player 2 moves
-    game.display_board()
-    game.move_piece("Player 1", "Piece 1", 0, 2)  # Player 1 moves
-    game.display_board()
-
-if __name__ == "__main__":
-    tic_tac_toe_example()
