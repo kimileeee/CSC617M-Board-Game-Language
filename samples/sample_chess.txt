@@ -1,7 +1,7 @@
 GAME chess
 
 DEFINE chess:
-    BOARD (8,8)
+    BOARD (8,8,checker)
     PLAYERS (white, black)
     PIECES (pawn, rook, knight, bishop, queen, king)
     OBSTACLES (NONE)
@@ -57,7 +57,7 @@ DEFINE chess.PIECES:
 END
 
 DEFINE chess.BOARD:
-    PLAYER white PIECE pawn SETUP (BOARD.A2 ... BOARD.H2)
+    PLAYER white PIECE pawn SETUP (BOARD.B1 ... BOARD.B8)
     PLAYER white PIECE king SETUP (BOARD.A1, BOARD.H1)
     PLAYER white PIECE knight SETUP (BOARD.B1, BOARD.G1)
     PLAYER white PIECE bishop SETUP (BOARD.C1, BOARD.F1)

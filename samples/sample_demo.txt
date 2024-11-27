@@ -2,7 +2,8 @@ GAME checkers
 
 DEFINE checkers:
      BOARD (8, 8, "checker")
-     PLAYERS (me, you) 
+     PLAYERS (me, you)
+     //3PLAYERS (me, you) 
      PIECES (regular, king)
      OBSTACLES (NONE)
      BOOSTERS (NONE)
@@ -43,7 +44,7 @@ DEFINE checkers.BOARD:
 END
 
 START:
-    
+
      eval_output = EVALUATE(1 + 2)
      PRINT(eval_output)
 

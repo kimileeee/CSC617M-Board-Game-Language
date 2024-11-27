@@ -39,6 +39,7 @@ def main():
 
         # Create a token stream from the lexer
         token_stream = CommonTokenStream(lexer)
+        token_stream.fill()
 
         # Check for lexer errors
         if check_lexer(token_stream.tokens):
@@ -59,7 +60,7 @@ def main():
                 print("\nSyntax errors found. Please check your source code.")
 
         else:
-            print("\nLexer errors found. Please check your source code.")
+            print("\nLexical errors found. Please check your source code.")
 
 
 if __name__ == '__main__':
