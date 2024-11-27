@@ -328,11 +328,22 @@ class BoardGameInterpreter(BoardGameParserVisitor):
         #     print(ctx.getChild(1))
         return self.visitChildren(ctx)
     
+
+    #####################
+    ### OBJECT ACCESS ###
+    #####################
+    
     # Visit a parse tree produced by BoardGameParser#ObjectEntityAccess.
     def visitObjectEntityAccess(self, ctx:BoardGameParser.ObjectEntityAccessContext):
         parent = ctx.parentCtx
+        # print("parent", type(ctx.parentCtx))
 
-        if type(parent) not in [BoardGameParser.DefineContext, BoardGameParser.Player_statementContext]:
+        if type(parent) is BoardGameParser.Primary_evalContext:
+            print("in primary eval, object entity access")
+            for i in ctx.children:
+                print(i.getText())
+
+        elif type(parent) not in [BoardGameParser.DefineContext, BoardGameParser.Player_statementContext]:
 
             if "COLOR" in ctx.getText():
                 return ctx.getChild(ctx.getChildCount() - 1).getText()
@@ -356,8 +367,14 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     # Visit a parse tree produced by BoardGameParser#GameEntityAccess.
     def visitGameEntityAccess(self, ctx:BoardGameParser.GameEntityAccessContext):
         parent = ctx.parentCtx
+        # print("parent", type(ctx.parentCtx))
 
-        if type(parent) not in [BoardGameParser.DefineContext, BoardGameParser.Player_statementContext]:
+        if type(parent) is BoardGameParser.Primary_evalContext:
+            print("in primary eval, game entity access")
+            for i in ctx.children:
+                print(i.getText())
+
+        elif type(parent) not in [BoardGameParser.DefineContext, BoardGameParser.Player_statementContext]:
 
             objs = ctx.getText().split(".")
             script = ""
@@ -411,6 +428,13 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#IdentifierAccess.
     def visitIdentifierAccess(self, ctx:BoardGameParser.IdentifierAccessContext):
+        parent = ctx.parentCtx
+        # print("parent", type(ctx.parentCtx))
+
+        if type(parent) is BoardGameParser.Primary_evalContext:
+            print("in primary eval, identifier access")
+            for i in ctx.children:
+                print(i.getText())
         return self.visitObjectEntityAccess(ctx)
 
 
@@ -659,6 +683,8 @@ class BoardGameInterpreter(BoardGameParserVisitor):
                 return self.lookup_symbol(ctx.IDENTIFIER().getText())
             except Exception as e:
                 raise ValueError(f"Unknown identifier: {ctx.IDENTIFIER().getText()}")
+        elif ctx.object_access():
+            return self.visit(ctx.object_access())
         else:
             return self.visit(ctx.eval_expression())
     

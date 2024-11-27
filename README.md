@@ -36,7 +36,7 @@ This will output a sequence of tokens for the chosen sample file. Sample code fi
 To visualize the parse tree for a sample code file, use:
 
 ```bash
-antlr4-parse BoardGameParser.g4 BoardGameLexer.g4 program -gui ./samples/sample_chess.txt
+antlr4-parse BoardGameParser.g4 BoardGameLexer.g4 program -gui ./samples/sample_checkers.txt
 ```
 
 This command opens a GUI displaying the parse tree for the `sample_chess.txt` file. You can modify the command to parse other sample files in the `samples/` folder.

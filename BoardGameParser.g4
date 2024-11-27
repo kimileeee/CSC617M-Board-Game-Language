@@ -180,6 +180,7 @@ primary_eval : OPEN_PAR eval_expression CLOSE_PAR
              | FLOAT_LITERAL
              | BOOLEAN_LITERAL
              | IDENTIFIER
+             | object_access
              ;
 
 unary : (ADD_OPT | SUB_OPT)? primary_eval
