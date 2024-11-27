@@ -377,6 +377,24 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BoardGameParser#RelationalExpression.
+    def enterRelationalExpression(self, ctx:BoardGameParser.RelationalExpressionContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#RelationalExpression.
+    def exitRelationalExpression(self, ctx:BoardGameParser.RelationalExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#StringRelationalExpression.
+    def enterStringRelationalExpression(self, ctx:BoardGameParser.StringRelationalExpressionContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#StringRelationalExpression.
+    def exitStringRelationalExpression(self, ctx:BoardGameParser.StringRelationalExpressionContext):
+        pass
+
+
     # Enter a parse tree produced by BoardGameParser#in_expression.
     def enterIn_expression(self, ctx:BoardGameParser.In_expressionContext):
         pass
@@ -629,12 +647,39 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#if_statement.
-    def enterIf_statement(self, ctx:BoardGameParser.If_statementContext):
+    # Enter a parse tree produced by BoardGameParser#IfElseExpression.
+    def enterIfElseExpression(self, ctx:BoardGameParser.IfElseExpressionContext):
         pass
 
-    # Exit a parse tree produced by BoardGameParser#if_statement.
-    def exitIf_statement(self, ctx:BoardGameParser.If_statementContext):
+    # Exit a parse tree produced by BoardGameParser#IfElseExpression.
+    def exitIfElseExpression(self, ctx:BoardGameParser.IfElseExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#IfExpression.
+    def enterIfExpression(self, ctx:BoardGameParser.IfExpressionContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#IfExpression.
+    def exitIfExpression(self, ctx:BoardGameParser.IfExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#IfElseEvaluate.
+    def enterIfElseEvaluate(self, ctx:BoardGameParser.IfElseEvaluateContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#IfElseEvaluate.
+    def exitIfElseEvaluate(self, ctx:BoardGameParser.IfElseEvaluateContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#IfEvaluate.
+    def enterIfEvaluate(self, ctx:BoardGameParser.IfEvaluateContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#IfEvaluate.
+    def exitIfEvaluate(self, ctx:BoardGameParser.IfEvaluateContext):
         pass
 
 
@@ -689,6 +734,15 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by BoardGameParser#dice_statement.
     def exitDice_statement(self, ctx:BoardGameParser.Dice_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#convert_statement.
+    def enterConvert_statement(self, ctx:BoardGameParser.Convert_statementContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#convert_statement.
+    def exitConvert_statement(self, ctx:BoardGameParser.Convert_statementContext):
         pass
 
 

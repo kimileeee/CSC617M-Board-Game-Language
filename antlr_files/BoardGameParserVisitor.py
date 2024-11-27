@@ -214,6 +214,16 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BoardGameParser#RelationalExpression.
+    def visitRelationalExpression(self, ctx:BoardGameParser.RelationalExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#StringRelationalExpression.
+    def visitStringRelationalExpression(self, ctx:BoardGameParser.StringRelationalExpressionContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BoardGameParser#in_expression.
     def visitIn_expression(self, ctx:BoardGameParser.In_expressionContext):
         return self.visitChildren(ctx)
@@ -354,8 +364,23 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BoardGameParser#if_statement.
-    def visitIf_statement(self, ctx:BoardGameParser.If_statementContext):
+    # Visit a parse tree produced by BoardGameParser#IfElseExpression.
+    def visitIfElseExpression(self, ctx:BoardGameParser.IfElseExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#IfExpression.
+    def visitIfExpression(self, ctx:BoardGameParser.IfExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#IfElseEvaluate.
+    def visitIfElseEvaluate(self, ctx:BoardGameParser.IfElseEvaluateContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#IfEvaluate.
+    def visitIfEvaluate(self, ctx:BoardGameParser.IfEvaluateContext):
         return self.visitChildren(ctx)
 
 
@@ -386,6 +411,11 @@ class BoardGameParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BoardGameParser#dice_statement.
     def visitDice_statement(self, ctx:BoardGameParser.Dice_statementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BoardGameParser#convert_statement.
+    def visitConvert_statement(self, ctx:BoardGameParser.Convert_statementContext):
         return self.visitChildren(ctx)
 
 
