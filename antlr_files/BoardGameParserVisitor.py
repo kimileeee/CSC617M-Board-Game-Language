@@ -419,5 +419,10 @@ class BoardGameParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BoardGameParser#break_statement.
+    def visitBreak_statement(self, ctx:BoardGameParser.Break_statementContext):
+        return self.visitChildren(ctx)
+
+
 
 del BoardGameParser

@@ -99,4 +99,12 @@ START:
                PRINT(y)
           END
      END
+
+     FOR i IN [1, 2, 3, 4, 5] :
+          IF EVALUATE(i == 3) THEN
+               BREAK
+          ELSE
+               PRINT(i)
+          END
+     END
 END

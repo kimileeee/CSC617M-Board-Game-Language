@@ -746,5 +746,14 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BoardGameParser#break_statement.
+    def enterBreak_statement(self, ctx:BoardGameParser.Break_statementContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#break_statement.
+    def exitBreak_statement(self, ctx:BoardGameParser.Break_statementContext):
+        pass
+
+
 
 del BoardGameParser

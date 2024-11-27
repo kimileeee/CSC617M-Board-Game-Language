@@ -34,6 +34,7 @@ statement   : game_entities_statement
             | input_statement
             | print_statement
             | return_statement
+            | break_statement
             ;
 
 game_entities : BOARD
@@ -274,3 +275,5 @@ return_statement : RETURN expression
 dice_statement  : DICE OPEN_PAR int_literal COMMA int_literal CLOSE_PAR //i imagine it as DICE(1,6) where it rolls the possible numbers
                 ; //currently its set as this in case of games that allow negative numbers since some games allow those type of dice rolls
 
+break_statement : BREAK
+                ;
