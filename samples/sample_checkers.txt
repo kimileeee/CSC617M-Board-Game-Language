@@ -84,8 +84,12 @@ START:
      PRINT("Moved regular_1 to F7")
      // PRINT(player_move)
 
-     IF EVALUATE(False) 
-     THEN a = True
-     ELSE a = False
+     IF EVALUATE(True) 
+     THEN 
+          IF EVALUATE(True) 
+          THEN a = "inner if then"
+          ELSE a = "inner if else"
+          END
+     ELSE a = "outer if else"
      END
 END
