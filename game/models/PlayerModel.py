@@ -17,6 +17,9 @@ class Player:
     def get_piece(self, name):
         """Get a piece by name."""
         return next(p for p in self.pieces if p.name == name)
+
+    def get_all_pieces(self):
+        return self.pieces
     
     def get_pieces_by_name(self, name):
         """Get all pieces by name."""
@@ -48,3 +51,5 @@ class Player:
     
     def __eq__(self, value):
         return self.name == value.name
+    
+

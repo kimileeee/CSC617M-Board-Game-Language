@@ -1,6 +1,7 @@
 from game.models.Colors import Colors
 from game.models.BoardCellModel import Cell
 from enum import Enum
+import pygame
 
 class BoardType(Enum):
     """Enumeration for the types of boards."""
@@ -125,3 +126,32 @@ class Board:
         """Set an obstacle in a cell."""
         cell = self.get_cell(row, col)
         cell.set_obstacle(obstacle)
+
+    def get_row(self):
+        return self.rows
+    
+    def get_col(self):
+        return self.cols
+    
+    def draw(self, screen):
+        """Draw the board on the screen."""
+        CELL_SIZE = 100
+        for row in range(self.rows):
+            for col in range(self.cols):
+                cell = self.grid[row][col]
+                
+                x = col * CELL_SIZE
+                y = row * CELL_SIZE
+                if self.board_type == BoardType.CHECKER.value:
+                    color = Colors.BLACK.hex_code() if cell.color == Colors.BLACK.normal_name() else Colors.WHITE.hex_code()
+                else:
+                    color = Colors.WHITE.hex_code()
+                pygame.draw.rect(screen, color, (x, y, CELL_SIZE, CELL_SIZE))
+
+    def draw_grid_lines(self, screen):
+        """Draw grid lines on the screen."""
+        CELL_SIZE = 100
+        for row in range(self.rows + 1):
+            pygame.draw.line(screen, Colors.GRAY.hex_code(), (0, row * CELL_SIZE), (self.cols * CELL_SIZE, row * CELL_SIZE))
+        for col in range(self.cols + 1):
+            pygame.draw.line(screen, Colors.GRAY.hex_code(), (col * CELL_SIZE, 0), (col * CELL_SIZE, self.rows * CELL_SIZE))

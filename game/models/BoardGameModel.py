@@ -4,6 +4,7 @@ from game.models.PieceModel import Piece
 from game.models.ObstacleModel import Obstacle
 from game.models.BoosterModel import Booster
 from game.models.ConditionModel import Condition
+from game.models.Colors import Colors
 import pygame
 import copy
 
@@ -37,6 +38,85 @@ class BoardGame:
         self.timer = None  # Total timer value (in seconds)
         self.timer_running = False
         self.start_time = 0
+
+    #PYGAME GUI
+    def setup_board(self, screen):
+        #colors of object
+        #setup board and later modify it to make it more general
+        pygame.display.update()
+        pygame.font.init()
+        font = pygame.font.SysFont('Comic Sans MS', 20)
+        width = 800
+        height = 800
+        square_size = width/8
+
+        row = self.board.get_row()
+        col = self.board.get_col()
+
+        y_offset = 20
+        for name in self.turn_order:
+            print(name)
+            player = "Player: "
+            text = font.render(player + name, True, Colors.RED.hex_code())
+            text_rect = text.get_rect(topleft=(width - 150, y_offset))
+            screen.blit(text, text_rect)
+            pygame.display.update()
+            y_offset += 30     
+
+        for rows in range(row):
+            for cols in range(col):
+                #check piece at current position and then get the values then draw it
+                #go through the player and check the pieces of player to set color of circle and to check piece
+                for player in self.players:
+                    #goes through each player in the player list
+                    pieces = player.get_all_pieces()
+                    #check each piece and see if the position is same as value of rows and cols
+                    for piece in pieces:
+                        #checks if piece has positions already
+                        if piece.get_pos() is not None:
+                            row, col = piece.get_pos()
+                            print(f"Row: {row}, Col: {col}")
+                            #checks if the row and col stored is same as row and col
+                            #this is easy if board is defined as 11 but if not conversion from letter to number should be done
+                            if row >= 'A' or row <= 'Z':
+                                row2 = ord(row)
+                            elif col >= 'A' or col <= 'Z':
+                                col2 = ord(col)
+                            if rows == row2 and cols == col2:
+                                pygame.draw.circle(screen, piece.get_color(), (rows*square_size + square_size//2, cols*square_size + square_size//2), square_size//4)
+                                text = font.render(piece.get_first_two_letters(), True, (255, 255, 255))  # Create a text surface
+                                text_rect = text.get_rect(center=(rows*square_size + square_size//2, cols*square_size + square_size//2))
+                                screen.blit(text, text_rect)
+
+
+
+
+    def start_game(self):
+        width = 800
+        height = 800
+        pygame.init()
+        screen = pygame.display.set_mode([width, height])
+        run = True
+        #setup board and its pieces
+        self.board.draw(screen)
+        self.board.draw_grid_lines(screen)
+        #draws initial piece
+        self.setup_board(screen)
+        pygame.font.init()
+        font = pygame.font.SysFont('Comic Sans MS', 20)
+        while run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    print("PUT PIECES USE HERE")
+                    #check the piece being clicked
+                    #check whose turn is it currently
+                    #depending on whose turn it is, either allow a movement of the piece or not
+
+ 
+            pygame.display.update()                
+        pygame.quit()
 
     # BOARD methods
     def set_board(self, rows, cols, type=BoardType.STANDARD.value):
@@ -283,24 +363,6 @@ class BoardGame:
             self.timer_running = False
             print("Time is up!")
         return remaining_time
-        
-
-    # GAMEPLAY methods
-    def start_game(self):
-        #setup the game using pygame 
-        #insert details later on
-        print("GAME START!")
-        width = 800
-        height = 800
-        pygame.init()
-        screen = pygame.display.set_mode([width, height])
-        run = True
-        while run:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-                
-        pygame.quit()
 
     def __repr__(self):
         return f"BoardGame({self.name})"
