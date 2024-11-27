@@ -1187,11 +1187,12 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#print_statement.
     def visitPrint_statement(self, ctx:BoardGameParser.Print_statementContext):
-        to_print = self.visit(ctx.param_list())
+        if ctx.param_list():
+            to_print = self.visit(ctx.param_list())
 
-        for item in to_print:
-            item = self.lookup_symbol(item) if item in self.symbol_table[-1] else item
-            print(item, end=" ")
+            for item in to_print:
+                item = self.lookup_symbol(item) if item in self.symbol_table[-1] else item
+                print(item, end=" ")
         print()
 
 

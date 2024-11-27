@@ -265,6 +265,7 @@ input_statement : IDENTIFIER ASSIGN_OPT INPUT OPEN_PAR STRING_LITERAL* CLOSE_PAR
                 ;
 
 print_statement : PRINT OPEN_PAR (param_list) CLOSE_PAR
+                | PRINT OPEN_PAR  CLOSE_PAR
                 ;
 
 return_statement : RETURN expression
