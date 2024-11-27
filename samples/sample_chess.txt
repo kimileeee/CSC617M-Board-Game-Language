@@ -24,9 +24,8 @@ DEFINE chess.CONDITIONS:
 END
 
 DEFINE chess.RULES:
-    RULE promote_rule (white AT BOARD.ROW.8 OR black AT BOARD.ROW.1)
-    RULE white_castling ((white.king AT BOARD.E1) AND (white.rook AT BOARD.H1) AND (BOARD.F1.empty()) AND (BOARD.G1.empty()))
-    RULE black_castling (black.king AT BOARD.E8 AND black.rook AT BOARD.H8 AND BOARD.F8.empty() AND BOARD.G8.empty())
+    RULE (name = promote_rule_white, pos_check = True, row = 8, piece = pawn, color = white, action = convert, convert_to = queen)
+    RULE (name = promote_rule_black, pos_check = True, row = 1, piece = regular, color = black, action = convert, convert_to = queen)
 END
 
 DEFINE chess.PIECES:
@@ -37,38 +36,23 @@ DEFINE chess.PIECES:
     PIECE queen COUNT 1
     PIECE king COUNT 1
 
-    PIECE pawn ACTION move(forward, 1, 1)
-    PIECE pawn ACTION consume(diagonal, 1, 1)
-    PIECE pawn ACTION promote(promote_rule, [queen, rook, bishop, knight])
+    PIECE pawn ACTION (name = move, direction = forward, min_count = 1, max_count = 1, skip = False, across = False, backtrack = False, consume = False)
+    PIECE pawn ACTION (name = consume, direction = diagonal, min_count = 1, max_count = 1, skip = False, across = False, backtrack = False, consume = True)
 
-    PIECE rook ACTION move(orthogonal, 8, 8)
-    PIECE rook ACTION consume(orthogonal, 8, 8)
+    PIECE rook ACTION (name = move, direction = orthogonal, min_count = 1, skip = False, across = True, backtrack = False, consume = False)
+    PIECE rook ACTION (name = consume, direction = orthogonal, min_count = 1, skip = False, across = True, backtrack = False, consume = True)
 
-    PIECE knight ACTION move(["NNW", "NNE", "SSW", "SSE", "EEN", "EES", "WWN", "WWS"])
-    PIECE knight ACTION consume(["NNW", "NNE", "SSW", "SSE", "EEN", "EES", "WWN", "WWS"])
+    PIECE knight ACTION (name = move, custom_movement = ["NNW", "NNE", "SSW", "SSE", "EEN", "EES", "WWN", "WWS"], consume = False)
+    PIECE knight ACTION (name = consume, custom_movement = ["NNW", "NNE", "SSW", "SSE", "EEN", "EES", "WWN", "WWS"], consume = True)
 
-    PIECE bishop ACTION move(diagonal, 8, 8)
-    PIECE bishop ACTION consume(diagonal, 8, 8)
+    PIECE bishop ACTION (name = move, direction = diagonal, min_count = 1, skip = False, across = True, backtrack = True, consume = False)
+    PIECE bishop ACTION (name = consume, direction = diagonal, min_count = 1, skip = False, across = True, backtrack = True, consume = True)
 
-    PIECE queen ACTION move(orthogonal, 8, 8), move(diagonal, 8, 8)
-    PIECE queen ACTION consume(orthogonal, 8, 8), move(diagonal, 8, 8)
+    PIECE queen ACTION (name = move, direction = adjacent, min_count = 1, skip = False, across = True, backtrack = True, consume = False)
+    PIECE queen ACTION (name = consume, direction = adjacent, min_count = 1, skip = False, across = True, backtrack = True, consume = True)
 
-    PIECE king ACTION move(orthogonal, 1, 1), move(diagonal, 1, 1)
-    PIECE king ACTION consume(orthogonal, 1, 1), move(diagonal, 1, 1)
-
-
-    // define castling as a special move
-    PIECE NONE ACTION castling((
-        GAME.current_player.get_color() == COLOR.white AND
-        white_castling AND
-        MOVE king TO BOARD.G1 AND
-        MOVE rook TO BOARD.F1
-    ) OR (
-        GAME.current_player.get_color() == COLOR.black AND
-        black_castling AND
-        MOVE king TO BOARD.G8 AND
-        MOVE rook TO BOARD.F8
-    ))
+    PIECE king ACTION (name = move, direction = adjacent, min_count = 1, max_count = 1, skip = False, across = False, backtrack = False, consume = False)
+    PIECE king ACTION (name = consume, direction = adjacent, min_count = 1, max_count = 1, skip = False, across = False, backtrack = False, consume = True)
 
 END
 
