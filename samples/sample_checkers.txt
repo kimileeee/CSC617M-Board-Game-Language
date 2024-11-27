@@ -28,7 +28,7 @@ END
 
 DEFINE checkers.PIECES:
      PIECE regular COUNT 12
-     PIECE king COUNT 0
+     PIECE king COUNT 2
 
      PIECE regular ACTION (name = move, direction = diagonal, min_count = 1, max_count = 1, skip = True, across = False, backtrack = False, consume = False)
      PIECE regular ACTION (name = consume, direction = diagonal, min_count = 1, max_count = 1, skip = True, across = False, backtrack = False, consume = True)
