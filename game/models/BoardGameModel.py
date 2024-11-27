@@ -144,6 +144,10 @@ class BoardGame:
         """Get a player by name."""
         return next(p for p in self.players if p.name == name)
     
+    def get_player_by_color(self, color):
+        """Get a player by name."""
+        return next(p for p in self.players if p.color == color)
+    
     def get_players(self):
         """Get all players."""
         return self.players
@@ -304,7 +308,36 @@ class BoardGame:
     def apply_rules(self):
         """Apply all rules to the current game state."""
         for rule in self.rules:
-            rule(self)
+            print(f"Evaluating {rule.name} rule")
+
+            if rule.pos_check == True:
+                if rule.piece and rule.color:
+                    player = self.get_player_by_color(rule.color)
+                    pieces = player.get_pieces_by_name(rule.piece)
+                    if rule.row:
+                        for piece in pieces:
+                            pos = piece.get_pos()
+                            if rule.row == pos[0]:
+                                if rule.action == 'convert':
+                                    player.remove_piece(piece)
+                                    promoted_piece = copy.deepcopy(self.get_base_pieces(rule.convert_to))
+                                    promoted_piece.set_color = player.get_color()
+                                    check_count = player.get_pieces_by_name(rule.convert_to)
+                                    check_count = len(check_count)
+                                    promoted_piece.set_ID = check_count + 1
+                                    player.add_piece(promoted_piece)
+                    elif rule.col:
+                        print("Do something for col checks")
+                    elif rule.row and rule.col:
+                        print("Do something for row and col checks")
+                    else:
+                        raise TypeError("Missing position inputs. Make sure to put at least one for position checks.")
+                elif rule.piece:
+                    print("Do something for non-color specific checks")
+                else:
+                    raise TypeError("Missing piece input. Make sure to put one for position checks.")
+            else:
+                print("Do something for other checks here.")
 
     # ORDER methods
     def set_turn_order(self, order):

@@ -1,4 +1,3 @@
-
 class BoardGameException(Exception):
     def __init__(self, message):
         self.message = message
@@ -22,3 +21,5 @@ class InvalidOperatorException(BoardGameException):
     def __init__(self, message="Invalid operator. Please check your operator."):
         super().__init__(message)
 
+class BreakException(Exception):
+    pass

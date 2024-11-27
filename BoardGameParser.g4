@@ -34,6 +34,7 @@ statement   : game_entities_statement
             | input_statement
             | print_statement
             | return_statement
+            | break_statement
             ;
 
 game_entities : BOARD
@@ -253,7 +254,8 @@ if_statement : IF expression THEN code_block ELSE code_block END                
              | IF evaluate_statement THEN code_block END                        # IfEvaluate
              ;
 
-for_statement : FOR IDENTIFIER IN list COLON code_block END
+for_statement : FOR IDENTIFIER IN list COLON code_block END             # ForList
+              | FOR IDENTIFIER IN IDENTIFIER COLON code_block END       # ForIdentifier
               ;
 
 while_statement : WHILE expression COLON code_block END
@@ -263,6 +265,7 @@ input_statement : IDENTIFIER ASSIGN_OPT INPUT OPEN_PAR STRING_LITERAL* CLOSE_PAR
                 ;
 
 print_statement : PRINT OPEN_PAR (param_list) CLOSE_PAR
+                | PRINT OPEN_PAR  CLOSE_PAR
                 ;
 
 return_statement : RETURN expression
@@ -274,3 +277,5 @@ return_statement : RETURN expression
 dice_statement  : DICE OPEN_PAR int_literal COMMA int_literal CLOSE_PAR //i imagine it as DICE(1,6) where it rolls the possible numbers
                 ; //currently its set as this in case of games that allow negative numbers since some games allow those type of dice rolls
 
+break_statement : BREAK
+                ;

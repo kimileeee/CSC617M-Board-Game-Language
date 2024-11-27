@@ -118,7 +118,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
             self.game.print_board()
 
         self.enter_scope()  # Enter a new scope for gameplay logic
-        self.game.start_game()
+        # self.game.start_game()
         self.visitChildren(ctx)
         self.exit_scope()
 
@@ -292,7 +292,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#ListLiteralParam.
     def visitListLiteralParam(self, ctx:BoardGameParser.ListLiteralParamContext):
-        return self.visitChildren(ctx)
+        return self.visit(ctx.list_())
 
 
     # Visit a parse tree produced by BoardGameParser#SingleParam.
@@ -321,16 +321,7 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#list.
     def visitList(self, ctx:BoardGameParser.ListContext):
-        parent = ctx.parentCtx
-        #check parent type and see if its players
-        # print(type(parent))
-        #checks if previous called was actually a player statement
-        #if player statement, it does this
-        #check if it can be generalized or should be kept like this
-        # if type(parent) == BoardGameParser.Player_statementContext:
-        #     #check contents of children
-        #     print(ctx.getChild(1))
-        return self.visitChildren(ctx)
+        return self.visit(ctx.param_list())
     
 
     #####################
@@ -1135,12 +1126,48 @@ class BoardGameInterpreter(BoardGameParserVisitor):
     # Visit a parse tree produced by BoardGameParser#IfEvaluate.
     def visitIfEvaluate(self, ctx:BoardGameParser.IfEvaluateContext):
         if self.visit(ctx.evaluate_statement()):
-            self.visit(ctx.code_block(0))
+            self.visit(ctx.code_block())
 
+    # Visit a parse tree produced by BoardGameParser#evaluate_statement.
+    def visitEvaluate_statement(self, ctx:BoardGameParser.Evaluate_statementContext):
+        return self.visit(ctx.eval_expression())
 
     # Visit a parse tree produced by BoardGameParser#for_statement.
-    def visitFor_statement(self, ctx:BoardGameParser.For_statementContext):
-        return self.visitChildren(ctx)
+    def visitForList(self, ctx:BoardGameParser.ForListContext):
+        loop_var = ctx.IDENTIFIER().getText()
+
+        loop_list = self.visit(ctx.list_())
+        if not isinstance(loop_list, list):
+            raise ValueError(f"Expected a list in 'FOR' statement, but got {type(loop_list)}")
+
+        self.enter_scope()
+        try:
+            for value in loop_list:
+                self.assign_symbol(loop_var, value)
+                self.visit(ctx.code_block())
+        except exceptions.BreakException:
+            pass
+        finally:
+            self.exit_scope()
+
+    # Visit a parse tree produced by BoardGameParser#ForIdentifier.
+    def visitForIdentifier(self, ctx:BoardGameParser.ForIdentifierContext):
+        loop_var = ctx.IDENTIFIER(0).getText()
+
+        var_loop_list = ctx.IDENTIFIER(1).getText()
+        loop_list = self.lookup_symbol(var_loop_list)
+        if not isinstance(loop_list, list):
+            raise ValueError(f"Expected a list in 'FOR' statement, but got {type(loop_list)}")
+
+        self.enter_scope()
+        try:
+            for value in loop_list:
+                self.assign_symbol(loop_var, value)
+                self.visit(ctx.code_block())
+        except exceptions.BreakException:
+            pass
+        finally:
+            self.exit_scope()
 
 
     # Visit a parse tree produced by BoardGameParser#while_statement.
@@ -1160,19 +1187,20 @@ class BoardGameInterpreter(BoardGameParserVisitor):
 
     # Visit a parse tree produced by BoardGameParser#print_statement.
     def visitPrint_statement(self, ctx:BoardGameParser.Print_statementContext):
-        to_print = self.visit(ctx.param_list())
+        if ctx.param_list():
+            to_print = self.visit(ctx.param_list())
 
-        for item in to_print:
-            item = self.lookup_symbol(item) if item in self.symbol_table[-1] else item
-            print(item, end=" ")
+            for item in to_print:
+                item = self.lookup_symbol(item) if item in self.symbol_table[-1] else item
+                print(item, end=" ")
         print()
 
 
     # Visit a parse tree produced by BoardGameParser#return_statement.
     def visitReturn_statement(self, ctx:BoardGameParser.Return_statementContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BoardGameParser#evaluate_statement.
-    def visitEvaluate_statement(self, ctx:BoardGameParser.Evaluate_statementContext):
-        return self.visit(ctx.eval_expression())
+        return self.visit(ctx.expression())
+    
+    # Visit a parse tree produced by BoardGameParser#break_statement.
+    def visitBreak_statement(self, ctx:BoardGameParser.Break_statementContext):
+        raise exceptions.BreakException()
+    

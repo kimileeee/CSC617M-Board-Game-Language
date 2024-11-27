@@ -692,12 +692,21 @@ class BoardGameParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by BoardGameParser#for_statement.
-    def enterFor_statement(self, ctx:BoardGameParser.For_statementContext):
+    # Enter a parse tree produced by BoardGameParser#ForList.
+    def enterForList(self, ctx:BoardGameParser.ForListContext):
         pass
 
-    # Exit a parse tree produced by BoardGameParser#for_statement.
-    def exitFor_statement(self, ctx:BoardGameParser.For_statementContext):
+    # Exit a parse tree produced by BoardGameParser#ForList.
+    def exitForList(self, ctx:BoardGameParser.ForListContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#ForIdentifier.
+    def enterForIdentifier(self, ctx:BoardGameParser.ForIdentifierContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#ForIdentifier.
+    def exitForIdentifier(self, ctx:BoardGameParser.ForIdentifierContext):
         pass
 
 
@@ -743,6 +752,15 @@ class BoardGameParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by BoardGameParser#dice_statement.
     def exitDice_statement(self, ctx:BoardGameParser.Dice_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by BoardGameParser#break_statement.
+    def enterBreak_statement(self, ctx:BoardGameParser.Break_statementContext):
+        pass
+
+    # Exit a parse tree produced by BoardGameParser#break_statement.
+    def exitBreak_statement(self, ctx:BoardGameParser.Break_statementContext):
         pass
 
 

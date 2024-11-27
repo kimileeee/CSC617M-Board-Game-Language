@@ -43,13 +43,36 @@ DEFINE checkers.BOARD:
 END
 
 START:
+    
+     eval_output = EVALUATE(1 + 2)
+     PRINT(eval_output)
+
+     eval_output = EVALUATE(3 + 5 - 2)
+     eval_output = EVALUATE(10 * 2 / 5)
+     eval_output = EVALUATE(10 * 2 / 3)
+     // eval_output = EVALUATE(10 * 2 / 0)
+     eval_output = EVALUATE(2 ^ 3 ^ 2)
+     eval_output = EVALUATE((2 ^ 3) ^ 2)
+     eval_output = EVALUATE(3 + 5 * 2 ^ 2)
+     eval_output = EVALUATE((3 + 5) * 2)
+     eval_output = EVALUATE(10 >= 10)
+     eval_output = EVALUATE(5 == 5 AND 5 == 3)
+     eval_output = EVALUATE(5 > 10 OR 8 < 10)
+     eval_output = EVALUATE(10 > 11 AND 7 - 7)
+     eval_output = EVALUATE(3 > 5)
+     eval_output = EVALUATE(NOT 3 > 5)
+     eval_output = EVALUATE(NOT 10 > 11 AND 7 - 7)
+     eval_output = EVALUATE((NOT 10 > 11) AND 7 - 7)
+     eval_output = EVALUATE(NOT (10 > 11 AND 7 - 7))
+     eval_output = EVALUATE((NOT 10 > 11 AND 7) - 7.0)
+     eval_output = EVALUATE(eval_output + 1)
+     // eval_output = EVALUATE(me.king + 1)
 
      TURN white
      MOVE regular_1 TO BOARD.E4
      // player_move = INPUT("Enter move: ")
      PRINT("Moved regular_1 to E4")
      // PRINT(player_move)
-     PRINT()
 
      TURN black
      MOVE regular_1 TO BOARD.F7
@@ -57,4 +80,44 @@ START:
      PRINT("Moved regular_1 to F7")
      // PRINT(player_move)
 
+     IF EVALUATE(10 > 9)
+     THEN 
+          a = True
+     ELSE 
+          a = False
+     END
+
+     IF EVALUATE(True) 
+     THEN 
+          IF EVALUATE(True) 
+          THEN 
+               a = "inner if then"
+               b = "inner if then 2"
+          ELSE 
+               a = "inner if else"
+               b = "inner if else 2"
+          END
+     ELSE 
+          a = "outer if else"
+          b = "outer if else 2"
+     END
+
+     FOR i IN [1, 2] :
+          x = EVALUATE(i * 2)
+          FOR j IN [3, 4] :
+               y = EVALUATE(x + j)
+               PRINT(y)
+          END
+     END
+
+     my_list = [1, 2, 3, 4, 5]
+     FOR i IN my_list:
+          IF EVALUATE(i == 3) THEN
+               i = EVALUATE(i + 10)
+               BREAK
+          ELSE
+               PRINT(i)
+          END
+     END
+     PRINT(my_list)
 END
