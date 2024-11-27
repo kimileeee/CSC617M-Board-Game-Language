@@ -27,7 +27,6 @@ statement   : game_entities_statement
             | turn_statement
             | move_statement
             | dice_statement
-            | convert_statement
             | expression
             | if_statement
             | for_statement
@@ -161,6 +160,7 @@ assignment_expression : IDENTIFIER ASSIGN_OPT expression              # AssignEx
                       | IDENTIFIER ASSIGN_OPT evaluate_statement        # AssignEvaluate
                       | IDENTIFIER ASSIGN_OPT method_call               # AssignMethodCall
                       | IDENTIFIER ASSIGN_OPT input_statement         # AssignInput
+                      | IDENTIFIER ASSIGN_OPT object_access         # AssignObjectAccess
                      ;
 
 eval_base_expressions   : conditional_expression
@@ -215,7 +215,7 @@ player_statement : PLAYER IDENTIFIER COLOR object_access AT board_pos
 condition_statement : CONDITION OPEN_PAR expression CLOSE_PAR
                     ;
 
-rule_statement : RULE IDENTIFIER OPEN_PAR (expression | if_statement) CLOSE_PAR
+rule_statement : RULE OPEN_PAR param_list CLOSE_PAR
                ;
 
 piece_statement : PIECE (IDENTIFIER | object_access | ALL | OPEN_PAR param_list CLOSE_PAR) COUNT int_literal 
@@ -267,7 +267,4 @@ return_statement : RETURN expression
 
 dice_statement  : DICE OPEN_PAR int_literal COMMA int_literal CLOSE_PAR //i imagine it as DICE(1,6) where it rolls the possible numbers
                 ; //currently its set as this in case of games that allow negative numbers since some games allow those type of dice rolls
-
-convert_statement : IDENTIFIER CONVERT IDENTIFIER
-                  ;
 
